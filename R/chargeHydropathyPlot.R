@@ -1,0 +1,176 @@
+#' Charge-Hydropathy Plot
+#'
+#' This function calculates the average net charge <R> and the average
+#'   scaled hydropathy <H> and visualizes the data. There are known boundaries
+#'   on the C-H plot that seperate extended and collapsed proteins. \cr
+#'   See Uversky (2019) \url{https://doi.org/10.3389/fphy.2019.00010} for
+#'   additional information.
+#' @param sequence amino acid sequence (or pathway to a fasta file)
+#'   as a character string. Supports multiple sequences / files, as a
+#'   character vector of strings.
+#' @param displayInsolubility logical value, TRUE by default.
+#'   This adds (or removes when FALSE) the verticle line
+#'   seperating collapsed proteins and insoluble proteins
+#' @param insolubleValue numerical value. 0.7 by default.
+#'   Ignored when \code{displayInsolubility = FALSE}. Plots the vertical line
+#'   \eqn{<H> = displayInsolubility}.
+#' @param proteinName,customPlotTitle optional character string. NA by default.
+#'   Used to either add the name of the protein to the plot title when there
+#'   is only one protein, or to create a custom plot title for the output.
+#' @param pKaSet pKa set used for charge calculations. See
+#'   \code{\link{chargeCalculation}} for additional details
+#' @param ... additional arguments to be passed to
+#'   \code{\link{chargeCalculation}},
+#'   \code{\link{averageScaledHydropathy}}, or
+#'   \code{\link[ggplot2]{ggplot}}
+#' @importFrom ggplot2 aes
+#' @return Graphical values of Charge-Hydropathy Plot
+#' @seealso \code{\link{netCharge}} and \code{\link{meanScaledHydropathy}} for
+#'   functions used to calculate values.
+#' @references
+#'   Kozlowski, L. P. (2016). IPC – Isoelectric Point Calculator. Biology
+#'   Direct, 11(1), 55. \url{https://doi.org/10.1186/s13062-016-0159-9} \cr
+#'   Kyte, J., & Doolittle, R. F. (1982). A simple method for
+#'   displaying the hydropathic character of a protein.
+#'   Journal of molecular biology, 157(1), 105-132. \cr
+#'   Uversky, V. N. (2019). Intrinsically Disordered Proteins and Their
+#'   “Mysterious” (Meta)Physics. Frontiers in Physics, 7(10).
+#'   \url{https://doi.org/10.3389/fphy.2019.00010}
+#'
+#' @export
+
+
+chargeHydropathyPlot <- function(
+  sequence,
+  displayInsolubility = T,
+  insolubleValue = 0.7,
+  proteinName = NA,
+  customPlotTitle = NA,
+  pKaSet = "IPC_protein",
+  ...) {
+
+  #--- Calculating the C-H data for each protein
+  nSequences <- length(sequence)
+
+  dataCollected <- data.frame(matrix(nrow = nSequences,
+                                     ncol = 3))
+  names(dataCollected) <- c("sequence",
+                            "avg_scaled_hydropathy",
+                            "avg_net_charge")
+
+  for (i in 1:nSequences) {
+
+    sequence.i <- sequence[i]
+
+    dataCollected$sequence[i] <- sequence.i
+
+    dataCollected$avg_scaled_hydropathy[i] <-
+      meanScaledHydropathy(sequence = sequence.i)
+
+    dataCollected$avg_net_charge[i] <-
+      netCharge(sequence = sequence.i,
+                pKaSet = "IPC_protein",
+                pH = 7.2,
+                includeTermini = TRUE,
+                averaged = TRUE)
+
+  }
+
+  # ---- Math for plotting lines
+  #The equations for the lines are:
+  #  Boundary seperating IDPs and compact proteins
+  #   <R> = 2.785 * <H> - 1.151
+  #   <R> = -2.785 * <H> + 1.151
+  #  Limits of CH space
+  #   <R> = 1.125 * <H> - 1.125
+  #   <R> = 1.000 - <H>
+  #  Insoluble line
+  #   <H> = 0.700 (or custom value)
+
+  intersectionPointX <- (1.151 * 2) / (2.785 * 2)
+
+  positiveBoundaryX <- (1.151 + 1) / (1 + 2.785)
+  positiveBoundaryY <- (-1 * positiveBoundaryX) + 1
+
+  negativeBoundaryX <- (1.151 + 1.125) / (1.125 + 2.785)
+  negativeBoundaryY <- 1.125 * negativeBoundaryX - 1.125
+
+  # --- making the ggplot
+  gg <- ggplot2::ggplot(dataCollected, aes(x = avg_scaled_hydropathy,
+                                           y = avg_net_charge))
+
+  gg <- gg + ggplot2::geom_segment(aes(x = intersectionPointX,
+                                       y = 0,
+                                       xend = positiveBoundaryX,
+                                       yend = positiveBoundaryY))
+  gg <- gg + ggplot2::geom_segment(aes(x = intersectionPointX,
+                                       y = 0,
+                                       xend = negativeBoundaryX,
+                                       yend = negativeBoundaryY))
+  if (displayInsolubility) {
+
+    if (!is.numeric(insolubleValue)) {
+      stop("insolubleValue must be a numeric value.")
+    }
+
+    insolubleMax <- (-1 * insolubleValue) + 1
+    insolubleMin <-  (1.125 * insolubleValue) - 1.125
+
+    gg <- gg + ggplot2::geom_segment(aes(x = insolubleValue,
+                                         y = insolubleMax,
+                                         xend = insolubleValue,
+                                         yend = insolubleMin))
+    gg <- gg +
+      ggplot2::geom_label(aes(x = 0.85, y = 0.35,
+                              label = "Insoluble Proteins")) +
+      ggplot2:: geom_label(aes(x = 0.7, y = 0.5,
+                               label = "Collapsed Proteins"))
+  } else {
+    gg <- gg +
+      ggplot2::geom_label(ggplot2::aes(x = 0.8,
+                                       y = 0.4,
+                                       label = "Collapsed Proteins"))
+  }
+
+  gg <- gg +
+    ggplot2::geom_label(ggplot2::aes(x = 0.4,
+                                     y = 0.8,
+                                     label = "Extended IDPs"))
+
+  #Values cannot exceede the logical space within the C-H plot
+  gg <- gg +
+    ggplot2::geom_segment(ggplot2::aes(x = 1, y = 0,
+                                       xend = 0, yend = 1)) +
+    ggplot2::geom_segment(ggplot2::aes(x = 1, y = 0,
+                                       xend = 0, yend = -1.125)) +
+    ggplot2::geom_segment(ggplot2::aes(x = 0, y = 1,
+                                       xend = 0, yend = -1.125))
+
+  xLabel <- paste("Mean Scaled Hydropathy")
+  yLabel <- paste("Mean Net Charge")
+
+  if (is.na(customPlotTitle)) {
+    if (nSequences == 1 &&
+        !is.na(proteinName)) {
+      ggTitle <- paste("Charge-Hydropathy Plot of ",
+                       proteinName,
+                       sep = "", collapse = "")
+    }
+    if (nSequences > 1 ||
+        is.na(proteinName)) {
+      ggTitle <- "Charge-Hydropathy Plot"
+    }
+  } else {
+    ggTitle <- customPlotTitle
+  }
+
+  gg <- gg +
+    ggplot2::geom_point() +
+    ggplot2::theme_minimal() +
+    ggplot2::xlim(0, 1) +
+    ggplot2::ylim(-1.125, 1) +
+    ggplot2::labs(y = yLabel,
+                  x = xLabel,
+                  title = ggTitle)
+  return(gg)
+}
