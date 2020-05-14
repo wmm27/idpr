@@ -36,5 +36,7 @@ vignettes/*.pdf
 *.knit.md
 
 ignore/*
+idpr.code.Rmd
+packageCheck.Rmd
 
 .DS_Store
