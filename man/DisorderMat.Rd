@@ -47,10 +47,10 @@ Disorder85
    or regions which experience intrinsic disorder. The matrices were
    calculated using pairwise sequence alignments of protein families
    which here identified from 287 experimentally confirmed Intrinsially
-   Disordered Proteins. The IDPs contained at least 30 sequential residues
-   of intrinsic disorder and protein families were found using BLAST.\cr
-   There was not a comprehensive comparison to other frequently used
-   substitution matrices (like BLOSUM and PAM) in terms of improving IDP
+   Disordered Proteins (IDPs). The IDPs contained at least 30 sequential
+   residues of intrinsic disorder and protein families were found using
+   BLAST.\cr There was not a comprehensive comparison to other frequently
+   used substitution matrices (like BLOSUM and PAM) in terms of improving IDP
    sequence alignments. The authors note that the purpose of these
    matrices were to compare evolutionary characteristics of disordered and
    ordered proteins.  Please see the source material for additional

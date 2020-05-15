@@ -82,5 +82,3 @@ NULL
 
 #' @rdname EDSSMat
 "EDSSMat90"
-
-

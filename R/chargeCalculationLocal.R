@@ -59,7 +59,7 @@ chargeCalculationLocal <- function(
     if (pKaSet %in% names(pKaData)) { #This is the section for supplied pKa sets
       setVector <- names(pKaData) %in% c("AA", pKaSet)
       pKaUsed <- pKaData[, setVector]
-
+      pKaUsed <- as.data.frame(pKaUsed)
       if (printCitation) {
         pKaCitation <- pKaUsed[pKaUsed$AA == "citation", 2]
         print(pKaCitation)
@@ -92,7 +92,7 @@ chargeCalculationLocal <- function(
 
     pKaUsed$charge[i] <- charge.i
   }
-
+   pKaUsed <- as.data.frame(pKaUsed)
   #the number of possible windows
   numberResiduesAnalyzed <- seqLength - (window - 1)
 
@@ -107,7 +107,8 @@ chargeCalculationLocal <- function(
     windowResidues <- seqVector[windowBegining:windowEnd]
     windowVector[i] <- paste(windowResidues, collapse = "")
 
-    pKaMatched <- pKaUsed[match(windowResidues, pKaUsed[, 1]), 3]
+    pKaMatched <- pKaUsed[match(windowResidues, (pKaUsed[, 1])), 3]
+    pKaMatched <- as.numeric(pKaMatched)
     pKaMatched[is.na(pKaMatched)] <- 0
 
     scoreVector[i] <- sum(pKaMatched) / window
@@ -148,3 +149,4 @@ chargeCalculationLocal <- function(
     return(chargeDF)
   }
 }
+

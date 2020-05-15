@@ -132,19 +132,20 @@ printCitation = FALSE,
     pKaUsed$charge[i] <- charge.i
   }
 
-  #----- mathces the pKa set to the sequence
+  #----- matches the pKa set to the sequence
   pKaMatched <- pKaUsed[match(seqCharacterVector, pKaUsed$AA), 3]
+  pKaMatched <- as.numeric(pKaMatched$charge)
   pKaMatched[is.na(pKaMatched)] <- 0
-
-  positionVector <- c(1 : seqLength)
 
   if (includeTermini) {
     nTerminus <- c(pKaUsed[pKaUsed$AA == "NH2", 3],
                    pKaUsed[pKaUsed$AA == "NH3", 3])
+    nTerminus <- as.numeric(nTerminus)
     nTerminus <- nTerminus[!is.na(nTerminus)][1] #incase two terminus values
 
     cTerminus <- c(pKaUsed[pKaUsed$AA == "COOH", 3],
                    pKaUsed[pKaUsed$AA == "COO", 3])
+    cTerminus <- as.numeric(cTerminus)
     cTerminus <- cTerminus[!is.na(cTerminus)][1] #incase two terminus values
 
     if (sumTermini) {

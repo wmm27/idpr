@@ -48,43 +48,21 @@
 #' @export
 #'
 
-
 sequenceMap <- function(
   sequence,
   property,
-  nbResidues = 30, # number of residues per line on the plot
+  nbResidues = 30,
   labelType = "both",
   everyN = c(1, 10),
   labelLocation = c("on", "below"),
   rotationAngle = c(0, 0),
   customColors = NA) {
 
-  seqCharacterVector <- sequenceCheck(
-    sequence = sequence,
-    sequenceName = NA,
-    method = "Stop",
-    outputType = "Vector",
-    supressOutputMessage = T)
-  seqLength <- length(seqCharacterVector)
-  seqDF <- data.frame(Position = c(1:seqLength),
-                      AA = seqCharacterVector,
-                      Property = property)
+  seqDF <- sequenceMapCoordinates(sequence = sequence,
+                                  nbResidues = nbResidues)
+  seqLength <- nrow(seqDF)
+  seqDF$Property <- property
   nRows <- ceiling(seqLength / nbResidues)
-  rowVector <- rep(1, seqLength)
-  colVector <- c(1:seqLength)
-  if (nRows > 1) {
-    for (i in 1:(nRows)) {
-      iteration <- i - 1
-      row.i <- nRows - (iteration)
-      start.i <- 1 + nbResidues * (iteration)
-      end.i <- nbResidues +  nbResidues * (iteration)
-      rowVector[start.i:end.i] <- row.i
-      colVector[start.i:end.i] <- c(1:nbResidues)
-    }
-  }
-
-  seqDF$row <- rowVector[1:seqLength]
-  seqDF$col <- colVector[1:seqLength]
 
   # ---- plot
   gg <- ggplot(data = seqDF,
@@ -94,7 +72,7 @@ sequenceMap <- function(
     geom_bin2d(binwidth = c(0.99, 0.5),
                aes(group = Property)) +
     ggplot2::theme_void()  +
-   ggplot2::ylim(0, nRows + 0.25) +
+    ggplot2::ylim(0, nRows + 0.25) +
     theme(legend.position = "top")
   #--- labeling
   if (!labelType == "none") {
@@ -176,8 +154,8 @@ sequenceMap <- function(
       gg <- gg + ggplot2::scale_fill_manual(values = customColors)
     } else {
       gg <- gg + ggplot2::scale_fill_gradient2(high = customColors[1],
-                                      low = customColors[2],
-                                      mid = customColors[3])
+                                               low = customColors[2],
+                                               mid = customColors[3])
     }
   }
   return(gg)

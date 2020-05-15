@@ -81,5 +81,3 @@ NULL
 
 #' @rdname DisorderMat
 "Disorder85"
-
-
