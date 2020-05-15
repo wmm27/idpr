@@ -1,3 +1,27 @@
+#' Sequence Map Coordinates
+#'
+#' This is a function used to create a coordinate grid for the
+#'   \code{\link{sequenceMap}} function. It is based on the length of the
+#'   sequence being mapped, and how many residues per line are specified.
+#'   The function wraps the sequence to have a number of columns that is
+#'   the sequence length / number of residues per row, rounded up. \cr\cr
+#'   This is intended for use within the sequenceMap function, however, this
+#'   can also be used to identify the coordinates of residues within the ggplot
+#'   coordinate plane for addition annotations.
+#'
+#' @inheritParams sequenceMap
+#' @inheritParams sequenceCheck
+#'
+#' @return A data frame with rows containing the amino acid sequence, residue
+#'   position within the sequence, as well as the row and column of each
+#'   residue within the ggplot output of sequenceMap().
+#'
+#' @seealso \code{\link{sequenceMapCoordinates}} for mapping coordinates
+#' @export
+
+
+
+
 sequenceMapCoordinates <-
   function(sequence,
            nbResidues = 30) {

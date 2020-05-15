@@ -73,3 +73,6 @@ A ggplot. Can be plotted immediatly or
 This is a graphical function used to visualize data along an
   amino acid sequence.
 }
+\seealso{
+\code{\link{sequenceMapCoordinates}} for mapping coordinates
+}

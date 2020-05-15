@@ -46,6 +46,7 @@
 #' @return A ggplot. Can be plotted immediatly or
 #'   additional layers can be added.
 #' @export
+#' @seealso \code{\link{sequenceMapCoordinates}} for mapping coordinates
 #'
 
 sequenceMap <- function(
