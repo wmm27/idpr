@@ -18,6 +18,7 @@
 #'
 #' @seealso \code{\link{sequenceMapCoordinates}} for mapping coordinates
 #' @export
+#'
 
 
 
