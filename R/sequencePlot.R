@@ -25,6 +25,11 @@
 #'   vector of the colors for c("highColor","lowColor","midColor").
 #'   Set NA to skip custom colors (default). Ignored if
 #'   \code{dynamicColor = NA}.
+#' @param midpoint needed for proper scales of customColors. The default
+#'   value is equal to hline (if provided). If there is no hline, the average
+#'   of propertyLimits is the midpoint (if provided). If neither is provided,
+#'   the value will be NA. The user can explicitly assign the midpoint to
+#'   avoid this or to overwrite the defaults.
 #' @param customTitle  optional, character string. Allows adding custom title.
 #'   Set to NA to skip (default).
 #' @return ggplot
@@ -39,6 +44,7 @@ sequencePlot <- function(
   propertyLimits = NA,
   dynamicColor = NA,
   customColors = NA,
+  midpoint = hline,
   customTitle = NA) {
 
 dataDF <- data.frame(position = position,
@@ -63,9 +69,14 @@ if (!is.na(dynamicColor[1])) {
     if (plyr::is.discrete(property)) {
       gg <- gg + ggplot2::scale_color_manual(values = customColors)
     } else {
+
+      if (is.na(midpoint)) {
+        midpoint <- sum(propertyLimits) / length(propertyLimits)
+      }
       gg <- gg + ggplot2::scale_color_gradient2(high = customColors[1],
                                                 low = customColors[2],
-                                                mid = customColors[3])
+                                                mid = customColors[3],
+                                                midpoint = midpoint)
     }
   }
 

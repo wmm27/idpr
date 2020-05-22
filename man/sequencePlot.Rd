@@ -13,6 +13,7 @@ sequencePlot(
   propertyLimits = NA,
   dynamicColor = NA,
   customColors = NA,
+  midpoint = hline,
   customTitle = NA
 )
 }
@@ -43,6 +44,12 @@ obervations is required. If property is a continuous scale, a character
 vector of the colors for c("highColor","lowColor","midColor").
 Set NA to skip custom colors (default). Ignored if
 \code{dynamicColor = NA}.}
+
+\item{midpoint}{needed for proper scales of customColors. The default
+value is equal to hline (if provided). If there is no hline, the average
+of propertyLimits is the midpoint (if provided). If neither is provided,
+the value will be NA. The user can explicitly assign the midpoint to
+avoid this or to overwrite the defaults.}
 
 \item{customTitle}{optional, character string. Allows adding custom title.
 Set to NA to skip (default).}

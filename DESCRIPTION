@@ -17,4 +17,5 @@ Imports:
     seqinr (>= 3.6.1),
     magrittr (>= 1.5),
     dplyr (>= 0.8.5),
-    plyr (>= 1.8.6)
+    plyr (>= 1.8.6),
+    jsonlite (>= 1.6.1)
