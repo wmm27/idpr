@@ -26,7 +26,7 @@
 #' @param ... additional arguments to be passed to
 #'   \code{\link{structuralTendency}} and
 #'   \code{\link[ggplot2]{ggplot}}
-#'
+#' @inheritParams structuralTendency
 #' @return a dataframe containing each residue from the sequence
 #'   matched with its structural tendancy, defined by disorderPromoting,
 #'   disorderNeutral, and orderPromoting.
@@ -44,6 +44,9 @@ structuralTendencyPlot <- function(
   summarize = FALSE,
   proteinName = NA,
   alphabetical = FALSE,
+  disorderPromoting = c("P", "E", "S", "Q", "K", "A", "G"),
+  disorderNeutral = c("D", "T", "R"),
+  orderPromoting = c("M", "N", "V", "H", "L", "F", "Y", "I", "W", "C"),
   ...) {  #How to order output results (summarize = F)
 
   #---
@@ -57,10 +60,13 @@ structuralTendencyPlot <- function(
        Set graphType = c("pie", "bar", "none")')
   }
 
+  structuralTendencyDF <- structuralTendency(sequence = sequence,
+                                             disorderPromoting = disorderPromoting,
+                                             disorderNeutral = disorderNeutral,
+                                             orderPromoting = orderPromoting)
+  sequenceLength <- nrow(structuralTendencyDF)
 
   if (summarize) {
-    structuralTendencyDF <- structuralTendency(sequence = sequence)
-    sequenceLength <- nrow(structuralTendencyDF)
     structuralTendencyDF <- data.frame(table(structuralTendencyDF$Tendency))
     names(structuralTendencyDF) <- c("Tendency", "Total")
     structuralTendencyDF$Frequency <- structuralTendencyDF$Total /
@@ -68,25 +74,17 @@ structuralTendencyPlot <- function(
     structuralTendencyDF$AA <- as.character(structuralTendencyDF$Tendency)
 
   } else {
-    seqCharacterVector <- sequenceCheck(
-      sequence = sequence,
-      sequenceName = NA,
-      method = "Stop",
-      outputType = "Vector",
-      supressOutputMessage = T)
-    sequenceLength <- length(seqCharacterVector)
 
-    residueFrequencyDF <- data.frame(table(seqCharacterVector))
+    structuralTendencyDF <- structuralTendencyDF[, 2:3]
+    residueFrequencyDF <- data.frame(table(structuralTendencyDF$AA))
     names(residueFrequencyDF) <- c("AA", "Total")
     residueVector <- as.character(residueFrequencyDF$AA)
-    structuralTendencyDF <- structuralTendency(sequence = residueVector)
-    removeVector <- names(structuralTendencyDF) == "Position"
-    structuralTendencyDF <- structuralTendencyDF[, !removeVector]
+    structuralTendencyDF <- unique(structuralTendencyDF)
     structuralTendencyDF <- merge(structuralTendencyDF, residueFrequencyDF)
     structuralTendencyDF$Frequency <- round(structuralTendencyDF$Total /
                                               sequenceLength * 100, 3)
 
-    if (alphabetical == F) {
+    if (!alphabetical) {
       aaOrder <- c("P", "E", "S", "Q", "K", "A", "G",
                    "D", "T", "R",
                    "M", "N", "V", "H", "L", "F", "Y", "I", "W", "C")
@@ -100,9 +98,8 @@ structuralTendencyPlot <- function(
                             ggplot2::aes(x = AA,
                                          y = Frequency,
                                          fill = Tendency,
-                                         group = Tendency))
-
-      gg <- gg + ggplot2::geom_bar(stat = "identity") +
+                                         group = Tendency)) +
+        ggplot2::geom_bar(stat = "identity") +
         ggplot2::theme_bw()
     }
     if (graphType == "pie") {
@@ -111,16 +108,13 @@ structuralTendencyPlot <- function(
         dplyr::arrange(desc(Tendency)) %>%
         dplyr::mutate(prop = Total / sum(structuralTendencyDF$Total) * 100) %>%
         dplyr::mutate(ypos = cumsum(prop) - 0.5 * prop)
-
-
       gg <- ggplot2::ggplot(structuralTendencyDF,
                             ggplot2::aes(x = "",
                                          y = prop,
-                                         fill = Tendency))
-
-      gg <- gg + ggplot2::geom_bar(stat = "identity",
-                                   width = 1,
-                                   color = "white") +
+                                         fill = Tendency)) +
+        ggplot2::geom_bar(stat = "identity",
+                          width = 1,
+                          color = "white") +
         ggplot2::coord_polar("y",
                              start = 0) +
         ggplot2::theme_void() +
@@ -129,7 +123,6 @@ structuralTendencyPlot <- function(
                            color = "white",
                            size = 4)
     }
-
 
     if (!is.na(proteinName)) {
       plotTitle <- paste("Compositional Profile of ",
@@ -145,7 +138,6 @@ structuralTendencyPlot <- function(
     gg <- gg +
       ggplot2::theme(legend.position = "top",
                      plot.title = ggplot2::element_text(hjust = 0.5))
-
     plot(gg)
   } else {
     return(structuralTendencyDF)
