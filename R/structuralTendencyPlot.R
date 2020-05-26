@@ -61,9 +61,9 @@ structuralTendencyPlot <- function(
   }
 
   structuralTendencyDF <- structuralTendency(sequence = sequence,
-                                             disorderPromoting = disorderPromoting,
-                                             disorderNeutral = disorderNeutral,
-                                             orderPromoting = orderPromoting)
+                                    disorderPromoting = disorderPromoting,
+                                      disorderNeutral = disorderNeutral,
+                                       orderPromoting = orderPromoting)
   sequenceLength <- nrow(structuralTendencyDF)
 
   if (summarize) {
@@ -78,7 +78,6 @@ structuralTendencyPlot <- function(
     structuralTendencyDF <- structuralTendencyDF[, 2:3]
     residueFrequencyDF <- data.frame(table(structuralTendencyDF$AA))
     names(residueFrequencyDF) <- c("AA", "Total")
-    residueVector <- as.character(residueFrequencyDF$AA)
     structuralTendencyDF <- unique(structuralTendencyDF)
     structuralTendencyDF <- merge(structuralTendencyDF, residueFrequencyDF)
     structuralTendencyDF$Frequency <- round(structuralTendencyDF$Total /

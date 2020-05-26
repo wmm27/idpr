@@ -149,4 +149,3 @@ chargeCalculationLocal <- function(
     return(chargeDF)
   }
 }
-

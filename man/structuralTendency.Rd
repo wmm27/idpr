@@ -22,7 +22,8 @@ the locaion of a .fasta or .fa file.}
 of individual residues to be matched with the input sequence. Defaults:
 \itemize{
   \item disorderPromoting = c("P", "E", "S", "Q", "K", "A", "G")
-  \item orderPromoting = c("M", "N", "V", "H", "L", "F", "Y", "I", "W", "C")
+  \item orderPromoting =
+     c("M", "N", "V", "H", "L", "F", "Y", "I", "W", "C")
   \item disorderNeutral = c("D", "T", "R")
 }
 It is not reccomended to change these.}

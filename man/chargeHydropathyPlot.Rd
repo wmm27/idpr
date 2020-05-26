@@ -32,11 +32,11 @@ Used to either add the name of the protein to the plot title when there
 is only one protein, or to create a custom plot title for the output.}
 
 \item{pKaSet}{pKa set used for charge calculations. See
-\code{\link{chargeCalculation}} for additional details}
+\code{\link{netCharge}} for additional details}
 
 \item{...}{additional arguments to be passed to
-\code{\link{chargeCalculation}},
-\code{\link{averageScaledHydropathy}}, or
+\link[idpr:netCharge]{idpr::netCharge()},
+\link[idpr:meanScaledHydropathy]{idpr::meanScaledHydropathy()} or
 \code{\link[ggplot2]{ggplot}}}
 }
 \value{
@@ -47,7 +47,8 @@ This function calculates the average net charge <R> and the average
   scaled hydropathy <H> and visualizes the data. There are known boundaries
   on the C-H plot that seperate extended and collapsed proteins. \cr
   See Uversky (2019) \url{https://doi.org/10.3389/fphy.2019.00010} for
-  additional information.
+  additional information. This plot has been referred to as a
+  "Uversky Plot".
 }
 \references{
 Kozlowski, L. P. (2016). IPC – Isoelectric Point Calculator. Biology
@@ -60,6 +61,7 @@ Kozlowski, L. P. (2016). IPC – Isoelectric Point Calculator. Biology
   \url{https://doi.org/10.3389/fphy.2019.00010}
 }
 \seealso{
-\code{\link{netCharge}} and \code{\link{meanScaledHydropathy}} for
-  functions used to calculate values.
+\code{\link{netCharge}} and
+  \code{\link{meanScaledHydropathy}}
+  for functions used to calculate values.
 }

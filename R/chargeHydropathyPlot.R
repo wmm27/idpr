@@ -4,7 +4,8 @@
 #'   scaled hydropathy <H> and visualizes the data. There are known boundaries
 #'   on the C-H plot that seperate extended and collapsed proteins. \cr
 #'   See Uversky (2019) \url{https://doi.org/10.3389/fphy.2019.00010} for
-#'   additional information.
+#'   additional information. This plot has been referred to as a
+#'   "Uversky Plot".
 #' @param sequence amino acid sequence (or pathway to a fasta file)
 #'   as a character string. Supports multiple sequences / files, as a
 #'   character vector of strings.
@@ -18,15 +19,16 @@
 #'   Used to either add the name of the protein to the plot title when there
 #'   is only one protein, or to create a custom plot title for the output.
 #' @param pKaSet pKa set used for charge calculations. See
-#'   \code{\link{chargeCalculation}} for additional details
+#'   \code{\link{netCharge}} for additional details
 #' @param ... additional arguments to be passed to
-#'   \code{\link{chargeCalculation}},
-#'   \code{\link{averageScaledHydropathy}}, or
+#'   \link[idpr:netCharge]{idpr::netCharge()},
+#'   \link[idpr:meanScaledHydropathy]{idpr::meanScaledHydropathy()} or
 #'   \code{\link[ggplot2]{ggplot}}
 #' @importFrom ggplot2 aes
 #' @return Graphical values of Charge-Hydropathy Plot
-#' @seealso \code{\link{netCharge}} and \code{\link{meanScaledHydropathy}} for
-#'   functions used to calculate values.
+#' @seealso \code{\link{netCharge}} and
+#'   \code{\link{meanScaledHydropathy}}
+#'   for functions used to calculate values.
 #' @references
 #'   Kozlowski, L. P. (2016). IPC – Isoelectric Point Calculator. Biology
 #'   Direct, 11(1), 55. \url{https://doi.org/10.1186/s13062-016-0159-9} \cr
