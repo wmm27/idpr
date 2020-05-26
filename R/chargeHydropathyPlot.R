@@ -98,8 +98,8 @@ chargeHydropathyPlot <- function(
   negativeBoundaryY <- 1.125 * negativeBoundaryX - 1.125
 
   # --- making the ggplot
-  gg <- ggplot2::ggplot(dataCollected, aes(x = avg_scaled_hydropathy,
-                                           y = avg_net_charge))
+  gg <- ggplot2::ggplot(dataCollected, aes(x = ~ avg_scaled_hydropathy,
+                                           y = ~ avg_net_charge))
 
   gg <- gg + ggplot2::geom_segment(aes(x = intersectionPointX,
                                        y = 0,

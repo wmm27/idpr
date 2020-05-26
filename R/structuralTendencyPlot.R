@@ -31,6 +31,7 @@
 #'   matched with its structural tendancy, defined by disorderPromoting,
 #'   disorderNeutral, and orderPromoting.
 #' @importFrom magrittr %>%
+#' @importFrom rlang .data
 #' @family structural tendency
 #' @references Kulkarni, Prakash, and Vladimir N. Uversky. "Intrinsically
 #'   disordered proteins: the dark horse of the dark proteome."
@@ -94,31 +95,31 @@ structuralTendencyPlot <- function(
   if (!graphType == "none") {
     if (graphType == "bar") {
       gg <- ggplot2::ggplot(structuralTendencyDF,
-                            ggplot2::aes(x = AA,
-                                         y = Frequency,
-                                         fill = Tendency,
-                                         group = Tendency)) +
+                            ggplot2::aes(x = ~ AA,
+                                         y = ~ Frequency,
+                                         fill = ~ Tendency,
+                                         group = ~ Tendency)) +
         ggplot2::geom_bar(stat = "identity") +
         ggplot2::theme_bw()
     }
     if (graphType == "pie") {
       #------Data needs mutated to label residues
       structuralTendencyDF <- structuralTendencyDF %>%
-        dplyr::arrange(desc(Tendency)) %>%
-        dplyr::mutate(prop = Total / sum(structuralTendencyDF$Total) * 100) %>%
-        dplyr::mutate(ypos = cumsum(prop) - 0.5 * prop)
+        dplyr::arrange(.data$desc(.data$Tendency)) %>%
+        dplyr::mutate(prop = .data$Total / sum(.data$Total) * 100) %>%
+        dplyr::mutate(ypos = cumsum(.data$prop) - 0.5 * .data$prop)
       gg <- ggplot2::ggplot(structuralTendencyDF,
                             ggplot2::aes(x = "",
-                                         y = prop,
-                                         fill = Tendency)) +
+                                         y = ~ prop,
+                                         fill = ~ Tendency)) +
         ggplot2::geom_bar(stat = "identity",
                           width = 1,
                           color = "white") +
         ggplot2::coord_polar("y",
                              start = 0) +
         ggplot2::theme_void() +
-        ggplot2::geom_text(ggplot2::aes(y = ypos,
-                                        label = AA),
+        ggplot2::geom_text(ggplot2::aes(y = ~ ypos,
+                                        label = ~ AA),
                            color = "white",
                            size = 4)
     }

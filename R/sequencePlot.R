@@ -2,7 +2,6 @@
 #' This is a graphical function used to visualize numreic
 #'   data along an amino acid sequence.
 #' @importFrom ggplot2 aes theme
-#'
 #' @param position numeric vector of residue positions.
 #'   Typically c(1 : sequenceLength). ie a sequence with 215 amino acids
 #'   has a vector of values 1 to 215. This is the X axis

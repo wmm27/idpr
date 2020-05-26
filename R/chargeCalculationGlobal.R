@@ -43,7 +43,6 @@
 #' @param proteinName character string with length = 1.
 #'   optional setting to include the name in the plot title.
 #' @param ... any additional parameters, especially those for plotting.
-#'
 #' @return  If \code{plotResults = FALSE}, a dataframe
 #'   is returned with the position, residue, and charge (-1 to +1). If
 #'   \code{plotResults = TRUE}, a graphical output is returned (ggplot) showing
@@ -65,8 +64,6 @@ proteinName = NA,
 printCitation = FALSE,
 ...) {
 
-
-
   seqCharacterVector <- sequenceCheck(
     sequence = sequence,
     sequenceName = NA,
@@ -84,7 +81,6 @@ printCitation = FALSE,
     stop(" plotResults, includeTermini, sumTermini, and printCitation
          must be logical values")
   }
-
 
   #----- to get pKa Set
 

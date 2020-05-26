@@ -69,9 +69,9 @@ sequenceMap <- function(
   gg <- ggplot(data = seqDF,
                aes(x = col,
                    y = row,
-                   fill = Property)) +
+                   fill = ~ Property)) +
     geom_bin2d(binwidth = c(0.99, 0.5),
-               aes(group = Property)) +
+               aes(group = ~ Property)) +
     ggplot2::theme_void()  +
     ggplot2::ylim(0, nRows + 0.25) +
     theme(legend.position = "top")
