@@ -19,5 +19,4 @@ Imports:
     dplyr (>= 0.8.5),
     plyr (>= 1.8.6),
     jsonlite (>= 1.6.1),
-    rlang (>= 0.4.6),
-    methods (>= 4.0.0)
+    rlang (>= 0.4.6)
