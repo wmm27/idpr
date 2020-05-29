@@ -26,7 +26,15 @@
 #' @param ... additional arguments to be passed to
 #'   \code{\link{structuralTendency}} and
 #'   \code{\link[ggplot2]{ggplot}}
-#' @inheritParams structuralTendency
+#' @param disorderPromoting,disorderNeutral,orderPromoting character vectors
+#'    of individual residues to be matched with the input sequence. Defaults:
+#'    \itemize{
+#'      \item disorderPromoting = c("P", "E", "S", "Q", "K", "A", "G")
+#'      \item orderPromoting =
+#'         c("M", "N", "V", "H", "L", "F", "Y", "I", "W", "C")
+#'      \item disorderNeutral = c("D", "T", "R")
+#'    }
+#'    It is not reccomended to change these.
 #' @return a dataframe containing each residue from the sequence
 #'   matched with its structural tendancy, defined by disorderPromoting,
 #'   disorderNeutral, and orderPromoting.
@@ -83,6 +91,7 @@ structuralTendencyPlot <- function(
     structuralTendencyDF <- merge(structuralTendencyDF, residueFrequencyDF)
     structuralTendencyDF$Frequency <- round(structuralTendencyDF$Total /
                                               sequenceLength * 100, 3)
+    names(structuralTendencyDF) <- c("AA", "Tendency", "Total", "Frequency")
 
     if (!alphabetical) {
       aaOrder <- c("P", "E", "S", "Q", "K", "A", "G",
@@ -94,8 +103,8 @@ structuralTendencyPlot <- function(
   }
   if (!graphType == "none") {
     if (graphType == "bar") {
-      gg <- ggplot2::ggplot(structuralTendencyDF,
-                            ggplot2::aes(x = ~ AA,
+      gg <- ggplot2::ggplot(data = structuralTendencyDF,
+                            ggplot2::aes_(x = ~ AA,
                                          y = ~ Frequency,
                                          fill = ~ Tendency,
                                          group = ~ Tendency)) +
@@ -105,11 +114,11 @@ structuralTendencyPlot <- function(
     if (graphType == "pie") {
       #------Data needs mutated to label residues
       structuralTendencyDF <- structuralTendencyDF %>%
-        dplyr::arrange(.data$desc(.data$Tendency)) %>%
+        dplyr::arrange(desc(.data$Tendency)) %>%
         dplyr::mutate(prop = .data$Total / sum(.data$Total) * 100) %>%
         dplyr::mutate(ypos = cumsum(.data$prop) - 0.5 * .data$prop)
       gg <- ggplot2::ggplot(structuralTendencyDF,
-                            ggplot2::aes(x = "",
+                            ggplot2::aes_(x = "",
                                          y = ~ prop,
                                          fill = ~ Tendency)) +
         ggplot2::geom_bar(stat = "identity",
@@ -118,7 +127,7 @@ structuralTendencyPlot <- function(
         ggplot2::coord_polar("y",
                              start = 0) +
         ggplot2::theme_void() +
-        ggplot2::geom_text(ggplot2::aes(y = ~ ypos,
+        ggplot2::geom_text(ggplot2::aes_(y = ~ ypos,
                                         label = ~ AA),
                            color = "white",
                            size = 4)
@@ -138,7 +147,7 @@ structuralTendencyPlot <- function(
     gg <- gg +
       ggplot2::theme(legend.position = "top",
                      plot.title = ggplot2::element_text(hjust = 0.5))
-    plot(gg)
+    return(gg)
   } else {
     return(structuralTendencyDF)
   }

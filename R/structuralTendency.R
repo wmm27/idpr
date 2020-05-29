@@ -40,9 +40,8 @@ structuralTendency <- function(
   #-----
   seqCharacterVector <- sequenceCheck(
     sequence = sequence,
-    sequenceName = NA,
-    method = "Stop",
-    outputType = "Vector",
+    method = "stop",
+    outputType = "vector",
     supressOutputMessage = T)
   sequenceLength <- length(seqCharacterVector)
 

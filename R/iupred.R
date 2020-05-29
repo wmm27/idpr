@@ -45,7 +45,7 @@
 #'   \strong{Please cite these articles if you use any iupred function.}
 #'
 #' @param uniprotAccession character string specifying the UniProt Accession
-#'   number of the protein used to fetch IUPred predictions.
+#'   of the protein of interest. Used to fetch predictions from IUPreds REST API
 #' @param iupredType character string. "long" by default. accepted types are
 #'   c("long", "short", "glob"). See "Prediction Type" information below.
 #' @param proteinName character string, optional. Used to add protein name

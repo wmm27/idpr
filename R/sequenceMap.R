@@ -2,7 +2,7 @@
 #'
 #' This is a graphical function used to visualize data along an
 #'   amino acid sequence.
-#' @importFrom ggplot2 ggplot aes geom_bin2d theme geom_text
+#' @importFrom ggplot2 ggplot aes geom_bin2d theme geom_text aes_
 #'
 #' @inheritParams sequenceCheck
 #' @param property a vector with length equal to sequence length.
@@ -67,11 +67,11 @@ sequenceMap <- function(
 
   # ---- plot
   gg <- ggplot(data = seqDF,
-               aes(x = col,
-                   y = row,
+               aes_(x = ~ col,
+                   y = ~ row,
                    fill = ~ Property)) +
     geom_bin2d(binwidth = c(0.99, 0.5),
-               aes(group = ~ Property)) +
+               aes_(group = ~ Property)) +
     ggplot2::theme_void()  +
     ggplot2::ylim(0, nRows + 0.25) +
     theme(legend.position = "top")

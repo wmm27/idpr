@@ -36,9 +36,8 @@ scaledHydropathyLocal <- function(
 
   seqVector <- sequenceCheck(
     sequence = sequence,
-    sequenceName = proteinName,
-    method = "Stop",
-    outputType = "Vector",
+    method = "stop",
+    outputType = "vector",
     supressOutputMessage = T)
 
   if ((window %% 2) == 0) {

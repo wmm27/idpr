@@ -29,9 +29,8 @@ sequenceMapCoordinates <-
 
     seqCharacterVector <- sequenceCheck(
       sequence = sequence,
-      sequenceName = NA,
-      method = "Stop",
-      outputType = "Vector",
+      method = "stop",
+      outputType = "vector",
       supressOutputMessage = T)
 
     seqLength <- length(seqCharacterVector)

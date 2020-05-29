@@ -29,7 +29,7 @@ iupredRedox(uniprotAccession, plotResults = TRUE, proteinName = NA)
 }
 \arguments{
 \item{uniprotAccession}{character string specifying the UniProt Accession
-number of the protein used to fetch IUPred predictions.}
+of the protein of interest. Used to fetch predictions from IUPreds REST API}
 
 \item{iupredType}{character string. "long" by default. accepted types are
 c("long", "short", "glob"). See "Prediction Type" information below.}

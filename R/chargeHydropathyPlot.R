@@ -24,7 +24,7 @@
 #'   \link[idpr:netCharge]{idpr::netCharge()},
 #'   \link[idpr:meanScaledHydropathy]{idpr::meanScaledHydropathy()} or
 #'   \code{\link[ggplot2]{ggplot}}
-#' @importFrom ggplot2 aes
+#' @importFrom ggplot2 aes aes_
 #' @return Graphical values of Charge-Hydropathy Plot
 #' @seealso \code{\link{netCharge}} and
 #'   \code{\link{meanScaledHydropathy}}
@@ -98,7 +98,7 @@ chargeHydropathyPlot <- function(
   negativeBoundaryY <- 1.125 * negativeBoundaryX - 1.125
 
   # --- making the ggplot
-  gg <- ggplot2::ggplot(dataCollected, aes(x = ~ avg_scaled_hydropathy,
+  gg <- ggplot2::ggplot(dataCollected, aes_(x = ~ avg_scaled_hydropathy,
                                            y = ~ avg_net_charge))
 
   gg <- gg + ggplot2::geom_segment(aes(x = intersectionPointX,

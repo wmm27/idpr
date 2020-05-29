@@ -43,27 +43,7 @@ Order of residues on plot axis. Only relevant when
  If FALSE, ordering is grouped by Disorder Tendancy (P, E, S, ..., W, C).
  If TRUE, the residues are ordered alphabetically (A, C, D, E, ..., W, Y).}
 
-\item{disorderPromoting}{character vectors
-of individual residues to be matched with the input sequence. Defaults:
-\itemize{
-  \item disorderPromoting = c("P", "E", "S", "Q", "K", "A", "G")
-  \item orderPromoting =
-     c("M", "N", "V", "H", "L", "F", "Y", "I", "W", "C")
-  \item disorderNeutral = c("D", "T", "R")
-}
-It is not reccomended to change these.}
-
-\item{disorderNeutral}{character vectors
-of individual residues to be matched with the input sequence. Defaults:
-\itemize{
-  \item disorderPromoting = c("P", "E", "S", "Q", "K", "A", "G")
-  \item orderPromoting =
-     c("M", "N", "V", "H", "L", "F", "Y", "I", "W", "C")
-  \item disorderNeutral = c("D", "T", "R")
-}
-It is not reccomended to change these.}
-
-\item{orderPromoting}{character vectors
+\item{disorderPromoting, disorderNeutral, orderPromoting}{character vectors
 of individual residues to be matched with the input sequence. Defaults:
 \itemize{
   \item disorderPromoting = c("P", "E", "S", "Q", "K", "A", "G")

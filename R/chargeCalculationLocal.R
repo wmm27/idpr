@@ -3,9 +3,7 @@
 #' This calculates the charge, as determined by the Henderson-Hasselbalch
 #'   equation, for each window along the sequence. This function uses a
 #'   sliding window. The output is either a graph or dataframe of calculations.
-
 #' @inheritParams chargeCalculationGlobal
-#'
 #' @param sequence amino acid sequence as a single character string
 #'   or vector of single characters.
 #'   It also supports a single character string that specifies
@@ -25,8 +23,6 @@
 #'   \code{\link{hendersonHasselbalch}} for charge calculations.
 #' @export
 
-
-
 chargeCalculationLocal <- function(
   sequence,
   window = 7,
@@ -39,9 +35,8 @@ chargeCalculationLocal <- function(
 
   seqVector <- sequenceCheck(
     sequence = sequence,
-    sequenceName = proteinName,
-    method = "Stop",
-    outputType = "Vector",
+    method = "stop",
+    outputType = "vector",
     supressOutputMessage = T)
   seqLength <- length(seqVector)
 

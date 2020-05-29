@@ -6,10 +6,8 @@
 \usage{
 sequenceCheck(
   sequence,
-  sequenceName = NA,
-  method = "Stop",
-  outputType = "String",
-  outputName = NA,
+  method = "stop",
+  outputType = "string",
   nonstandardResidues = NA,
   supressAAWarning = F,
   supressOutputMessage = F
@@ -21,27 +19,18 @@ or vector of single characters.
 It also supports a single character string that specifies
 the locaion of a .fasta or .fa file.}
 
-\item{sequenceName}{Optional setting.
-\code{sequenceName = NA} for default naming.}
-
 \item{method}{Required Setting.
- \code{method = c("Stop", "Warn", "Print")} "Stop" by default.
- "Stop" Reports invalid residues as an error and
+\code{method = c("stop", "warn")}. "stop" by default.
+"stop" Reports invalid residues as an error and
 prevents the function from continuing.
- "Warn" Reports invalid residues through a warning function.
- "Print" Reports invalid residues as a message,
- but doesn't halt the function.
- Any invalid sequences will be reported as intended.}
+"warn" Reports invalid residues through a warning
+Any invalid sequences will be reported as intended.}
 
-\item{outputType}{Required Setting. "String" By default.
-\code{outputType = c("String", "Vector", "List", "None")}
-Returns the sequence as a single string of amino acids.
-"Vector" returns the sequence as a vector of individual characters
-"List" returns the sequences as a list of individual characters
-"None" prevents the function from returning a sequence.}
-
-\item{outputName}{Optional Setting. "Sequence" by default.
-Allows for a custom value name during assignment.}
+\item{outputType}{Required Setting. "string" By default.
+\code{outputType = c("string", "vector", "none")}
+"string" returns the sequence as a single string of amino acids.
+"vector" returns the sequence as a vector of individual characters.
+"none" prevents the function from returning a sequence.}
 
 \item{nonstandardResidues}{Optional setting.
 Expands the amino acid alphabet.
