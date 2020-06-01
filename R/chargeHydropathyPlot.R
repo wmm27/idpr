@@ -8,7 +8,9 @@
 #'   "Uversky Plot".
 #' @param sequence amino acid sequence (or pathway to a fasta file)
 #'   as a character string. Supports multiple sequences / files, as a
-#'   character vector of strings.
+#'   character vector of strings. Additionally, this supports a single protein
+#'   as character vectors. Multiple protiens are not supported as a character
+#'   vector of single characters.
 #' @param displayInsolubility logical value, TRUE by default.
 #'   This adds (or removes when FALSE) the verticle line
 #'   seperating collapsed proteins and insoluble proteins
@@ -51,6 +53,9 @@ chargeHydropathyPlot <- function(
   pKaSet = "IPC_protein",
   ...) {
 
+  if (nchar(sequence[1]) == 1) {
+  sequence <- paste(sequence, sep = "", collapse = "")
+  }
   #--- Calculating the C-H data for each protein
   nSequences <- length(sequence)
 

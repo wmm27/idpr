@@ -17,7 +17,9 @@ chargeHydropathyPlot(
 \arguments{
 \item{sequence}{amino acid sequence (or pathway to a fasta file)
 as a character string. Supports multiple sequences / files, as a
-character vector of strings.}
+character vector of strings. Additionally, this supports a single protein
+as character vectors. Multiple protiens are not supported as a character
+vector of single characters.}
 
 \item{displayInsolubility}{logical value, TRUE by default.
 This adds (or removes when FALSE) the verticle line
