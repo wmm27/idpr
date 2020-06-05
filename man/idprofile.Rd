@@ -158,6 +158,30 @@ The IDPRofile is a summation of many features of the idpr package,
  }
 }
 
+\examples{
+\dontrun{
+#For most functions, a protein sequence is all that is needed.
+
+#The UniProt ID is optional but reccomened for IUPred results.
+proteinID <- "P04637"
+iupredDF <- iupred(proteinID,
+                   plotResults = FALSE)
+iupredSeq <- iupredDF$AA
+
+idprofile(
+  sequence = iupredSeq,
+  uniprotAccession = proteinID)
+
+
+#changing the iupred to redox
+## and getting a pie chart for structuralTendency.
+idprofile(
+  sequence = iupredSeq,
+  uniprotAccession = proteinID,
+  iupredType = "redox",
+  structuralTendencyType = "pie")
+}
+}
 \seealso{
 \code{\link{chargeHydropathyPlot}}\cr
   \code{\link{chargeCalculationLocal}}\cr

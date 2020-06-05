@@ -52,6 +52,45 @@ This function calculates the average net charge <R> and the average
   additional information. This plot has been referred to as a
   "Uversky Plot".
 }
+\examples{
+\dontrun{
+#Amino acid sequences can be character strings
+aaString <- "ACDEFGHIKLMNPQRSTVWY"
+#Amino acid sequences can also be character vectors
+aaVector <- c("A", "C", "D", "E", "F",
+              "G", "H", "I", "K", "L",
+              "M", "N", "P", "Q", "R",
+              "S", "T", "V", "W", "Y")
+#Alternativly, .fasta files can also be used by providing
+##The path to the file as a character string
+
+chargeHydropathyPlot(sequence = aaString)
+chargeHydropathyPlot( sequence = aaVector)
+
+#This function also supports multiple sequences
+#only as character strings or .fasta files
+multipleSeq <- c("ACDEFGHIKLMNPQRSTVWY",
+               "ACDEFGHIK",
+               "LMNPQRSTVW")
+chargeHydropathyPlot(sequence = multipleSeq)
+
+#since it is a ggplot, we can add additional annotations or themes
+chargeHydropathyPlot(
+ sequence = multipleSeq)  +
+  ggplot2::theme_void()
+
+chargeHydropathyPlot(
+  sequence = multipleSeq)  +
+  ggplot2::geom_hline(yintercept = 0,
+                     color = "red")
+
+#choosing the pKa set used for calculations
+chargeHydropathyPlot(
+  sequence = multipleSeq,
+  pKaSet = "EMBOSS")
+ }
+
+}
 \references{
 Kozlowski, L. P. (2016). IPC – Isoelectric Point Calculator. Biology
   Direct, 11(1), 55. \url{https://doi.org/10.1186/s13062-016-0159-9} \cr

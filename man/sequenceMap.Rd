@@ -73,6 +73,114 @@ A ggplot. Can be plotted immediatly or
 This is a graphical function used to visualize data along an
   amino acid sequence.
 }
+\examples{
+\dontrun{
+#Get a data frame returned from another function
+aaVector <- c("A", "C", "D", "E", "F",
+              "G", "H", "I", "K", "L",
+              "M", "N", "P", "Q", "R",
+              "S", "T", "V", "W", "Y")
+## As a continuous property
+exampleDF_cont <- chargeCalculationGlobal(sequence = aaVector)
+head(exampleDF_cont)
+## Or as a discrete property
+exampleDF_disc <- structuralTendency(sequence = aaVector)
+head(exampleDF_disc)
+
+sequenceMap(sequence = exampleDF_cont$AA,
+          property = exampleDF_cont$Charge,
+         nbResidues = 3,
+         labelType = "both")
+
+sequenceMap(sequence = exampleDF_disc$AA,
+         property = exampleDF_disc$Tendency,
+         nbResidues = 3,
+         labelType = "both")
+
+#Change the layout of labels
+sequenceMap(
+sequence = exampleDF_disc$AA,
+property = exampleDF_disc$Tendency,
+nbResidues = 3,
+labelType = "AA") #Only AA residue Labels
+
+sequenceMap(
+sequence = exampleDF_disc$AA,
+property = exampleDF_disc$Tendency,
+nbResidues = 3,
+labelType = "number") #Only residue numner labels
+
+sequenceMap(
+sequence = exampleDF_disc$AA,
+property = exampleDF_disc$Tendency,
+nbResidues = 3,
+labelType = "none") #No labels
+
+#The text can also be rotated for ease of reading, espeically helpful for larger sequences
+sequenceMap(
+sequence = exampleDF_disc$AA,
+property = exampleDF_disc$Tendency,
+labelType = "number",
+labelLocation = "on",
+  rotationAngle = 90)
+
+#Specify colors for continuous values
+
+sequenceMap(
+sequence = exampleDF_cont$AA,
+property = exampleDF_cont$Charge,
+customColors = c("purple", "pink", "grey90"))
+
+#or discrete values
+sequenceMap(
+sequence = exampleDF_disc$AA,
+property = exampleDF_disc$Tendency,
+customColors = c("#999999", "#E69F00", "#56B4E9"))
+
+
+#change the number of residues on each line with nbResidue
+#or discrete values
+sequenceMap(
+sequence = exampleDF_disc$AA,
+property = exampleDF_disc$Tendency,
+nbResidues = 1)
+sequenceMap(
+sequence = exampleDF_disc$AA,
+property = exampleDF_disc$Tendency,
+nbResidues = 3)
+sequenceMap(
+sequence = exampleDF_disc$AA,
+property = exampleDF_disc$Tendency,
+nbResidues = 10)
+
+
+#Use sequenceMapCoordinates for additional annotations
+gg <- sequenceMap(sequence = exampleDF_disc$AA,
+               property = exampleDF_disc$Tendency,
+               nbResidues = 3,
+               labelType = "both")
+
+#Change the nbResidues to correspond to the sequenceMap setting
+mapCoordDF <- sequenceMapCoordinates(aaString,
+                                  nbResidues = 3)
+head(mapCoordDF)
+
+#subsetting for positive residues
+mapCoordDF_subset <- mapCoordDF$AA \%in\% c("K", "R", "H")
+mapCoordDF_subset <- mapCoordDF[mapCoordDF_subset,]
+
+library(ggplot2)
+gg <- gg + geom_point(inherit.aes = FALSE,
+                    data = mapCoordDF_subset,
+                   aes(x = col + 0.5, #to center on the residue
+                       y = row + 0.2), #to move above on the residue
+                   color = "purple",
+                   size = 3,
+                   shape = 3)
+plot(gg)
+
+}
+}
 \seealso{
 \code{\link{sequenceMapCoordinates}} for mapping coordinates
 }

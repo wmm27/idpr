@@ -1,3 +1,104 @@
+#' Sequence Map Coordinates
+#'
+#' This is a function used to create a coordinate grid for the
+#'   \code{\link{sequenceMap}} function. It is based on the length of the
+#'   sequence being mapped, and how many residues per line are specified.
+#'   The function wraps the sequence to have a number of columns that is
+#'   the sequence length / number of residues per row, rounded up. \cr\cr
+#'   This is intended for use within the sequenceMap function, however, this
+#'   can also be used to identify the coordinates of residues within the ggplot
+#'   coordinate plane for addition annotations.
+#'
+#' @inheritParams sequenceMap
+#' @inheritParams sequenceCheck
+#'
+#' @return A data frame with rows containing the amino acid sequence, residue
+#'   position within the sequence, as well as the row and column of each
+#'   residue within the ggplot output of sequenceMap().
+#'
+#' @seealso \code{\link{sequenceMapCoordinates}} for mapping coordinates
+#' @export
+#' @examples
+#' #Amino acid sequences can be character strings
+#' aaString <- "ACDEFGHIKLMNPQRSTVWY"
+#' #Amino acid sequences can also be character vectors
+#' aaVector <- c("A", "C", "D", "E", "F",
+#'            "G", "H", "I", "K", "L",
+#'            "M", "N", "P", "Q", "R",
+#'            "S", "T", "V", "W", "Y")
+#' #Alternativly, .fasta files can also be used by providing
+#' ##The path to the file as a character string
+#'
+#' exampleDF <- sequenceMapCoordinates(aaString,
+#'                                   nbResidues = 10)
+#' head(exampleDF)
+#'
+#' exampleDF <- sequenceMapCoordinates(aaVector,
+#'                                  nbResidues = 10)
+#' head(exampleDF)
+#'
+#' \dontrun{
+#'  #Making a sequenceMap ggplot to annotate
+#' gg <- sequenceMap(sequence = tendencyDF$AA,
+#'             property = tendencyDF$Tendency,
+#'              nbResidues = 3,
+#'               labelType = "both")
+#'
+#' #Change the nbResidues to correspond to the sequenceMap setting
+#' mapCoordDF <- sequenceMapCoordinates(aaString,
+#'                                   nbResidues = 3)
+#' head(mapCoordDF)
+#'
+#' #subsetting for positive residues
+#' mapCoordDF_subset <- mapCoordDF$AA %in% c("K", "R", "H")
+#' mapCoordDF_subset <- mapCoordDF[mapCoordDF_subset,]
+#'
+#' #use mapCoordDF to annotate positive residues with a plus
+#' library(ggplot2)
+#' gg <- gg + geom_point(inherit.aes = FALSE,
+#'                     data = mapCoordDF_subset,
+#'                    aes(x = col + 0.5, #to center on the residue
+#'                        y = row + 0.2), #to move above on the residue
+#'                    color = "purple",
+#'                    size = 3,
+#'                    shape = 3)
+#' plot(gg)
+#' }
+
+sequenceMapCoordinates <-
+  function(sequence,
+           nbResidues = 30) {
+
+    seqCharacterVector <- sequenceCheck(
+      sequence = sequence,
+      method = "stop",
+      outputType = "vector",
+      supressOutputMessage = T)
+
+    seqLength <- length(seqCharacterVector)
+    seqDF <- data.frame(Position = c(1:seqLength),
+                        AA = seqCharacterVector)
+    nRows <- ceiling(seqLength / nbResidues)
+    rowVector <- rep(1, seqLength)
+    colVector <- c(1:seqLength)
+    if (nRows > 1) {
+      for (i in 1:(nRows)) {
+        iteration <- i - 1
+        row.i <- nRows - (iteration)
+        start.i <- 1 + nbResidues * (iteration)
+        end.i <- nbResidues +  nbResidues * (iteration)
+        rowVector[start.i:end.i] <- row.i
+        colVector[start.i:end.i] <- c(1:nbResidues)
+      }
+    }
+
+    seqDF$row <- rowVector[1:seqLength]
+    seqDF$col <- colVector[1:seqLength]
+
+    return(seqDF)
+  }
+
+
 #' Sequence Map Function
 #'
 #' This is a graphical function used to visualize data along an
@@ -47,7 +148,114 @@
 #'   additional layers can be added.
 #' @export
 #' @seealso \code{\link{sequenceMapCoordinates}} for mapping coordinates
+#' @examples
+#' \dontrun{
+#' #Get a data frame returned from another function
+#' aaVector <- c("A", "C", "D", "E", "F",
+#'               "G", "H", "I", "K", "L",
+#'               "M", "N", "P", "Q", "R",
+#'               "S", "T", "V", "W", "Y")
+#' ## As a continuous property
+#' exampleDF_cont <- chargeCalculationGlobal(sequence = aaVector)
+#' head(exampleDF_cont)
+#' ## Or as a discrete property
+#' exampleDF_disc <- structuralTendency(sequence = aaVector)
+#' head(exampleDF_disc)
 #'
+#' sequenceMap(sequence = exampleDF_cont$AA,
+#'           property = exampleDF_cont$Charge,
+#'          nbResidues = 3,
+#'          labelType = "both")
+#'
+#' sequenceMap(sequence = exampleDF_disc$AA,
+#'          property = exampleDF_disc$Tendency,
+#'          nbResidues = 3,
+#'          labelType = "both")
+#'
+#' #Change the layout of labels
+#' sequenceMap(
+#' sequence = exampleDF_disc$AA,
+#' property = exampleDF_disc$Tendency,
+#' nbResidues = 3,
+#' labelType = "AA") #Only AA residue Labels
+#'
+#' sequenceMap(
+#' sequence = exampleDF_disc$AA,
+#' property = exampleDF_disc$Tendency,
+#' nbResidues = 3,
+#' labelType = "number") #Only residue numner labels
+#'
+#' sequenceMap(
+#' sequence = exampleDF_disc$AA,
+#' property = exampleDF_disc$Tendency,
+#' nbResidues = 3,
+#' labelType = "none") #No labels
+#'
+#' #The text can also be rotated for ease of reading, espeically helpful for larger sequences
+#' sequenceMap(
+#' sequence = exampleDF_disc$AA,
+#' property = exampleDF_disc$Tendency,
+#' labelType = "number",
+#' labelLocation = "on",
+#'   rotationAngle = 90)
+#'
+#' #Specify colors for continuous values
+#'
+#' sequenceMap(
+#' sequence = exampleDF_cont$AA,
+#' property = exampleDF_cont$Charge,
+#' customColors = c("purple", "pink", "grey90"))
+#'
+#' #or discrete values
+#' sequenceMap(
+#' sequence = exampleDF_disc$AA,
+#' property = exampleDF_disc$Tendency,
+#' customColors = c("#999999", "#E69F00", "#56B4E9"))
+#'
+#'
+#' #change the number of residues on each line with nbResidue
+#' #or discrete values
+#' sequenceMap(
+#' sequence = exampleDF_disc$AA,
+#' property = exampleDF_disc$Tendency,
+#' nbResidues = 1)
+#' sequenceMap(
+#' sequence = exampleDF_disc$AA,
+#' property = exampleDF_disc$Tendency,
+#' nbResidues = 3)
+#' sequenceMap(
+#' sequence = exampleDF_disc$AA,
+#' property = exampleDF_disc$Tendency,
+#' nbResidues = 10)
+#'
+#'
+#' #Use sequenceMapCoordinates for additional annotations
+#' gg <- sequenceMap(sequence = exampleDF_disc$AA,
+#'                property = exampleDF_disc$Tendency,
+#'                nbResidues = 3,
+#'                labelType = "both")
+#'
+#' #Change the nbResidues to correspond to the sequenceMap setting
+#' mapCoordDF <- sequenceMapCoordinates(aaString,
+#'                                   nbResidues = 3)
+#' head(mapCoordDF)
+#'
+#' #subsetting for positive residues
+#' mapCoordDF_subset <- mapCoordDF$AA %in% c("K", "R", "H")
+#' mapCoordDF_subset <- mapCoordDF[mapCoordDF_subset,]
+#'
+#use mapCoordDF to annotate positive residues with a plus
+#' library(ggplot2)
+#' gg <- gg + geom_point(inherit.aes = FALSE,
+#'                     data = mapCoordDF_subset,
+#'                    aes(x = col + 0.5, #to center on the residue
+#'                        y = row + 0.2), #to move above on the residue
+#'                    color = "purple",
+#'                    size = 3,
+#'                    shape = 3)
+#' plot(gg)
+#'
+#' }
 
 sequenceMap <- function(
   sequence,
@@ -161,3 +369,104 @@ sequenceMap <- function(
   }
   return(gg)
 }
+
+#' Sequence Map Coordinates
+#'
+#' This is a function used to create a coordinate grid for the
+#'   \code{\link{sequenceMap}} function. It is based on the length of the
+#'   sequence being mapped, and how many residues per line are specified.
+#'   The function wraps the sequence to have a number of columns that is
+#'   the sequence length / number of residues per row, rounded up. \cr\cr
+#'   This is intended for use within the sequenceMap function, however, this
+#'   can also be used to identify the coordinates of residues within the ggplot
+#'   coordinate plane for addition annotations.
+#'
+#' @inheritParams sequenceMap
+#' @inheritParams sequenceCheck
+#'
+#' @return A data frame with rows containing the amino acid sequence, residue
+#'   position within the sequence, as well as the row and column of each
+#'   residue within the ggplot output of sequenceMap().
+#'
+#' @seealso \code{\link{sequenceMapCoordinates}} for mapping coordinates
+#' @export
+#' @examples
+#' #Amino acid sequences can be character strings
+#' aaString <- "ACDEFGHIKLMNPQRSTVWY"
+#' #Amino acid sequences can also be character vectors
+#' aaVector <- c("A", "C", "D", "E", "F",
+#'            "G", "H", "I", "K", "L",
+#'            "M", "N", "P", "Q", "R",
+#'            "S", "T", "V", "W", "Y")
+#' #Alternativly, .fasta files can also be used by providing
+#' ##The path to the file as a character string
+#'
+#' exampleDF <- sequenceMapCoordinates(aaString,
+#'                                   nbResidues = 10)
+#' head(exampleDF)
+#'
+#' exampleDF <- sequenceMapCoordinates(aaVector,
+#'                                  nbResidues = 10)
+#' head(exampleDF)
+#'
+#' \dontrun{
+#'  #Making a sequenceMap ggplot to annotate
+#' gg <- sequenceMap(sequence = tendencyDF$AA,
+#'             property = tendencyDF$Tendency,
+#'              nbResidues = 3,
+#'               labelType = "both")
+#'
+#' #Change the nbResidues to correspond to the sequenceMap setting
+#' mapCoordDF <- sequenceMapCoordinates(aaString,
+#'                                   nbResidues = 3)
+#' head(mapCoordDF)
+#'
+#' #subsetting for positive residues
+#' mapCoordDF_subset <- mapCoordDF$AA %in% c("K", "R", "H")
+#' mapCoordDF_subset <- mapCoordDF[mapCoordDF_subset,]
+#'
+#' #use mapCoordDF to annotate positive residues with a plus
+#' library(ggplot2)
+#' gg <- gg + geom_point(inherit.aes = FALSE,
+#'                     data = mapCoordDF_subset,
+#'                    aes(x = col + 0.5, #to center on the residue
+#'                        y = row + 0.2), #to move above on the residue
+#'                    color = "purple",
+#'                    size = 3,
+#'                    shape = 3)
+#' plot(gg)
+#' }
+
+sequenceMapCoordinates <-
+  function(sequence,
+           nbResidues = 30) {
+
+    seqCharacterVector <- sequenceCheck(
+      sequence = sequence,
+      method = "stop",
+      outputType = "vector",
+      supressOutputMessage = T)
+
+    seqLength <- length(seqCharacterVector)
+    seqDF <- data.frame(Position = c(1:seqLength),
+                        AA = seqCharacterVector)
+    nRows <- ceiling(seqLength / nbResidues)
+    rowVector <- rep(1, seqLength)
+    colVector <- c(1:seqLength)
+    if (nRows > 1) {
+      for (i in 1:(nRows)) {
+        iteration <- i - 1
+        row.i <- nRows - (iteration)
+        start.i <- 1 + nbResidues * (iteration)
+        end.i <- nbResidues +  nbResidues * (iteration)
+        rowVector[start.i:end.i] <- row.i
+        colVector[start.i:end.i] <- c(1:nbResidues)
+      }
+    }
+
+    seqDF$row <- rowVector[1:seqLength]
+    seqDF$col <- colVector[1:seqLength]
+
+    return(seqDF)
+  }
+

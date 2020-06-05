@@ -27,6 +27,47 @@ This function calculates the ionic charge of a residue at a specific pH
   The output is a ratio comparing acid to conjugate base for acidic residues
   or a ratio comparing conugate base to acid for basic residues.
 }
+\examples{
+#Calculating Lysine charge using the EMBOSS pKa data
+EMBOSS_pKa <- pKaData[, 1:2]
+EMBOSS_pKa
+
+Lys_pKa <- EMBOSS_pKa[EMBOSS_pKa$AA == "K", ]
+Lys_pKa$EMBOSS #This is Lysines pKa
+
+hendersonHasselbalch(
+  pKa = as.numeric(Lys_pKa$EMBOSS),
+  pH = 7.2,
+  residue = "K")
+
+#residue = supports general properties as well
+hendersonHasselbalch(
+  pKa = as.numeric(Lys_pKa$EMBOSS),
+  pH = 7.2,
+  residue = "base")
+
+hendersonHasselbalch(
+  pKa = as.numeric(Lys_pKa$EMBOSS),
+  pH = 7.2,
+  residue = "positive")
+
+#CALCULATIONS ARE DEPENDENT ON RESIDUE PROPERTY!
+hendersonHasselbalch(
+  pKa = as.numeric(Lys_pKa$EMBOSS),
+  pH = 7.2,
+  residue = "acid") #Inaccurate Description
+
+#You can also calculate charge at different pHs
+hendersonHasselbalch(
+  pKa = as.numeric(Lys_pKa$EMBOSS),
+  pH = 5.5,
+  residue = "K")
+hendersonHasselbalch(
+  pKa = as.numeric(Lys_pKa$EMBOSS),
+  pH = 8,
+  residue = "K")
+
+}
 \seealso{
 \code{\link{pKaData}} for residue pKa values and citations. See
  other charge functions for use.

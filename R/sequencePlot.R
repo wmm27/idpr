@@ -31,10 +31,40 @@
 #'   avoid this or to overwrite the defaults.
 #' @param customTitle  optional, character string. Allows adding custom title.
 #'   Set to NA to skip (default).
-#' @return ggplot
+#' @return a ggplot
 #' @export
-
-
+#' @examples
+#' \dontrun{
+#' #Get a data frame returned from another function
+#' aaVector <- c("A", "C", "D", "E", "F",
+#'            "G", "H", "I", "K", "L",
+#'            "M", "N", "P", "Q", "R",
+#'            "S", "T", "V", "W", "Y")
+#' exampleDF <- chargeCalculationGlobal(sequence = aaVector)
+#' head(exampleDF)
+#'
+#' #Making a sequence plot
+#' sequencePlot(
+#'   position = exampleDF$Position,
+#'   property = exampleDF$Charge)
+#'
+#' #Change the horizontal lines
+#' sequencePlot(
+#' position = exampleDF$Position,
+#' property = exampleDF$Charge,
+#' hline = 0.0,
+#' propertyLimits = c(-1.0, 1.0))
+#'
+#' #Adding a dynamic colors based on the property values
+#' sequencePlot(
+#' position = exampleDF$Position,
+#'   property = exampleDF$Charge,
+#' hline = 0.0,
+#' propertyLimits = c(-1.0, 1.0),
+#' dynamicColor = exampleDF$Charge,
+#' customColors = c("red", "blue", "grey50"),
+#' customTitle = "Charge of Each Residue / Terminus")
+#' }
 
 sequencePlot <- function(
   position,

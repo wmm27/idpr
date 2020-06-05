@@ -122,3 +122,46 @@ This function makes a connection to the IUPred2A REST API based on the type
    }
 }
 
+\examples{
+#A UniProt Accession must be specified.
+##this example uses human P53.
+TP53_UniProt <- "P04637"
+\dontrun{
+#Getting data as a data frame
+exampleDF_long <- iupred(uniprotAccession = TP53_UniProt,
+                         iupredType = "long",
+                         plotResults = FALSE)
+head(exampleDF_long)
+
+exampleDF_short <- iupred(uniprotAccession = TP53_UniProt,
+                          iupredType = "short",
+                          plotResults = FALSE)
+head(exampleDF_short)
+
+exampleDF_anchor <- iupredAnchor(uniprotAccession = TP53_UniProt,
+                                 plotResults = FALSE)
+head(exampleDF_anchor)
+
+exampleDF_redox <- iupredRedox(uniprotAccession = TP53_UniProt,
+                              plotResults = FALSE)
+head(exampleDF_redox)
+
+#Plotting
+
+iupred(uniprotAccession = TP53_UniProt,
+    iupredType = "long",
+    plotResults = TRUE)
+
+iupred(uniprotAccession = TP53_UniProt,
+    iupredType = "short",
+    plotResults = TRUE)
+
+iupredAnchor(uniprotAccession = TP53_UniProt,
+          plotResults = TRUE)
+
+iupredRedox(uniprotAccession = TP53_UniProt,
+         plotResults = TRUE)
+}
+#A valid internet connection is needed to make
+##A connection with the IUPred REST API
+}

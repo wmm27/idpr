@@ -41,6 +41,39 @@
 #'   is not specified. Otherwise the sequence is assigned to the value of
 #'   sequenceName. This allows the sequences to be called by the user.
 #' @export
+#' @examples
+#' \dontrun{
+#'  #Amino acid sequences can be character strings
+#' aaString <- "ACDEFGHIKLMNPQRSTVWY"
+#' #Amino acid sequences can also be character vectors
+#' aaVector <- c("A", "C", "D", "E", "F",
+#'            "G", "H", "I", "K", "L",
+#'            "M", "N", "P", "Q", "R",
+#'            "S", "T", "V", "W", "Y")
+#' #Alternativly, .fasta files can also be used by providing
+#' ##The path to the file as a character string
+#' sequenceCheck(aaString)
+#' sequenceCheck(aaVector)
+#'
+#'
+#' #To allow O and U
+#' sequenceCheck(aaString,
+#'            nonstandardResidues = c("O", "U"),
+#'            supressAAWarning = TRUE)
+#'
+#' #To turn off output message
+#' sequenceCheck(aaString,
+#'            supressOutputMessage = TRUE)
+#'
+#' #To change string to be a vector
+#' sequenceCheck(aaString,
+#'            outputType = "vector")
+#'
+#' #To not return a sequence but check the input
+#' sequenceCheck(aaVector,
+#'             outputType = "none")
+#' }
+#'
 
 
 
