@@ -191,7 +191,8 @@ sequenceMapCoordinates <-
 #' nbResidues = 3,
 #' labelType = "none") #No labels
 #'
-#' #The text can also be rotated for ease of reading, espeically helpful for larger sequences
+#' #The text can also be rotated for ease of reading,
+#'  ## espeically helpful for larger sequences.
 #' sequenceMap(
 #' sequence = exampleDF_disc$AA,
 #' property = exampleDF_disc$Tendency,
@@ -469,4 +470,3 @@ sequenceMapCoordinates <-
 
     return(seqDF)
   }
-

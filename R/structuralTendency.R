@@ -167,11 +167,11 @@ structuralTendency <- function(
 #' ##These residues are labeled as such from Dunker et al (2001),
 #' ##"Intrinsically disordered protein."
 #' structuralTendencyPlot(aaString,
-#'                     disorderPromoting = c("A", "R", "G", "Q", "S", "P", "E", "K"),
-#'                     disorderNeutral = c("H", "M", "T", "D"),
-#'                     orderPromoting = c("W", "C", "F", "I", "Y", "V", "L", "N"),
-#'                     graphType = "bar",
-#'                     alphabetical = TRUE)
+#'               disorderPromoting = c("A", "R", "G", "Q", "S", "P", "E", "K"),
+#'               disorderNeutral = c("H", "M", "T", "D"),
+#'               orderPromoting = c("W", "C", "F", "I", "Y", "V", "L", "N"),
+#'               graphType = "bar",
+#'               alphabetical = TRUE)
 #' }
 
 structuralTendencyPlot <- function(
@@ -197,9 +197,9 @@ structuralTendencyPlot <- function(
   }
 
   structuralTendencyDF <- structuralTendency(sequence = sequence,
-                                             disorderPromoting = disorderPromoting,
-                                             disorderNeutral = disorderNeutral,
-                                             orderPromoting = orderPromoting)
+                                          disorderPromoting = disorderPromoting,
+                                          disorderNeutral = disorderNeutral,
+                                          orderPromoting = orderPromoting)
   sequenceLength <- nrow(structuralTendencyDF)
 
   if (summarize) {

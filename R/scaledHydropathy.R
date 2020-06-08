@@ -444,4 +444,3 @@ meanScaledHydropathy <-
       return(avgHydrop)
     }
   }
-

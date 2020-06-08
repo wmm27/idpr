@@ -543,5 +543,3 @@ netCharge <-
       return(netCharge)
     }
   }
-
-
