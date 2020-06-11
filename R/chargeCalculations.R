@@ -15,7 +15,7 @@
 #'     "Bjellqvist", "ProMoST", "IPC_protein", "IPC_peptide")
 #'    Alternativly, the user may supply a custom pKa dataset.
 #'    The format must be a data frame where:
-#'    Column 1 must be a character vector of residues AND
+#'    Column 1 must be a character vector of residues named "AA" AND
 #'    Column 2 must be a numeric vector of pKa values.
 #' @param pH numeic value, 7.2 by default.
 #'   The envioronmental pH used to calculate residue charge.
@@ -161,8 +161,9 @@ printCitation = FALSE,
   }
 
   if (is.data.frame(pKaSet)) {
-    if (dim(pKaUsed)[2] >= 2) {
+    if (dim(pKaSet)[2] >= 2) {
       pKaUsed <- pKaSet
+      names(pKaUsed)[1:2] <- c("AA", "pKa")
     } else {
       stop("Custom pKaSet must be a data frame with 2 (or more) columns.
            Column 1 must be a character vector of residues.
@@ -186,10 +187,10 @@ printCitation = FALSE,
 
     pKaUsed$charge[i] <- charge.i
   }
-
+  pKaUsed <- as.data.frame(pKaUsed)
   #----- matches the pKa set to the sequence
-  pKaMatched <- pKaUsed[match(seqCharacterVector, pKaUsed$AA), 3]
-  pKaMatched <- as.numeric(pKaMatched$charge)
+  pKaMatched <- pKaUsed[match(seqCharacterVector, pKaUsed[, 1]), 3]
+  pKaMatched <- as.numeric(pKaMatched)
   pKaMatched[is.na(pKaMatched)] <- 0
 
   if (includeTermini) {
@@ -247,10 +248,6 @@ printCitation = FALSE,
     return(chargeDF)
   }
 }
-
-
-
-
 
 #' Charge Calculation Along a Protein Sequence
 #'

@@ -1,0 +1,305 @@
+---
+title: "iupred-vignette"
+author: "William McFadden"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{iupred-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 6, 
+  fig.height = 4
+)
+```
+
+```{r setup}
+library(idpr)
+```
+
+
+# Fetching IUPred Predictions of Intrinsic Disorder
+
+
+## Quick Start
+
+The functions iupred(), iupredAnchor(), and iupredRedox() are all functions 
+designed to fetch predictions of intrinsic disorder from the IUPred2A REST API. 
+To fetch results, a UniProt ID is needed. 
+
+Predictions are made on a scale of 0-1, where any residues with a score over 
+0.5 are predicted to be in a disordered region, and any residue scoring below 
+0.5 are predicted to be ordered.
+
+
+```{r}
+p53_ID <- "P04637"
+iupred(p53_ID,
+       proteinName = "HUMAN P53")
+```
+
+
+## Background
+The primary structure of a protein, also known as the amino acid sequence, 
+can be an accurate predictor of protein folding. Because of this, many different
+tools have been developed to make probabilistic predictions of intrinsic 
+disorder based on various known properties of Intrinsically 
+Disordered Proteins (IDPs) (Li et al., 2015). 
+
+One example of these is IUPred2A. 
+IUPred2 analyzes an amino acid sequence and returns a score of 
+intrinsic disorder depending on a model of the estimated energy potential for 
+residue interactions (Mészáros, Erdős, & Dosztányi, 2018). This is because 
+structured proteins have the ability to create a network of interactions, while
+IDPs lack abundant interactions. The reduced number of interactions leads to an 
+IDPs lack of secondary and tertiary structure (Dosztányi, 2018). 
+
+Predictions are made on a scale of 0-1, where any residues with a score over 0.5 
+are predicted to be in a disordered region, and any residue scoring below 0.5
+are predicted to be ordered.
+
+IUPred2 website is located at https://iupred2a.elte.hu/. 
+For detailed information on using IUPred2A, please refer to Erdős & Dosztányi
+(2020) “Analyzing protein disorder with IUPred2A”. Current Protocols in
+Bioinformatics, 70, e99. 
+Additionally, please see Mészáros et al. (2019) for further information, 
+theory, and applications of IUPred2A.
+
+All iupred functions in **idpr** make a connection to the IUPred2A REST API 
+based on the type of analysis and UniProt accession number within the function’s
+arguments. To make this connection requires that the user to know the UniProt
+accession number for their protein of interest (UniProt Consortium, 2019). 
+Additionally, the user will need a connection to the internet. 
+The results are then formatted to match output of other **idpr** functions. 
+
+The results for all predictions fetched can be represented graphically, 
+with plotResults = TRUE (default) or as a data frame with plotResults = FALSE.
+Both type of results will be shown for examples. 
+
+
+
+## iupred function and iupredType arguments.
+
+iupred() has is the core prediction of intrinsic disorder.
+The argument iupredType =  is important to specify depending on the 
+goal of the analysis. 
+
+### iupredType = "long"
+iupredType =  “long” is the default setting, and the setting that is recommended 
+for predicting intrinsic disorder in proteins (Dosztányi, 2018). 
+This prediction is similar to relevant disordered segments curated within 
+the DisProt Database (Dosztányi, 2018; Hatos et al., 2019). 
+
+```{r}
+p53_ID <- "P04637"
+iupred(p53_ID,
+       proteinName = "HUMAN P53",
+       iupredType = "long")
+```
+
+
+```{r}
+iupredLongDF <- iupred(p53_ID,
+                       proteinName = "HUMAN P53",
+                       iupredType = "long",
+                       plotResults = FALSE)
+head(iupredLongDF)
+```
+
+### iupredType = "short"
+iupredType =  “short” is the setting to predict small regions of intrinsic
+disorder in proteins, optimized for missing regions of protein structures saved 
+to the Protein Databank (PDB). It is important to note that this tends to favor
+disorder at the N- and C- terminus (Dosztányi, 2018). 
+
+```{r}
+p53_ID <- "P04637"
+iupred(p53_ID,
+       proteinName = "HUMAN P53",
+       iupredType = "short")
+```
+
+```{r}
+iupredShortDF <- iupred(p53_ID,
+                        iupredType = "short",
+                        plotResults = FALSE)
+head(iupredShortDF)
+```
+
+### iupredType = "glob"
+iupredType =  “glob” is the setting that is to help reduce the noise of small 
+disordered regions in otherwise ordered regions and to help identify sequences 
+that are likely to have a specific and rigid fold (Dosztányi, 2018). 
+```{r}
+p53_ID <- "P04637"
+iupred(p53_ID,
+       proteinName = "HUMAN P53",
+       iupredType = "glob")
+```
+
+
+```{r}
+iupredGlobDF <- iupred(p53_ID,
+                       iupredType = "glob",
+                       plotResults = FALSE)
+head(iupredGlobDF)
+```
+
+
+-----------
+
+## iupredAnchor
+IDPs and IDRs serve many important roles in a cell, one prominent role is the
+ability to act as a hub for protein-protein interactions (Uversky, 2013). 
+Additionally, many disordered regions undergo what is known as 
+“induced folding”. This is a phenomenon where under native conditions the IDP is 
+unstructured, however when entering a specific environment, such as those that
+occur when binding to other proteins, higher-order structures may form and allow
+the IDP to execute its function (Kovacs, Szabo, Pancsa, & Tompa, 2013). It is 
+important to note that not all IDPs experience induced folding. 
+
+ANCHOR2 is a context-dependent predictor of binding regions for protein-protein
+interactions (Mészáros et al., 2018). Similarly to IUPred2, ANCHOR2 gives a
+score of 0-1 indicating if a region is predicted to be involved in protein-protein 
+interactions. 
+
+iupredAnchor() is used to combine the output of IUPred2 long (plot is the
+same as shown prior) with ANCHOR2 predictions (shown as a maroon line).
+```{r}
+p53_ID <- "P04637"
+iupredAnchor(p53_ID,
+             proteinName = "HUMAN P53")
+```
+
+The data frame has an additional column for ANCHOR2 scores
+```{r}
+iupredAnchorDF <- iupredAnchor(p53_ID, 
+                               plotResults = FALSE)
+head(iupredAnchorDF)
+```
+
+## iupredRedox
+Another element influencing the environmental chemistry is the redox potential. 
+As mentioned before, under native conditions IDPs are unstructured, however when 
+entering a different environment higher-order structures may form and allow IDPs
+to execute their function (Kovacs et al., 2013).
+
+iupredRedox() is used to predict redox-sensitive regions that may experience 
+induced folding upon changing environments. This is a context-dependent 
+predictor of disordered regions depending on a reducing (plus) or 
+oxidizing (minus) environment. The prediction is done by modifying all 
+cystine residues to serine when simulating a “redox-minus” environment.
+This eliminates any structural stabilization by disulfide bonds 
+(Mészáros et al., 2018).
+
+Redox-plus predictions are shown in blue, Redox-minus predications are shown
+in purple. Any region identified as "Redox Senstitive" will be highlighted in
+light green (does not appear if there are no senstitive regions predicted).
+```{r}
+p53_ID <- "P04637"
+iupredRedox(p53_ID,
+             proteinName = "HUMAN P53")
+```
+
+The data frame has two IUPred2 long scores. One in a redox-plus environment
+(Normal prediction) and a redox-minus environment (Cys --> Ser). 
+An additional column is provided of logical values indicating if a redox 
+sensitive region was predicted. When redoxSensitive == TRUE, the residue is 
+predicted to be in a redox sensitive region, when FALSE the residue is not 
+predicted to be in a redox sensitive region. 
+```{r}
+iupredRedoxDF <- iupredRedox(p53_ID, 
+                             plotResults = FALSE)
+head(iupredRedoxDF)
+```
+
+## Additional Example
+
+
+While the aesthetics of the plots above are meant to represent a middleground of
+the graphics avaliable on 
+and the other plots generated by **idpr**, a user may wish to use the data
+frames for data analysis or unique graphics. Another way to represent the data
+is using the sequenceMap() funciton.
+
+```{r}
+iupredLongDF <- iupred(p53_ID,
+                       proteinName = "HUMAN P53",
+                       iupredType = "long",
+                       plotResults = FALSE)
+
+sequenceMap(sequence = iupredLongDF$AA,
+            property = iupredLongDF$IUPred2,
+            customColors = c("darkolivegreen3", "grey65", "darkorchid1")) + 
+  ggplot2::labs(title = "Prediction of Intrinsic Disorder in HUMAN P53",
+                subtitle = "By IUPred2A long")
+
+
+                         
+```
+
+
+## References
+
+Dosztányi, Z. (2018). Prediction of protein disorder based on IUPred. 
+Protein Sci, 27(1), 331-340. doi:10.1002/pro.3334
+
+
+Hatos, A., Hajdu-Soltész, B., Monzon, A. M., Palopoli, N., Álvarez, L., 
+Aykac-Fas, B., . . . Piovesan, D. (2019). DisProt: intrinsic protein disorder
+annotation in 2020. Nucleic acids research, 48(D1), D269-D276. 
+doi:10.1093/nar/gkz975
+
+
+Kovacs, D., Szabo, B., Pancsa, R., & Tompa, P. (2013).
+Intrinsically disordered proteins undergo and assist folding transitions in 
+the proteome. Archives of Biochemistry and Biophysics, 531(1), 80-89. 
+doi:https://doi.org/10.1016/j.abb.2012.09.010
+
+
+Li, J., Feng, Y., Wang, X., Li, J., Liu, W., Rong, L., & Bao, J. (2015).
+An Overview of Predictors for Intrinsically Disordered Proteins over 2010-2014.
+International journal of molecular sciences, 16(10), 23446-23462. 
+doi:10.3390/ijms161023446
+
+
+Mészáros, B., Erdős, G., & Dosztányi, Z. (2018). IUPred2A: 
+context-dependent prediction of protein disorder as a function
+of redox state and protein binding. Nucleic acids research, 46(W1), W329-W337. 
+
+
+UniProt Consortium. (2019). UniProt: a worldwide hub of protein knowledge. 
+Nucleic acids research, 47(D1), D506-D515. 
+
+
+Uversky, V. N. (2013). Unusual biophysics of intrinsically disordered proteins.
+Biochimica et Biophysica Acta (BBA) - Proteins and Proteomics, 1834(5), 932-951.
+doi:https://doi.org/10.1016/j.bbapap.2012.12.008
+
+
+
+
+```{r}
+citation("ggplot2")
+```
+
+
+### Additional Information
+R Version
+```{r}
+R.version.string
+```
+
+System Infomation
+```{r}
+as.data.frame(Sys.info())
+```
+
+```{r, results="asis"}
+citation()
+```

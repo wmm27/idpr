@@ -106,11 +106,11 @@ head(exampleDF)
 ##These residues are labeled as such from Dunker et al (2001),
 ##"Intrinsically disordered protein."
 structuralTendencyPlot(aaString,
-                    disorderPromoting = c("A", "R", "G", "Q", "S", "P", "E", "K"),
-                    disorderNeutral = c("H", "M", "T", "D"),
-                    orderPromoting = c("W", "C", "F", "I", "Y", "V", "L", "N"),
-                    graphType = "bar",
-                    alphabetical = TRUE)
+              disorderPromoting = c("A", "R", "G", "Q", "S", "P", "E", "K"),
+              disorderNeutral = c("H", "M", "T", "D"),
+              orderPromoting = c("W", "C", "F", "I", "Y", "V", "L", "N"),
+              graphType = "bar",
+              alphabetical = TRUE)
 }
 }
 \references{

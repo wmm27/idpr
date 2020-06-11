@@ -1,0 +1,243 @@
+---
+title: "structuralTendency-vignette"
+author: "William McFadden"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{structuralTendency-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 6, 
+  fig.height = 4
+)
+```
+
+```{r setup}
+library(idpr)
+```
+
+
+
+## Background
+The composition of amino acids and the overall chemistry of Intrinsically
+Disordered Proteins (IDPs) are distinctly different from that of ordered 
+proteins. Each amino acid has a tendency to favor a compact or extended 
+secondary / tertiary structure based on the chemistry of the residue.
+Disorder-promoting residues, those enriched in IDPs, are typically hydrophilic, 
+charged, or small residues. Order promoting residues, those enriched in 
+structured proteins, tend to be aliphatic, hydrophobic, aromatic, or form
+tertiary structures. Disorder neutral residues neither favor order or disordered
+structures (Uversky, 2019).  
+
+
+Disorder-promoting residues are P, E, S, Q, K, A, and G; 
+order-promoting residues are M, N, V, H, L, F, Y, I, W, and C; 
+disorder‐neutral residues are D, T, and R (Uversky, 2013).  
+
+
+
+
+## Quick-use guide
+
+The structuralTendency function is used to convert an amino acid sequence
+into a data frame with each residue within the sequence in one column and the
+corresponding structural tendency in another column.
+
+This example will use the *H. sapiens* TP53 sequence, acquired from UniProt 
+(UniProt Consortium 2019)
+
+```{r}
+P53_HUMAN <- idpr:::TP53Sequences[2]
+print(P53_HUMAN)
+```
+
+```{r}
+tendencyDF <- structuralTendency(P53_HUMAN)
+head(tendencyDF)
+```
+
+
+For convient plotting, use structuralTendencyPlot().
+Results can be as a pie chart or bar plot. 
+
+```{r}
+structuralTendencyPlot(P53_HUMAN)
+
+structuralTendencyPlot(P53_HUMAN,
+                       graphType = "bar")
+```
+
+
+
+
+
+## structuralTendency In Detail
+
+Like most functions in **idpr**, the structuralTendency function will accept an
+amino acid sequence as a vector of single-letter residues or as a character 
+string. It will also accept a .fasta file as a character string (".fasta" must
+be included within the string).
+
+It will result in a data frame with 3 columns. The first column is the Position
+of the residue in the submitted sequence. The second column is the AA residue
+of the sequence. The third column is the Tendency, which is the structural 
+tendency of the residue that was matched by the function. 
+
+The following examples will use the *M. musculus* Tp53 sequence,
+acquired from UniProt (UniProt Consortium 2019)
+```{r}
+P53_MOUSE <- idpr:::TP53Sequences[1]
+tendencyDF <- structuralTendency(P53_MOUSE)
+head(tendencyDF)
+```
+
+
+The data frame can be used for custom plotting. 
+Another possibility is the use of the sequenceMap() function within **idpr**. 
+```{r}
+sequenceMap(
+  sequence = tendencyDF$AA,
+  property = tendencyDF$Tendency,
+  customColors = c("#999999", "#E69F00", "#56B4E9"))  
+```
+
+structuralTendency defines order- and disorder-promoting residues based on 
+Uversky (2013).
+
+* Disorder-promoting: P, E, S, Q, K, A, and G
+* Order-promoting: M, N, V, H, L, F, Y, I, W, and C
+* Disorder‐neutral: D, T, and R.  
+
+However, there are other definitions of these categories. For example, 
+Dunker et al. (2001) defines these categories as:
+
+* Disorder-promoting: A, R, G, Q, S, P, E, K
+* Order-promoting: W, C, F, I, Y, V, L, N
+* Disorder‐neutral: H, M, T, and D.
+* (Dunker et al., 2001)
+
+structuralTendency allows for the user to use different definitions. 
+An example of this using the Dunker et al. (2001) definitions is below.
+
+```{r}
+tendencyDF <- structuralTendency(P53_MOUSE,
+                 disorderPromoting = c("A", "R", "G", "Q", "S", "P", "E", "K"),
+                 disorderNeutral = c("H", "M", "T", "D"),
+                 orderPromoting = c("W", "C", "F", "I", "Y", "V", "L", "N"))
+head(tendencyDF)
+  
+  
+sequenceMap(
+  sequence = P53_MOUSE,
+  property = tendencyDF$Tendency,
+  customColors = c("#999999", "#E69F00", "#56B4E9"))    
+```
+
+
+
+## structuralTendencyPlot In Detail
+
+structuralTendencyPlot is a function for summarizing and plotting results from 
+structuralTendency. 
+This function accepts the same arguments as before for sequence and definitions
+of residues.
+
+The function will get the amino acid comosition for the protein and match
+it to the tendency definition.
+
+The results can be a pie chart (default) or a bar chart. 
+```{r}
+structuralTendencyPlot(P53_MOUSE)
+
+structuralTendencyPlot(P53_MOUSE,
+                       graphType = "bar",
+                       proteinName = names(P53_MOUSE))
+```
+
+
+In addition to the compositional profile of each residue, a summary of the 
+profile focused only on the structural tendency can be given by setting
+summarize = TRUE. The graphType is preseved.
+
+```{r}
+structuralTendencyPlot(P53_MOUSE,
+                       summarize = TRUE)
+
+structuralTendencyPlot(P53_MOUSE,
+                       graphType = "bar",
+                       proteinName = names(P53_MOUSE),
+                       summarize = TRUE)
+```
+
+In addition to the default plotting, a data frame of the compositional profile
+can be produced by setting graphType = "none". This can be used for further data
+analysis or for custom plotting. The "summarize" argument is preserved. 
+
+```{r}
+compositionDF <- structuralTendencyPlot(P53_MOUSE,
+                                        graphType = "none")
+head(compositionDF)
+
+
+summaryDF <- structuralTendencyPlot(P53_MOUSE,
+                                    graphType = "none",
+                                    summarize = TRUE)
+head(summaryDF)
+```
+
+
+## References
+
+### Citations
+
+Dunker, A. K., Lawson, J. D., Brown, C. J., Williams, R. M., Romero, P., 
+Oh, J. S., . . . Obradovic, Z. (2001). Intrinsically disordered protein. 
+Journal of Molecular Graphics and Modelling, 19(1), 26-59.
+doi:https://doi.org/10.1016/S1093-3263(00)00138-8
+
+
+UniProt Consortium. (2019). UniProt: a worldwide hub of protein knowledge.
+Nucleic acids research, 47(D1), D506-D515. 
+
+
+Uversky, V. N. (2013). A decade and a half of protein intrinsic disorder: 
+Biology still waits for physics. Protein Science, 22(6), 693-724. 
+doi:10.1002/pro.2261
+
+
+Uversky, V. N. (2019). Intrinsically Disordered Proteins and Their “Mysterious”
+(Meta)Physics. Frontiers in Physics, 7(10). doi:10.3389/fphy.2019.00010
+
+
+### Additional Information
+R Version
+```{r}
+R.version.string
+```
+
+System Infomation
+```{r}
+as.data.frame(Sys.info())
+```
+
+```{r, results="asis"}
+citation()
+```
+
+
+
+
+
+
+
+
+
+
+
+

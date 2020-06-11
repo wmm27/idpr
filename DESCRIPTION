@@ -20,3 +20,10 @@ Imports:
     plyr (>= 1.8.6),
     jsonlite (>= 1.6.1),
     rlang (>= 0.4.6)
+Suggests: 
+    knitr,
+    rmarkdown,
+    Biostrings,
+    msa,
+    ape
+VignetteBuilder: knitr

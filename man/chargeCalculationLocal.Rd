@@ -36,7 +36,7 @@ Character string to load specific, preloaded pKa sets.
   "Bjellqvist", "ProMoST", "IPC_protein", "IPC_peptide")
  Alternativly, the user may supply a custom pKa dataset.
  The format must be a data frame where:
- Column 1 must be a character vector of residues AND
+ Column 1 must be a character vector of residues named "AA" AND
  Column 2 must be a numeric vector of pKa values.}
 
 \item{printCitation}{Logical value. FALSE by default.

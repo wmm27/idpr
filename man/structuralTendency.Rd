@@ -46,6 +46,31 @@ Each amino acid residue has a  tendency to impact the order / disorder
   to be aliphatic, hydrophobic, aromatic, or form tertiary structures.
   Disorder neutral residues neither favor order or disordered strucutres.
 }
+\examples{
+#Amino acid sequences can be character strings
+aaString <- "ACDEFGHIKLMNPQRSTVWY"
+#Amino acid sequences can also be character vectors
+aaVector <- c("A", "C", "D", "E", "F",
+              "G", "H", "I", "K", "L",
+              "M", "N", "P", "Q", "R",
+             "S", "T", "V", "W", "Y")
+#Alternativly, .fasta files can also be used by providing
+##The path to the file as a character string
+
+exampleDF <- structuralTendency(aaString)
+head(exampleDF)
+exampleDF <- structuralTendency(aaVector)
+head(exampleDF)
+
+#If using a different definition of disordered residues
+##These residues are labeled as such from Dunker et al (2001),
+##"Intrinsically disordered protein."
+exampleDF <- structuralTendency(aaString,
+                             disorderPromoting = c("A", "R", "G", "Q", "S", "P", "E", "K"),
+                             disorderNeutral = c("H", "M", "T", "D"),
+                             orderPromoting = c("W", "C", "F", "I", "Y", "V", "L", "N"))
+head(exampleDF)
+}
 \references{
 Kulkarni, Prakash, and Vladimir N. Uversky. "Intrinsically
   disordered proteins: the dark horse of the dark proteome."

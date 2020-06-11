@@ -1,0 +1,406 @@
+---
+title: "sequenceMAP-vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{sequenceMAP-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 6, 
+  fig.height = 4
+)
+```
+
+```{r setup}
+library(idpr)
+```
+
+## Introduction
+
+One way to visualize results both within **idpr** and with data from other 
+sources is the sequenceMap() function. The purpose of this function is to show 
+the entire sequence and color it based on properties. This may help identify 
+important residues within a protein.
+
+It has been identified that as few as a single amino acid is sufficient for an 
+IDP to dock to its binding partner (Warren & Shechter, 2017). Therefore, it is
+important to look at sequence-wide data along with the context of the primary 
+sequence.  
+
+To make a sequence map you will need two vectors of data (typically as a 
+data frame). One vector is the amino acid sequence and another is a vector
+of data to color. 
+
+Examples will use the *H. sapiens* TP53 sequence, acquired from UniProt 
+(UniProt Consortium 2019)
+
+## Basics of sequenceMap
+
+```{r}
+P53_HUMAN <- idpr:::TP53Sequences[2]
+print(P53_HUMAN)
+```
+
+The values can be discrete, like the output of structuralTendency(), or 
+continuous, like the output of chargeCalculationGlobal()
+
+```{r}
+tendencyDF <- structuralTendency(sequence = P53_HUMAN) 
+head(tendencyDF)
+
+
+chargeDF <- chargeCalculationGlobal(sequence = P53_HUMAN,
+                                    includeTermini = FALSE)
+head(chargeDF)
+
+```
+
+The output of structuralTendency() gives us both the amino acid sequence in the
+column 'Residue' and the values in 'Tendency'
+
+The output of chargeCalculationLocal(plotResults = FALSE) 
+gives us both the amino acid sequence in the column 'aa' and the values
+in 'Charge'
+```{r}
+sequenceMap(
+  sequence = tendencyDF$AA,
+  property = tendencyDF$Tendency) 
+
+
+sequenceMap(
+  sequence = as.character(chargeDF$AA),
+  property = chargeDF$Charge, #character vector
+  customColors = c("blue", "red", "grey30")) 
+
+```
+
+
+## Customizations
+
+There are multiple customization options to allow for improved graphing. 
+One is the organization of the labels. 
+You are able to represent the sequence with both amino acid residues and their 
+location in the sequence, but you can choose one or the other (or nethier).
+
+```{r}
+sequenceMap(
+  sequence = tendencyDF$AA,
+  property = tendencyDF$Tendency,
+  labelType = "AA") #Only AA residue Labels
+
+sequenceMap(
+  sequence = tendencyDF$AA,
+  property = tendencyDF$Tendency,
+  labelType = "number") #Only residue numner labels
+
+sequenceMap(
+  sequence = tendencyDF$AA,
+  property = tendencyDF$Tendency,
+  labelType = "none") #No labels
+```
+
+There is also the option of where to plot the labels. either "on" or 
+"below" the sequence graphic. 
+```{r}
+sequenceMap(
+  sequence = tendencyDF$AA,
+  property = tendencyDF$Tendency,
+  labelType = "number",
+  labelLocation = "on") #Residue numbers printed on the sequence graphic
+
+
+sequenceMap(
+  sequence = tendencyDF$AA,
+  property = tendencyDF$Tendency,
+  labelType = "number",
+  labelLocation = "below") #Residue numbers printed below the sequence graphic
+```
+
+The text can also be rotated for ease of reading, espeically helpful for 
+larger sequences
+```{r}
+sequenceMap(
+  sequence = tendencyDF$AA,
+  property = tendencyDF$Tendency,
+  labelType = "number",
+  labelLocation = "on",
+  rotationAngle = 90)
+```
+
+Also to avoid an overwhelming visual, you can specify the pattern of labels
+with everyN. This number selects every Nth residue to be printed. everyN = 1 
+every residue is printed. everyN = 10 every 10th residue is printed.
+```{r}
+sequenceMap(
+  sequence = tendencyDF$AA,
+  property = tendencyDF$Tendency,
+  labelType = "number",
+  labelLocation = "on",
+  everyN = 1) #Every residue
+
+sequenceMap(
+  sequence = tendencyDF$AA,
+  property = tendencyDF$Tendency,
+  labelType = "number",
+  labelLocation = "on",
+  everyN = 2) #Every 2nd (or every other)
+
+sequenceMap(
+  sequence = tendencyDF$AA,
+  property = tendencyDF$Tendency,
+  labelType = "number",
+  labelLocation = "on",
+  everyN = 10) #Every 10th residue is printed
+
+sequenceMap(
+  sequence = tendencyDF$AA,
+  property = tendencyDF$Tendency,
+  labelType = "number",
+  labelLocation = "on",
+  everyN = 30) #Every 30th residue is printed
+```
+
+You can also change the number of residues on each line with nbResidues. 
+This helps improve visualization based on the sequence
+```{r}
+sequenceMap(
+  sequence = tendencyDF$AA,
+  property = tendencyDF$Tendency,
+  labelType = "number",
+  labelLocation = "on",
+  nbResidues = 30) #30 residues each row
+
+sequenceMap(
+  sequence = tendencyDF$AA,
+  property = tendencyDF$Tendency,
+  labelType = "number",
+  labelLocation = "on",
+  nbResidues = 15) #15 residues each row
+
+sequenceMap(
+  sequence = tendencyDF$AA,
+  property = tendencyDF$Tendency,
+  labelType = "number",
+  labelLocation = "on",
+  nbResidues = 45,
+  rotationAngle = 90) #45 residues each row
+```
+
+
+You can also specify colors for discrete values using a vector of colors
+```{r}
+sequenceMap(
+  sequence = tendencyDF$AA,
+  property = tendencyDF$Tendency,
+  customColors = c("#999999", "#E69F00", "#56B4E9")) 
+```
+
+Continuous variables custom colors are specified with a vector in the order of 
+"High value", "Low  Value", "Middle Value". Here the order is high = purple, 
+low = pink, and middle = light grey
+```{r}
+sequenceMap(
+  sequence = as.character(chargeDF$AA),
+  property = chargeDF$Charge, 
+  customColors = c("purple", "pink", "grey90")
+  ) 
+```
+
+Since the output is a ggplot, the visualization is able to be stored and 
+additional features can be added / annotated
+```{r}
+library(ggplot2)
+
+ggSequence <- sequenceMap(
+  sequence = tendencyDF$AA,
+  property = tendencyDF$Tendency,
+  nbResidues = 40,
+  customColors = c("#999999", "#E69F00", "#56B4E9"))
+
+    # Adding Annotations of DNA Binding from UniProt
+ggSequence <- ggSequence +
+              annotate("segment",
+                       x = 21,
+                       xend  = 40.5,
+                        y = 8.05,
+                        yend = 8.05,
+                       color = "#FF3562",
+                       size = 1.5) + 
+              annotate("segment",
+                       x = 1,
+                       xend  = 12.5,
+                        y = 3.05,
+                        yend = 3.05,
+                       color = "#FF3562",
+                       size = 1.5) + 
+              annotate("segment",
+                       x = 1,
+                       xend  = 40.5,
+                        y = c(7:4) + 0.05,
+                        yend = c(7:4) + 0.05,
+                       color = "#FF3562",
+                       size = 1.5) +
+               annotate("segment",
+                        x = 34,
+                        xend = 36,
+                        y = 0.65,
+                        yend = 0.65,
+                        color = "#FF3562",
+                       size = 1.5) +
+              annotate("text",
+                       x = 36.35, 
+                       y = 0.65,
+                       label = "= DNA Binding",
+                       size = 3.5,
+                       hjust = 0)
+  
+  
+# Adding a plot title
+ggSequence <- ggSequence +
+              labs(title = "P53 Structural Tendency") +
+              theme(plot.title = element_text(hjust = 0.5,
+                                              vjust = 2.5))
+# Adding point and text annotations
+ggSequence <- ggSequence +
+              geom_point(aes(x = 2.5, #column 2
+                             y = 4), #row 4
+                         shape = 8,
+                         show.legend = FALSE,
+                         inherit.aes = FALSE) +
+              annotate("text",
+                       x = 4.5, 
+                       y = 4.3,
+                       label = "Metal Binding",
+                        size = 3)
+
+plot(ggSequence)
+```
+
+
+
+
+## Getting Coordinates
+
+To make annotations easy, the sequenceMapCoordinates() will give you 
+the row (y value) and the colun (x value) of each residue visualized with 
+sequenceMap(). 
+
+As shown before, nbResidues deterines how many residues will be on each
+row. Make sure nbResidues is equal to the value used in sequenceMap(). 
+
+To get the coordinates, the amino acid sequence must be supplied. The output
+is a data frame with each reside and its column and row values. These can 
+then be used to make annotations on the map.
+
+
+```{r}
+coord_DF <- sequenceMapCoordinates(P53_HUMAN,
+                                   nbResidues = 40)
+head(coord_DF)
+```
+
+
+## Sequence Plot
+
+The funtions for calculating charge and scaled hydropathy and the iupred
+functions all have plotting options. The plotting for these are done with the
+sequencePlot() function to have a uniform aesthetic. If you wish to make a plot
+with custom values, sequencePlot() can still be used.
+
+Horizontal lines are provided by hline (the dashed line in the middle) and
+propertyLimits (the solid lines at the top and bottom).
+
+Colors can be dynamic by setting dynamicColor equal to the value of the color.
+
+```{r}
+exampleDF <- chargeCalculationGlobal(P53_HUMAN,
+                                     includeTermini = FALSE)
+
+#Making a sequence plot
+sequencePlot(
+  position = exampleDF$Position,
+  property = exampleDF$Charge)
+
+#Change / add the horizontal lines
+sequencePlot(
+position = exampleDF$Position,
+property = exampleDF$Charge,
+hline = 0.0,
+propertyLimits = c(-1.0, 1.0))
+
+
+#Adding a dynamic colors based on the property values
+sequencePlot(
+position = exampleDF$Position,
+  property = exampleDF$Charge,
+hline = 0.0,
+propertyLimits = c(-1.0, 1.0),
+dynamicColor = exampleDF$Charge,
+customColors = c("red", "blue", "grey50"),
+customTitle = "Charge of Each Residue / Terminus")
+```
+
+
+
+
+## References
+
+### Packages Used
+
+```{r}
+citation("ggplot2")
+```
+
+
+### Citations
+
+
+Kozlowski, L. P. (2016). IPC – Isoelectric Point Calculator. Biology Direct, 
+11(1), 55. doi:10.1186/s13062-016-0159-9
+
+
+Kulkarni, P., & Uversky, V. N. (2018). Intrinsically Disordered Proteins: 
+The Dark Horse of the Dark Proteome. PROTEOMICS, 18(21-22), 1800061. 
+doi:10.1002/pmic.201800061
+
+
+UniProt Consortium. (2019). UniProt: a worldwide hub of protein knowledge. 
+Nucleic acids research, 47(D1), D506-D515. 
+
+Uversky, V. N. (2019). Intrinsically Disordered Proteins 
+and Their 
+“Mysterious” (Meta)Physics. Frontiers in Physics, 7(10).
+doi:10.3389/fphy.2019.00010
+
+
+Warren, C., & Shechter, D. (2017). Fly Fishing for Histones:
+Catch and Release by Histone Chaperone Intrinsically Disordered Regions
+and Acidic Stretches. J Mol Biol, 429(16), 2401-2426. 
+doi:10.1016/j.jmb.2017.06.005
+
+
+
+
+
+### Additional Information
+R Version
+```{r}
+R.version.string
+```
+
+System Infomation
+```{r}
+as.data.frame(Sys.info())
+```
+
+```{r, results="asis"}
+citation()
+```
+
+
+

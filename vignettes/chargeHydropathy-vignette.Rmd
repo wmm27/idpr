@@ -1,0 +1,554 @@
+---
+title: "chargeHydropathy-vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{chargeHydropathy-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 6, 
+  fig.height = 4
+)
+```
+
+```{r setup}
+library(idpr)
+```
+
+
+## Background
+
+The composition of amino acids and the overall chemistry of Intrinsically
+Disordered Proteins (IDPs) are distinctly different from that of ordered 
+proteins. Each amino acid has unique chemical characteristics that can either 
+favor a compact or an extended structure (Uversky, 2019) . Disorder-promoting
+residues, those enriched in IDPs, are typically hydrophilic, charged, or small 
+residues. Order promoting residues, those enriched in structured proteins, 
+tend to be aliphatic, hydrophobic, aromatic, or form tertiary structures
+(Uversky, 2013).  
+Therefore, there is a distinct difference of biochemistry
+between IDPs and ordered proteins. 
+
+
+It was shown in Uversky, Gillespie, & Fink (2000) that both high net charge and 
+low mean hydropathy are properties of IDPs. One explanation is that a high net 
+charge leads to increased repulsion of residues causing an extended structure 
+and low hydrophobicity will reduce the hydrophobic interactions causing reduced 
+protein packing. When both average net charge and mean scaled hydropathy are 
+plotted, IDPs occupy a unique area on the plot. The barrier between unfolded 
+and compact proteins is:
+$$<R> = 2.785 <H> - 1.151 $$ 
+where 
+&lt;R>
+is the absolute mean 
+net charge and 
+&ltH>
+is the mean scaled hydropathy
+(Uversky, Gillespie, & Fink, 2000).  
+
+
+An alternative version of the Charge Hydropathy plot mentioned was shown
+in Uversky (2016), where the average net charge is shown rather than the 
+absolute value. This creates two cutoff lines. One for positively charged 
+peptides: 
+$$<R> = 2.785 <H> - 1.151 $$
+and another for negatively charged peptides: 
+$$<R> = - 2.785 <H> + 1.151 $$
+(Uversky, 2016). 
+
+This plot allows a distinction between
+negative and positive proteins while preserving the information of the 
+charge-hydropathy plot. 
+
+## Methods
+
+Methods are originally described in Uversky, Gillespie, & Fink (2000). 
+
+Mean scaled hydropathy is calculated by normalizing the Kyte and Doolittle scale
+on a scale of 0 to 1, with Arg having a hydropathy of 0 and Ile having a 
+hydropathy of 1, averaged by the sequence length 
+(Kyte & Doolittle, 1982; Uversky, 2016). 
+
+Net charge is calculated with the Henderson-Hasselbalch equation 
+(Po & Senozan, 2001). While there is not one agreed upon set of pKa values,
+the Isoelectric Point Calculator does a great job at unifying these data sets 
+(Kozlowski, 2016).  The net charge is then averaged over the sequence length. 
+
+Both values are plotted in the Charge-Hydropathy plot to identify a protein 
+or proteins location in that space. 
+
+
+### Example calulations
+
+Examples will use the *H. sapiens* TP53 sequence,
+acquired from UniProt (UniProt Consortium 2019)
+
+```{r}
+HUMAN_P53 <- idpr:::TP53Sequences[2]
+print(HUMAN_P53)
+```
+
+
+The first portion is calculating the mean scaled hydropathy of the sequence.
+This will correspond to the value on the X-axis
+```{r}
+P53_msh <- meanScaledHydropathy(HUMAN_P53)
+print(P53_msh)
+```
+
+The second value is the net charge. Setting averaged = TRUE will average the
+calculated net charge by the sequence length.This will correspond to the 
+value on the Y-axis. Total Net charge can be calculated by setting
+averaged to FALSE. 
+
+```{r}
+P53_nc <- netCharge(HUMAN_P53,
+                     averaged = TRUE)
+print(P53_nc)
+```
+
+The chargeHydropathyFunction will automatically calculate these values and 
+plot it as a point within the charge-hydropathy space according to 
+Uversky, Gillespie, & Fink (2000) / Uversky (2016)
+
+Since a ggplot is returned, the cooridnates will be annotated
+
+```{r, include = FALSE}
+P53_msh <- round(P53_msh, 3)
+P53_nc <- round(P53_nc, 3)
+```
+
+```{r}
+chargeHydropathyPlot(HUMAN_P53) +
+  ggplot2::annotate("text",
+                    x = P53_msh,
+                    y = P53_nc + 0.1, #offset from point
+                    label = paste("(", P53_msh, ", ", P53_nc, ")",
+                                  collapse = "",
+                                  sep = ""))
+```
+
+
+
+
+***
+
+## Using the chargeHydropathyPlot Function
+
+The plot above shows calculations for one protein, but the function 
+can accept multiple sequences. 
+
+The following examples will use highly similar TP53 sequences,
+acquired from UniProt (UniProt Consortium 2019).
+
+```{r}
+TP53_Sequences <- idpr:::TP53Sequences
+
+gg <- chargeHydropathyPlot(
+  sequence = TP53_Sequences,
+  pKaSet = "IPC_protein") 
+plot(gg)
+```
+
+Since it is a ggplot, the user can add additional parameters to the plot like 
+labels, custom themes, or additional features
+```{r}
+gg <- gg + ggplot2::theme_void() + #Add a different theme
+            ggplot2::annotate("text", #Add text annotations
+                    x = P53_msh - 0.05,
+                    y = P53_nc,
+                    label = "TP53\nSequences")
+plot(gg)
+```
+
+If you do not wish to use the IPC_protein pKa set, you can change this to any 
+accepted by netCharge(). 
+
+```{r}
+chargeHydropathyPlot(
+  sequence = TP53_Sequences,
+  pKaSet = "EMBOSS")  #Using EMBOSS pKa set
+```
+
+
+## Calculating Scaled Hydropathy
+
+### Mean Scaled Hydropathy
+
+meanScaledHydropathy is used to calculate the scaled hydropathy of a sequence.
+See the introduction and methods for more details.
+```{r}
+ meanScaledHydropathy(HUMAN_P53)
+```
+
+
+### Global Hydropathy
+
+scaledHydropathyGlobal is used to match the scaled hydropathy of 
+an amino acid sequence for each residue in the sequence.
+
+The results can be a data frame of matched values:
+```{r}
+P53_shg <- scaledHydropathyGlobal(HUMAN_P53)
+head(P53_shg)
+```
+
+Or as a plot
+
+```{r}
+scaledHydropathyGlobal(HUMAN_P53,
+                       plotResults = TRUE)
+```
+
+(This is not the most aesthetically pleasing plot, so a sequenceMap from 
+**idpr** is reccomended in this case for visualizations.)
+
+```{r}
+P53_shg <- scaledHydropathyGlobal(HUMAN_P53)
+sequenceMap(sequence = P53_shg$AA,
+            property = P53_shg$Hydropathy,
+            customColors = c("chocolate1", "grey65", "skyblue3"))
+```
+
+
+
+
+### Local Hydrophobicity 
+
+scaledHydropathyLocal is a function used to calculate the average 
+hydrophobicity of a sequence using a sliding window. 
+The results are returned as a data frame or a plot.
+
+The scaled hydropathy is matched to each residue then the average of
+each window is calculated. 
+
+This can be helpful to identify regions of high or low hydrophobicity within
+a protein. This may help with identifying IDRs as well. 
+
+
+Creating a data frame of window hydropathy scores
+```{r}
+P53_shl <- scaledHydropathyLocal(HUMAN_P53,
+                                 plotResults = FALSE)
+head(P53_shl)
+```
+
+Plotting each window hydropathy scores along the sequence
+```{r}
+scaledHydropathyLocal(HUMAN_P53,
+                       plotResults = TRUE)
+```
+
+
+The window size can be specified as well. This must be an odd integer
+
+```{r}
+scaledHydropathyLocal(HUMAN_P53,
+                       window = 3,
+                       plotResults = TRUE)
+```
+
+```{r}
+scaledHydropathyLocal(HUMAN_P53,
+                       window = 7,
+                       plotResults = TRUE)
+```
+
+```{r}
+scaledHydropathyLocal(HUMAN_P53,
+                       window = 11,
+                       plotResults = TRUE)
+```
+
+
+
+
+
+## Calculating Charge
+
+### Net Charge
+netCharge is used to calculate the net charge of a sequence.
+See the introduction and methods for more details.
+```{r}
+netCharge(HUMAN_P53)
+```
+
+Setting averaged = TRUE will average the calculated net charge by the sequence 
+length (Shown before in methods). 
+
+```{r}
+netCharge(HUMAN_P53,
+          averaged = TRUE)
+```
+
+
+netCharge relies on the Henderson-Hasselbalch equation (via the 
+hendersonHasselbalch function). Therefore the pH and pKa are important for 
+calculations.
+netCharge allows for different pH values using the pH argument. 
+
+```{r}
+netCharge(HUMAN_P53,
+          pH = 5.5)
+netCharge(HUMAN_P53,
+          pH = 7)
+netCharge(HUMAN_P53,
+          pH = 8)
+```
+
+There are also many pKa sets that are preloaded. 
+pKa datasets used within this vignette are cited. See the documentation for
+netCharge or pKaData within **idpr** for additional information and citations 
+for avaliable pKa sets. 
+Additionally, see Kozlowski (2016) for additional details on pKa data sets. 
+
+* "EMBOSS" -  (Rice, Longden, & Bleasby, 2000)
+* "DTASelect"
+* "Solomons"
+* "Sillero"
+* "Rodwell"
+* "Lehninger"
+* "Toseland"
+* "Thurlkill"
+* "Nozaki"
+* "Dawson"
+* "Bjellqvist"
+* "ProMoST"
+* "Vollhardt"
+* "IPC_protein" (Kozlowski, 2016).
+* "IPC_peptide" (Kozlowski, 2016).
+
+
+```{r}
+netCharge(HUMAN_P53,
+          pKaSet = "IPC_protein")
+netCharge(HUMAN_P53,
+          pKaSet = "IPC_peptide")
+netCharge(HUMAN_P53,
+          pKaSet = "EMBOSS")
+
+```
+
+
+Alternativly, the user may supply a custom pKa dataset.
+The format must be a data frame where: Column 1 must be a 
+character vector of residues AND Column 2 must be a numeric vector of pKa 
+values. This can be helpful if there is a data set the user prefers or if
+there are noncannonical amino acids.
+Here is an example using the pKa values from 
+https://en.wikipedia.org/wiki/Proteinogenic_amino_acid#Chemical_properties
+
+```{r, include=FALSE}
+charged_aa <- c("C", "D", "E", "H", "K", "R", "Y", "NH3", "COO")
+aa_pKa <- c(8.55, 3.67, 4.25, 6.54, 10.40, 12.3, 9.84, 9.28, 1.99)
+custom_pKa <- data.frame(AA = charged_aa,
+                         pKa = aa_pKa)
+```
+
+
+```{r}
+print(custom_pKa)
+
+netCharge(HUMAN_P53,
+          pKaSet = custom_pKa,
+          includeTermini = FALSE)
+```
+
+
+
+### Global Charge Distibution
+
+chargeCalculationGlobal is a function used to calculate the charge of
+each residue, indepenent of other amino acids, within a sequence. 
+The results are returned as a data frame (default) or a plot.
+
+chargeCalculationGlobal accepts the same pKa and pH arguments as netCharge. 
+
+Creating a data frame of charge for each residue
+```{r}
+P53_ccg <- chargeCalculationGlobal(HUMAN_P53)
+head(P53_ccg)
+```
+
+Plotting charge distribution
+```{r}
+chargeCalculationGlobal(HUMAN_P53,
+                        plotResults = TRUE)
+```
+
+(This is not the most aesthetically pleasing plot, so a sequenceMap from 
+**idpr** is reccomended in this case for visualizations.)
+
+```{r}
+P53_ccg <- chargeCalculationGlobal(HUMAN_P53) #repeating from above
+sequenceMap(sequence = P53_ccg$AA,
+            property = P53_ccg$Charge,
+            customColors = c("red", "blue", "grey65"))
+```
+
+
+The C-terminus here has a charge of ~ -2 since the function aggregates the
+termini values with residue charges by default. If you wish to calculate
+the termini as seperate values, use sumTermini = FALSE. This will add 2 residues
+to the data frame as "NH3" and "COO"
+
+```{r}
+chargeCalculationGlobal(HUMAN_P53,
+                        plotResults = TRUE,
+                        sumTermini = FALSE)
+P53_ccg <- chargeCalculationGlobal(HUMAN_P53,
+                        sumTermini = FALSE)
+head(P53_ccg)
+```
+
+
+If you wish to completly ignore the termini for calculation, set includeTermini
+= FALSE. 
+
+```{r}
+chargeCalculationGlobal(HUMAN_P53,
+                        plotResults = TRUE,
+                        includeTermini = FALSE)
+P53_ccg <- chargeCalculationGlobal(HUMAN_P53,
+                        includeTermini = FALSE)
+head(P53_ccg)
+```
+
+
+### Local Charge 
+
+chargeCalculationLocal is a function used to calculate the charge of
+a sequence using a sliding window. 
+The results are returned as a data frame (default) or a plot.
+
+chargeCalculationLocal accepts the same pKa and pH arguments as netCharge. 
+
+Unlike chargeCalculationGlobal, the chargeCalculationLocal function does not 
+consider termini for calculations.
+
+
+Creating a data frame of charge for each residue
+```{r}
+P53_cgl <- chargeCalculationLocal(HUMAN_P53)
+head(P53_cgl)
+```
+
+Plotting charge distribution
+```{r}
+chargeCalculationLocal(HUMAN_P53,
+                       plotResults = TRUE)
+```
+
+
+The window size can be specified as well. This must be an odd integer
+
+```{r}
+chargeCalculationLocal(HUMAN_P53,
+                       window = 3,
+                       plotResults = TRUE)
+```
+
+```{r}
+chargeCalculationLocal(HUMAN_P53,
+                       window = 7,
+                       plotResults = TRUE)
+```
+
+```{r}
+chargeCalculationLocal(HUMAN_P53,
+                       window = 11,
+                       plotResults = TRUE)
+```
+
+
+
+
+
+## References
+
+### Packages Used
+
+```{r}
+citation("ggplot2")
+```
+
+
+### Citations
+
+### References
+
+Consortium, T. U. (2018). UniProt: a worldwide hub of protein knowledge. 
+Nucleic acids research, 47(D1), D506-D515. doi:10.1093/nar/gky1049
+
+
+Kozlowski, L. P. (2016). IPC – Isoelectric Point Calculator.
+Biology Direct, 11(1), 55. doi:10.1186/s13062-016-0159-9
+
+Kyte, J., & Doolittle, R. F. (1982). A simple method for
+displaying the hydropathic character of a protein. Journal of molecular
+biology, 157(1), 105-132. 
+
+
+Po, H. N., & Senozan, N. (2001). The Henderson-Hasselbalch equation:
+its history and limitations. Journal of Chemical Education, 78(11), 1499. 
+
+
+Rice, P., Longden, I., & Bleasby, A. (2000). 
+EMBOSS: The European Molecular Biology Open Software Suite.
+Trends in Genetics, 16(6), 276-277. doi:10.1016/S0168-9525(00)02024-2
+
+
+Uversky, V. N. (2013). A decade and a half of protein intrinsic disorder:
+Biology still waits for physics. Protein Science, 22(6), 693-724.
+doi:10.1002/pro.2261
+
+
+Uversky, V. N. (2016). Paradoxes and wonders of intrinsic disorder:
+Complexity of simplicity. Intrinsically Disordered Proteins, 4(1), e1135015. 
+doi:10.1080/21690707.2015.1135015
+
+
+Uversky, V. N. (2019). Intrinsically Disordered Proteins and Their “Mysterious” 
+(Meta)Physics. Frontiers in Physics, 7(10). doi:10.3389/fphy.2019.00010
+
+
+Uversky, V. N., Gillespie, J. R., & Fink, A. L. (2000).
+Why are “natively unfolded” proteins unstructured under physiologic conditions? 
+Proteins: Structure, Function, and Bioinformatics, 41(3), 415-427.
+doi:10.1002/1097-0134(20001115)41:3<415::AID-PROT130>3.0.CO;2-7
+
+
+
+### Additional Information
+R Version
+```{r}
+R.version.string
+```
+
+System Infomation
+```{r}
+as.data.frame(Sys.info())
+```
+
+```{r}
+sessionInfo()
+```
+
+```{r, results="asis"}
+citation()
+```
+
+
+
+
+
+
+
+
+
+
