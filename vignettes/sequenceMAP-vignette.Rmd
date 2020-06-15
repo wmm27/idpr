@@ -1,8 +1,8 @@
 ---
-title: "sequenceMAP-vignette"
+title: "Sequence Map Vignette"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{sequenceMAP-vignette}
+  %\VignetteIndexEntry{Sequence Map Vignette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -16,9 +16,6 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-library(idpr)
-```
 
 ## Introduction
 
@@ -32,14 +29,21 @@ IDP to dock to its binding partner (Warren & Shechter, 2017). Therefore, it is
 important to look at sequence-wide data along with the context of the primary 
 sequence.  
 
-To make a sequence map you will need two vectors of data (typically as a 
-data frame). One vector is the amino acid sequence and another is a vector
-of data to color. 
+To make a sequence map, two vectors of data are needed (typically 
+in the form of a data frame). 
+One vector is the amino acid sequence and another is a vector
+of data to color the residues based on some property. 
 
 Examples will use the *H. sapiens* TP53 sequence, acquired from UniProt 
 (UniProt Consortium 2019)
+and stored within the **idpr** package for examples.
+
 
 ## Basics of sequenceMap
+
+```{r setup}
+library(idpr) #load the idpr package
+```
 
 ```{r}
 P53_HUMAN <- idpr:::TP53Sequences[2]
@@ -60,12 +64,12 @@ head(chargeDF)
 
 ```
 
-The output of structuralTendency() gives us both the amino acid sequence in the
-column 'Residue' and the values in 'Tendency'
+The output of structuralTendency() returns both the amino acid sequence in the
+column 'AA' and the matched values in 'Tendency'.
 
 The output of chargeCalculationLocal(plotResults = FALSE) 
-gives us both the amino acid sequence in the column 'aa' and the values
-in 'Charge'
+returns both the amino acid sequence in the column 'AA' and the calculated
+values in 'Charge'.
 ```{r}
 sequenceMap(
   sequence = tendencyDF$AA,
@@ -86,6 +90,7 @@ There are multiple customization options to allow for improved graphing.
 One is the organization of the labels. 
 You are able to represent the sequence with both amino acid residues and their 
 location in the sequence, but you can choose one or the other (or nethier).
+This is specified by the 'labelType' argument
 
 ```{r}
 sequenceMap(
@@ -105,7 +110,7 @@ sequenceMap(
 ```
 
 There is also the option of where to plot the labels. either "on" or 
-"below" the sequence graphic. 
+"below" the sequence graphic. This is done with the "labelLocation" argument.
 ```{r}
 sequenceMap(
   sequence = tendencyDF$AA,
@@ -121,8 +126,8 @@ sequenceMap(
   labelLocation = "below") #Residue numbers printed below the sequence graphic
 ```
 
-The text can also be rotated for ease of reading, espeically helpful for 
-larger sequences
+The text can also be rotated, via the 'rotationAngle' argument, for ease of 
+reading. This is espeically helpful for larger sequences with dense graphics.
 ```{r}
 sequenceMap(
   sequence = tendencyDF$AA,
@@ -166,7 +171,8 @@ sequenceMap(
 ```
 
 You can also change the number of residues on each line with nbResidues. 
-This helps improve visualization based on the sequence
+This helps improve visualization based on the sequence size. Visualizing a 
+larger sequence will likely benefit from a larger nbResidues value.
 ```{r}
 sequenceMap(
   sequence = tendencyDF$AA,
@@ -192,7 +198,8 @@ sequenceMap(
 ```
 
 
-You can also specify colors for discrete values using a vector of colors
+You can also specify colors for discrete values using a vector of colors. This
+is done with the "customColors" argument.
 ```{r}
 sequenceMap(
   sequence = tendencyDF$AA,
@@ -211,8 +218,11 @@ sequenceMap(
   ) 
 ```
 
-Since the output is a ggplot, the visualization is able to be stored and 
-additional features can be added / annotated
+Since the output is a ggplot, the visualization is able to be assigned to an
+object and additional features can be added and annotated. The example below 
+will annotate a metal binding residue and the region that the P53 protien binds 
+DNA. These annotations and locations were retrieved from UniProt 
+(UniProt Consortium 2019).
 ```{r}
 library(ggplot2)
 
@@ -286,9 +296,14 @@ plot(ggSequence)
 
 ## Getting Coordinates
 
-To make annotations easy, the sequenceMapCoordinates() will give you 
-the row (y value) and the colun (x value) of each residue visualized with 
-sequenceMap(). 
+Since the sequenceMap() function plots the sequence as a grid, adding additional
+features to the correct location may be difficult without knowing the location
+of the residues on the map.
+
+To solve this, sequenceMapCoordinates() will return the row (y value) and the 
+column (x value) as a data frame for each residue visualized with sequenceMap(). 
+The puporse of this is to make adding annotations easier and customizable.
+
 
 As shown before, nbResidues deterines how many residues will be on each
 row. Make sure nbResidues is equal to the value used in sequenceMap(). 

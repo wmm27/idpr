@@ -1,10 +1,10 @@
 ---
-title: "disorderedMatrices-vignette"
+title: "Disordered Matrices Vignette"
 author: "William McFadden"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{disorderedMatrices-vignette}
+  %\VignetteIndexEntry{Disordered Matrices Vignette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -14,10 +14,6 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-```
-
-```{r setup}
-library(idpr)
 ```
 
 
@@ -30,17 +26,17 @@ have many distinct properties compared to structured proteins, such as
 amino acid composition and rate of evolution. The most commonly used amino
 acid substitution matrices (PAM and BLOSUM) are derived from or favor structured
 proteins and therefore are not the most appropriate to use when analyzing IDPs.
-The following amino acid substitution matrices derived from sets of IDPs and
+The following amino acid substitution matrices are derived from sets of IDPs and
 thus are more appropriate.
 
 A detailed comparison is available at 
-[Trivedi & Nagarajaram (2019)](https://doi.org/10.1038/s41598-019-52532-8).  
+[Trivedi & Nagarajaram, 2019](https://doi.org/10.1038/s41598-019-52532-8).  
 Additionally, see the documentation for each matrix for quick information
 about the derivation and use of each matrix.
 
 The following matrices are available within **idpr**:
 
-* EDSS Matrices ([Trivedi & Nagarajaram 2019](https://doi.org/10.1038/s41598-019-52532-8))
+* EDSS Matrices ([Trivedi & Nagarajaram, 2019](https://doi.org/10.1038/s41598-019-52532-8))
    + EDSSMat50
    + EDSSMat60
    + **EDSSMat62**
@@ -48,18 +44,19 @@ The following matrices are available within **idpr**:
    + EDSSMat75
    + EDSSMat80
    + EDSSMat90
-* "Disorder" Matrices ([Brown et al. 2009](https://doi.org/10.1093/molbev/msp277))
+* "Disorder" Matrices ([Brown et al., 2009](https://doi.org/10.1093/molbev/msp277))
    + **Disorder40**
    + Disorder60
    + **Disorder85**
-* DUNMat ([Radivojac et al. 2001](https://doi.org/10.1142/9789812799623_0055))
+* DUNMat ([Radivojac et al., 2001](https://doi.org/10.1142/9789812799623_0055))
    + DUNMat
 
 *Bolded Matrices are the best-preforming*
 
-Downloading and attaching idpr
+***
+
+To access these, the **idpr** package needs to be loaded
 ```{r}
-#devtools::install_github("wmm27/idpr")
 library(idpr)
 ```
 
@@ -68,56 +65,58 @@ library(idpr)
 ## Background and Motivation
 It has been shown that solvent-exposed amino acids experience higher levels of
 evolution compared to the internal residues of a protein (
-[Franzosa & Xia 2009](https://doi.org/10.1093/molbev/msp146)). Intrinsically
+[Franzosa & Xia, 2009](https://doi.org/10.1093/molbev/msp146)). Intrinsically
 Disordered Proteins (IDPs) and Intrinsically Disordered Regions (IDRs) are, 
 by definition, more solvent exposed. One can predict that these proteins have
-accelerated evolution, and has been observed (
-[Brown et al. 2011](https://doi.org/10.1016/j.sbi.2011.02.005)).
+accelerated evolution, and this has been observed (
+[Brown et al., 2011](https://doi.org/10.1016/j.sbi.2011.02.005)).
 
 
 Additionally, a study that compared proteins with both ordered and disordered 
 regions showed the IDRs, on average, evolved at faster rates than the ordered
 regions (
-[Brown et al. (2002)](https://doi.org/10.1016/j.sbi.2011.02.005)).
+[Brown et al., 2002](https://doi.org/10.1016/j.sbi.2011.02.005)).
 
 
 The most commonly used amino acid substitution matrices are 
 BLOSUM and PAM. These are currently the only accepted matrices for NCBI BLAST (
-[Johnson et al. 2008](https://doi.org/10.1093/nar/gkn201)), as well as 
+[Johnson et al., 2008](https://doi.org/10.1093/nar/gkn201)), as well as 
 EMBOSS Needle and EMBOSS Water web serveries (
-[Madeira et al. 2019](http://doi.org/10.1093/nar/gkz268)).
+[Madeira et al., 2019](http://doi.org/10.1093/nar/gkz268)).
 
 The sequences used to calculate the values for both of these matrices are from 
 highly conserved protein families (Dayhoff et al. 1978;
-[Henikoff & Henikoff 1992](https://doi.org/10.1073/pnas.89.22.10915))
+[Henikoff & Henikoff, 1992](https://doi.org/10.1073/pnas.89.22.10915)).
 While they do not explicitly exclude IDPs,
 the sequences used for analysis are enriched in highly-ordered proteins. 
 Structured proteins have served as the basis for sequence-level comparisons due 
 to their residue and position conservation.
 IDPs do not experience the same level of residue-identity conservation that has 
 been observed in proteins with a specific, well-folded structure. 
-IDPs typically have a conservation of chemistry and disordered state, but less 
-so at the residue and position position level. Therefore the
-use of BLOSUM and PAM for studies comparing IDP evolution are not as appropriate
-since these matrices account for evolutionary observations of ordered proteins(
-[Brown et al. 2011](https://doi.org/10.1016/j.sbi.2011.02.005)).
+IDPs often conserve the overall chemistry and the disordered state of the 
+protein, but are less conserved at the residue and position position level. 
+Therefore using BLOSUM or PAM for studies comparing IDP evolution is 
+not the most appropriate method,
+since these matrices account for the evolutionary observations of ordered
+proteins (
+[Brown et al., 2011](https://doi.org/10.1016/j.sbi.2011.02.005)).
 
 
 Additionally, the amino acid composition and accepted point mutations for IDPs 
 differ compared to structured proteins. IDPs and IDRs tend to be enriched in 
 hydrophillic and charged residues (
-[Uversky 2019](https://doi.org/10.3389/fphy.2019.00010)).
+[Uversky, 2019](https://doi.org/10.3389/fphy.2019.00010)).
 In addition to a distinct composition, IDPs 
 tend to accept indels at higher rates (
-[Brown et al. 2011](https://doi.org/10.1016/j.sbi.2011.02.005)).
+[Brown et al., 2011](https://doi.org/10.1016/j.sbi.2011.02.005)).
 
 
 Therefore, there are multiple reasons as to why BLOSUM and PAM matrices do not
-accurately analyze the evolution of IDPs. Therefore, the works of 
-[Trivedi & Nagarajaram 2019](https://doi.org/10.1038/s41598-019-52532-8),
-[Brown et al. 2009](https://doi.org/10.1093/molbev/msp277), and
-[Radivojac et al. 2001](https://doi.org/10.1142/9789812799623_0055) can serve
-as references for IDP-based substitution matrices. These each use experimentally
+accurately assess the evolutionary history of IDPs. The works of 
+[Trivedi & Nagarajaram, 2019](https://doi.org/10.1038/s41598-019-52532-8),
+[Brown et al., 2009](https://doi.org/10.1093/molbev/msp277), and
+[Radivojac et al., 2001](https://doi.org/10.1142/9789812799623_0055) can serve
+as references for IDP-based substitution matrices. Each use experimentally
 confirmed or computationally predicted IDPs to create the data set of protein
 sequences and protein families to calculate the accepted point mutations 
 specific to disordered sequences. These are the EDSSMat set of matrices, the
@@ -125,15 +124,16 @@ specific to disordered sequences. These are the EDSSMat set of matrices, the
 
 
 Unlike most commonly used web-based tools, many sequence comparison functions
-within R packages allow for custom substitution matrices. **idpr** has added 11 
-disorder-based substitution matrices for IDP sequence conservation studies for
-user convenience. 
+within other R packages allow for custom substitution matrices. **idpr** has 
+added 11 disorder-based substitution matrices for IDP sequence conservation 
+studies for user convenience. 
 
-[Trivedi & Nagarajaram 2019](https://doi.org/10.1038/s41598-019-52532-8) 
+[Trivedi & Nagarajaram, 2019](https://doi.org/10.1038/s41598-019-52532-8) 
 provides many details for comparing the EDSSMat matrices to the other disorder
 matrices and other matrices like BLOSUM and PAM within sequence alignments.
 The paper also calculated the optimal gap parameters for sequence alignments 
-depending on how disordered the sequences were. Protein families were sorted 
+depending on how disordered the aligned sequences were predicted to be.
+Protein families were sorted 
 into 3 categories: Proteins containing Less Disorder (LD), defined as
 [0-20%] disorder, Moderate Disorder (MD), defined as (20-40%] disorder, and
 High Disorder (HD), defined as (40-100%] disorder. 
@@ -141,16 +141,16 @@ High Disorder (HD), defined as (40-100%] disorder.
 Additionally, EDSSMat62 was shown to identify both close and distant homologs of 
 a specific IDP while other matrices could only identify some close homologs.
 Please see 
-[Trivedi & Nagarajaram 2019](https://doi.org/10.1038/s41598-019-52532-8)  
+[Trivedi & Nagarajaram, 2019](https://doi.org/10.1038/s41598-019-52532-8)  
 for additional information and for comparisons to other matrices. 
 
 
 ## Matrices
 
 ### EDSS Matrices
-EDSSMat62, like the other EDSS matrices, are derived from alignment blocks of
+EDSSMat62, like the other EDSS matrices, is derived from alignment blocks of
 computationally predicted IDPs. 
-[Trivedi & Nagarajaram 2019](https://doi.org/10.1038/s41598-019-52532-8)  
+[Trivedi & Nagarajaram, 2019](https://doi.org/10.1038/s41598-019-52532-8)  
 go into detail of methods and comparisons. EDSSMat62 the best preforming matrix
 in their study and was shown to identify both close and distant homologs of 
 Secretogranin-1, an IDP, while other matrices could only identify some 
@@ -158,8 +158,8 @@ close homologs. On average, EDSSMat62 attained smaller E-values when aligning
 Highly Disordered (HD) proteins compared to BLOSUM and PAM matrices, and against
 some other disorder-based substitution matrices.
 
-EDSS Matrices are symmetric, 24x24 matrices. It has the 20 standard amino acids
-and 4 ambiguous residues: B, Asparagine or Aspartic Acid (Asx);
+EDSS Matrices are symmetric, 24x24 matrices. They contain  the 20 standard amino
+acids and 4 ambiguous residues: B, Asparagine or Aspartic Acid (Asx);
 Z, Glutamine or Glutamic Acid (Glx); X, Unspecified or unknown amino acid; and 
 *, Stop.
 ```{r}
@@ -168,23 +168,24 @@ EDSSMat62
 
 ### "Disorder" Matrices
 In their study,
-[Trivedi & Nagarajaram 2019](https://doi.org/10.1038/s41598-019-52532-8) 
+[Trivedi & Nagarajaram, 2019](https://doi.org/10.1038/s41598-019-52532-8) 
 show that the Disorder40 and Disorder85 matrices, on average, score lower 
 E-values for the HD proteins. EDSSMat62 on average attains lower E-values for
 the Low and Medium disordered proteins. 
-These matrices are from 
-[Brown et al. 2009](https://doi.org/10.1093/molbev/msp277),
-found protein families based on experimentally confirmed IDPs.
-These were not designed with the goal of improving sequence alignments.
-The authors note that the purpose of these matrices were to compare evolutionary
-characteristics of disordered and ordered proteins.
+The "Disorder" matrices are from 
+[Brown et al., 2009](https://doi.org/10.1093/molbev/msp277), which identified
+protein families based on homology to experimentally confirmed IDPs.
+The "Disorder" matrices were not designed with the goal of improving sequence 
+alignments. The authors note that the purpose of these matrices were to compare 
+evolutionary characteristics of disordered and ordered proteins.
 Therefore information for using these in sequence alignments, like gap scores
-and entropy, are not provided by the authors.  
-[Trivedi & Nagarajaram 2019](https://doi.org/10.1038/s41598-019-52532-8)
+and entropy, are not provided by the original authors.  
+[Trivedi & Nagarajaram, 2019](https://doi.org/10.1038/s41598-019-52532-8)
 determined the optimal gap parameters for these matrices to compare against 
 EDSSMat62. 
 
-Disorder40, Disorder60, and Disorder85 are symmetric, 24x24 matrices. It has the 20 standard amino acids
+Disorder40, Disorder60, and Disorder85 are symmetric, 24x24 matrices.
+They contain the 20 standard amino acids
 and 4 ambiguous residues: B, Asparagine or Aspartic Acid (Asx);
 Z, Glutamine or Glutamic Acid (Glx); X, Unspecified or unknown amino acid; and 
 *, Stop.
@@ -199,10 +200,11 @@ Disorder85
 
 ### DUNMat
 DUNMat was described in 
-[Radivojac et al. 2001](https://doi.org/10.1142/9789812799623_0055). 
-This was an early attempt at improving alignments for IDPs. 
+[Radivojac et al., 2001](https://doi.org/10.1142/9789812799623_0055). 
+This was an early attempt at improving alignments for IDPs. It is included in 
+**idpr** due to its significance in developing substitution matrices for IDPs.
 It is a symmetric 20x20 matrix. 
-[Trivedi & Nagarajaram 2019](https://doi.org/10.1038/s41598-019-52532-8) 
+[Trivedi & Nagarajaram, 2019](https://doi.org/10.1038/s41598-019-52532-8) 
 show that EDSSMat62, on average, attains lower E-values for HD proteins. 
 ```{r}
 DUNMat
@@ -214,7 +216,7 @@ DUNMat
 
 P53 is a well-known IDP that has been experimentally determined. 
 Information was accessed by DisProt, a database for IDPs (
-[Hatos et al. 2019](https://doi.org/10.1093/nar/gkz975)).
+[Hatos et al., 2019](https://doi.org/10.1093/nar/gkz975)).
 (https://www.disprot.org/)
 
 
@@ -232,7 +234,7 @@ Information was accessed by DisProt, a database for IDPs (
     + UniProt ID: A0A2I2Y7Z8
     + DisProt ID: NA  
 
-The amino acid sequences were acquired from UniProt (UniProt Consortium 2019)
+The amino acid sequences were acquired from UniProt (UniProt Consortium, 2019)
 and stored within the **idpr** package for examples.
 
 ```{r}
@@ -246,9 +248,9 @@ print(P53_GORILLA)
 
 
 PSA of Human TP53 to Gorilla and Mouse P53 BLOSUM62 (
-[Henikoff & Henikoff 1992](https://doi.org/10.1073/pnas.89.22.10915))
+[Henikoff & Henikoff, 1992](https://doi.org/10.1073/pnas.89.22.10915))
 with default gap opening/extension from EMBOSS Needle (
-[Madeira et al. 2019](http://doi.org/10.1093/nar/gkz268)).
+[Madeira et al., 2019](http://doi.org/10.1093/nar/gkz268)).
 pairwiseAlignment function and BLOSUM62 matrix are from **Biostrings**
 ```{r}
 library(Biostrings)
@@ -269,7 +271,7 @@ print(HUMAN_GORILLA_BLOSUM_PSA)
 
 PSA of Human TP53 to Gorilla and Mouse P53 
 using EDSSMat62 with gap costs recommended for IDPs in (
-[Trivedi & Nagarajaram 2019](https://doi.org/10.1038/s41598-019-52532-8)).
+[Trivedi & Nagarajaram, 2019](https://doi.org/10.1038/s41598-019-52532-8)).
 ```{r}
 HUMAN_MOUSE_EDSS_PSA <- pairwiseAlignment(P53_MOUSE, P53_HUMAN,
                                             substitutionMatrix = EDSSMat62,
@@ -296,16 +298,19 @@ comparing Human p53 to Mouse p53 and in the alignment comparing Human p53
 to Gorilla p53. Scores are not directly comparable between matrices, but this
 shows relative to each other, the scores with EDSSMat62 are similar for this
 specific case. There will be some instances where BLOSUM62 may appear to have
-better scores, but as previously stated 
-[Trivedi & Nagarajaram 2019](https://doi.org/10.1038/s41598-019-52532-8) 
+better scores, but as previously stated, 
+[Trivedi & Nagarajaram, 2019](https://doi.org/10.1038/s41598-019-52532-8) 
 show that on average EDSSMat62 attains lower E-values for alignments of IDPs. 
 
 
 ### Multiple Sequence Alignments (MSAs)
 
+In addition to PSAs, Multiple Sequence Alignments (MSAs) offer additional 
+analysis for protein families.
+
 First I will load several P53 sequences stored within **idpr**. 
 These sequences were selected due to their highly similar identity on UniProt(
-[The UniProt Consortium 2018](https://doi.org/10.1093/nar/gky1049)).
+[The UniProt Consortium, 2019](https://doi.org/10.1093/nar/gky1049)).
 ```{r}
 TP53_Sequences <- idpr:::TP53Sequences
 print(TP53_Sequences)
@@ -339,9 +344,10 @@ print(EDSS_MSA, show="complete")
 
 ### Distance Trees
 
-The **msa** vignette shows an example of using the multiple sequence alignment
-(generated above) into a phylogenetic tree of sequence distances.
-This uses both the **ape** and **seqinr** packages. 
+The user guide to **msa** shows an example of converting the sequence alignment
+(like the one generated above) into a phylogenetic tree of sequence distances.
+Therefore, the IDP-specific matrices can be used for this type of analysis.
+The conversion uses both the **ape** and **seqinr** packages. 
 ```{r fig1, fig.height = 4, fig.width = 6}
 EDSS_MSA_Tree <- msa::msaConvert(EDSS_MSA, type="seqinr::alignment")
 d <- seqinr::dist.alignment(EDSS_MSA_Tree, "identity")

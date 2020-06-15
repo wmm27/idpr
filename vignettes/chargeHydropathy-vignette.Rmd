@@ -1,8 +1,8 @@
 ---
-title: "chargeHydropathy-vignette"
+title: "Charge and Hydropathy Vignette"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{chargeHydropathy-vignette}
+  %\VignetteIndexEntry{Charge and Hydropathy Vignette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -47,7 +47,7 @@ where
 &lt;R>
 is the absolute mean 
 net charge and 
-&ltH>
+&lt;H>
 is the mean scaled hydropathy
 (Uversky, Gillespie, & Fink, 2000).  
 
@@ -68,6 +68,9 @@ charge-hydropathy plot.
 ## Methods
 
 Methods are originally described in Uversky, Gillespie, & Fink (2000). 
+The calculations shown here are to explain how chargeHydropathyPlot() obtains
+the values for graphing, and are done automatically within the function.
+
 
 Mean scaled hydropathy is calculated by normalizing the Kyte and Doolittle scale
 on a scale of 0 to 1, with Arg having a hydropathy of 0 and Ile having a 
@@ -87,6 +90,7 @@ or proteins location in that space.
 
 Examples will use the *H. sapiens* TP53 sequence,
 acquired from UniProt (UniProt Consortium 2019)
+and stored within the **idpr** package for examples.
 
 ```{r}
 HUMAN_P53 <- idpr:::TP53Sequences[2]
@@ -116,7 +120,9 @@ The chargeHydropathyFunction will automatically calculate these values and
 plot it as a point within the charge-hydropathy space according to 
 Uversky, Gillespie, & Fink (2000) / Uversky (2016)
 
-Since a ggplot is returned, the cooridnates will be annotated
+Since a ggplot is returned, the user can assign the plot to an object to 
+modify aesthetics and/or add annotations. 
+The example shown here will label the cooridnates on the returned plot.
 
 ```{r, include = FALSE}
 P53_msh <- round(P53_msh, 3)
@@ -144,11 +150,16 @@ The plot above shows calculations for one protein, but the function
 can accept multiple sequences. 
 
 The following examples will use highly similar TP53 sequences,
-acquired from UniProt (UniProt Consortium 2019).
+acquired from UniProt (UniProt Consortium 2019) that were
+ stored within the **idpr** package for examples.
 
 ```{r}
 TP53_Sequences <- idpr:::TP53Sequences
+print(TP53_Sequences)
+```
 
+
+```{r}
 gg <- chargeHydropathyPlot(
   sequence = TP53_Sequences,
   pKaSet = "IPC_protein") 
@@ -156,7 +167,7 @@ plot(gg)
 ```
 
 Since it is a ggplot, the user can add additional parameters to the plot like 
-labels, custom themes, or additional features
+labels, custom themes, and other supported features.
 ```{r}
 gg <- gg + ggplot2::theme_void() + #Add a different theme
             ggplot2::annotate("text", #Add text annotations
@@ -192,13 +203,18 @@ See the introduction and methods for more details.
 scaledHydropathyGlobal is used to match the scaled hydropathy of 
 an amino acid sequence for each residue in the sequence.
 
-The results can be a data frame of matched values:
+The results can be a data frame of matched values.
+It will result in a data frame with 3 columns. The first column is "Position",
+which indicates the numeric position of the residue in the submitted sequence. 
+The second column is "AA", which indicates the amino acid residue as a single
+letter. The third column is "Hydropathy", which indicates the value of scaled 
+hydropathy for that residue, which was matched by the function. 
 ```{r}
 P53_shg <- scaledHydropathyGlobal(HUMAN_P53)
 head(P53_shg)
 ```
 
-Or as a plot
+Or results can be returned as a plot
 
 ```{r}
 scaledHydropathyGlobal(HUMAN_P53,
@@ -231,21 +247,32 @@ This can be helpful to identify regions of high or low hydrophobicity within
 a protein. This may help with identifying IDRs as well. 
 
 
-Creating a data frame of window hydropathy scores
+Results can be returned as a data frame of window hydropathy scores.
+It will result in a data frame with 3 columns. The first column is "Position",
+which indicates the numeric position of the residue in the submitted sequence. 
+The second column is "Window" which indicates all the residues within the
+sliding window that were used for calculations. The "CenterResidue" column 
+specifies the amino acid residue as a single letter that is located in the 
+center of the window and is located at the number specified by "Position"
+And finally, the "WindowHydropathy" is the calculated average hydropathy for
+the residues specified in the "Window" column.
+
 ```{r}
 P53_shl <- scaledHydropathyLocal(HUMAN_P53,
                                  plotResults = FALSE)
 head(P53_shl)
 ```
 
-Plotting each window hydropathy scores along the sequence
+The results can also return a plot that shows
+each window's hydropathy score along the sequence.
 ```{r}
 scaledHydropathyLocal(HUMAN_P53,
                        plotResults = TRUE)
 ```
 
 
-The window size can be specified as well. This must be an odd integer
+The window size can be specified as well by the "window" argument. 
+**This must be an odd integer**
 
 ```{r}
 scaledHydropathyLocal(HUMAN_P53,
@@ -288,7 +315,7 @@ netCharge(HUMAN_P53,
 
 
 netCharge relies on the Henderson-Hasselbalch equation (via the 
-hendersonHasselbalch function). Therefore the pH and pKa are important for 
+hendersonHasselbalch function). Therefore the pH and pKa are critical for 
 calculations.
 netCharge allows for different pH values using the pH argument. 
 
@@ -301,11 +328,11 @@ netCharge(HUMAN_P53,
           pH = 8)
 ```
 
-There are also many pKa sets that are preloaded. 
+There are also many pKa sets that are preloaded in **idpr**. 
 pKa datasets used within this vignette are cited. See the documentation for
 netCharge or pKaData within **idpr** for additional information and citations 
 for avaliable pKa sets. 
-Additionally, see Kozlowski (2016) for additional details on pKa data sets. 
+Additionally, see Kozlowski (2016) for further details on pKa data sets. 
 
 * "EMBOSS" -  (Rice, Longden, & Bleasby, 2000)
 * "DTASelect"
@@ -340,7 +367,8 @@ The format must be a data frame where: Column 1 must be a
 character vector of residues AND Column 2 must be a numeric vector of pKa 
 values. This can be helpful if there is a data set the user prefers or if
 there are noncannonical amino acids.
-Here is an example using the pKa values from 
+Here is an example using the pKa values from Wikipedia 
+(Proteinogenic amino acid, n.d.).
 https://en.wikipedia.org/wiki/Proteinogenic_amino_acid#Chemical_properties
 
 ```{r, include=FALSE}
@@ -369,13 +397,19 @@ The results are returned as a data frame (default) or a plot.
 
 chargeCalculationGlobal accepts the same pKa and pH arguments as netCharge. 
 
-Creating a data frame of charge for each residue
+The results can return a data frame of charge for each residue
+
+It will result in a data frame with 3 columns. The first column is "Position",
+which indicates the numeric position of the residue in the submitted sequence. 
+The second column is "AA", which indicates the amino acid residue as a single
+letter. The third column is "Charge", which indicates the calculated charge
+for the residue at the specified pH. 
 ```{r}
 P53_ccg <- chargeCalculationGlobal(HUMAN_P53)
 head(P53_ccg)
 ```
 
-Plotting charge distribution
+The results can return a ggplot visalizing the charge distribution.
 ```{r}
 chargeCalculationGlobal(HUMAN_P53,
                         plotResults = TRUE)
@@ -431,21 +465,31 @@ chargeCalculationLocal accepts the same pKa and pH arguments as netCharge.
 Unlike chargeCalculationGlobal, the chargeCalculationLocal function does not 
 consider termini for calculations.
 
+Results can be returned as a data frame of window hydropathy scores.
+It will result in a data frame with 4 columns. The first column is "Position",
+which indicates the numeric position of the residue in the submitted sequence. 
+The "CenterResidue" column 
+specifies the amino acid residue as a single letter that is located in the 
+center of the window and is located at the number specified by "Position".
+The "Window" column contains all the residues within the
+sliding window that were used for calculating the charge.
+And finally, the "windowCharge" is the calculated average charge for
+the residues specified in the "Window" column.
 
-Creating a data frame of charge for each residue
 ```{r}
 P53_cgl <- chargeCalculationLocal(HUMAN_P53)
 head(P53_cgl)
 ```
 
-Plotting charge distribution
+Alternativly, results can be returned as a plot of each window's charge.
 ```{r}
 chargeCalculationLocal(HUMAN_P53,
                        plotResults = TRUE)
 ```
 
 
-The window size can be specified as well. This must be an odd integer
+The window size can be specified as well via the "window" argument. 
+**This must be an odd integer**
 
 ```{r}
 chargeCalculationLocal(HUMAN_P53,
@@ -497,6 +541,8 @@ biology, 157(1), 105-132.
 Po, H. N., & Senozan, N. (2001). The Henderson-Hasselbalch equation:
 its history and limitations. Journal of Chemical Education, 78(11), 1499. 
 
+Proteinogenic amino acid. (n.d.). In Wikipedia. Retrieved July 12th, 2020. 
+https://en.wikipedia.org/wiki/Proteinogenic_amino_acid#Chemical_properties
 
 Rice, P., Longden, I., & Bleasby, A. (2000). 
 EMBOSS: The European Molecular Biology Open Software Suite.

@@ -1,10 +1,10 @@
 ---
-title: "structuralTendency-vignette"
+title: "Structural Tendency Vignette"
 author: "William McFadden"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{structuralTendency-vignette}
+  %\VignetteIndexEntry{Structural Tendency Vignette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -18,19 +18,14 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-library(idpr)
-```
-
-
 
 ## Background
 The composition of amino acids and the overall chemistry of Intrinsically
 Disordered Proteins (IDPs) are distinctly different from that of ordered 
 proteins. Each amino acid has a tendency to favor a compact or extended 
-secondary / tertiary structure based on the chemistry of the residue.
+secondary and tertiary structures based on the chemistry of the residue.
 Disorder-promoting residues, those enriched in IDPs, are typically hydrophilic, 
-charged, or small residues. Order promoting residues, those enriched in 
+charged, or small. Order promoting residues, those enriched in 
 structured proteins, tend to be aliphatic, hydrophobic, aromatic, or form
 tertiary structures. Disorder neutral residues neither favor order or disordered
 structures (Uversky, 2019).  
@@ -45,12 +40,18 @@ disorder‐neutral residues are D, T, and R (Uversky, 2013).
 
 ## Quick-use guide
 
+```{r setup}
+library(idpr)
+```
+
+
 The structuralTendency function is used to convert an amino acid sequence
 into a data frame with each residue within the sequence in one column and the
 corresponding structural tendency in another column.
 
 This example will use the *H. sapiens* TP53 sequence, acquired from UniProt 
 (UniProt Consortium 2019)
+and stored within the **idpr** package for examples.
 
 ```{r}
 P53_HUMAN <- idpr:::TP53Sequences[2]
@@ -81,18 +82,26 @@ structuralTendencyPlot(P53_HUMAN,
 
 Like most functions in **idpr**, the structuralTendency function will accept an
 amino acid sequence as a vector of single-letter residues or as a character 
-string. It will also accept a .fasta file as a character string (".fasta" must
-be included within the string).
+string. It will also accept the path to a .fasta file as a character string 
+(".fasta" must be included within the string).
 
-It will result in a data frame with 3 columns. The first column is the Position
-of the residue in the submitted sequence. The second column is the AA residue
-of the sequence. The third column is the Tendency, which is the structural 
+It will result in a data frame with 3 columns. The first column is "Position",
+which indicates the numeric position of the residue in the submitted sequence. 
+The second column is "AA", which indicates the amino acid residue as a single
+letter. The third column is  "Tendency", which indicates the structural 
 tendency of the residue that was matched by the function. 
 
-The following examples will use the *M. musculus* Tp53 sequence,
+The following examples will use the *M. musculus* Tp53 sequence, 
 acquired from UniProt (UniProt Consortium 2019)
+and stored within the **idpr** package for examples.
 ```{r}
 P53_MOUSE <- idpr:::TP53Sequences[1]
+print(P53_MOUSE)
+```
+
+
+This will get the data frame.
+```{r}
 tendencyDF <- structuralTendency(P53_MOUSE)
 head(tendencyDF)
 ```
@@ -117,8 +126,8 @@ Uversky (2013).
 However, there are other definitions of these categories. For example, 
 Dunker et al. (2001) defines these categories as:
 
-* Disorder-promoting: A, R, G, Q, S, P, E, K
-* Order-promoting: W, C, F, I, Y, V, L, N
+* Disorder-promoting: A, R, G, Q, S, P, E, and K
+* Order-promoting: W, C, F, I, Y, V, L, and N
 * Disorder‐neutral: H, M, T, and D.
 * (Dunker et al., 2001)
 
@@ -145,13 +154,14 @@ sequenceMap(
 
 structuralTendencyPlot is a function for summarizing and plotting results from 
 structuralTendency. 
-This function accepts the same arguments as before for sequence and definitions
-of residues.
+This function accepts the same arguments as structuralTendency()
+for sequence and definitions of residue tendency.
 
 The function will get the amino acid comosition for the protein and match
 it to the tendency definition.
 
-The results can be a pie chart (default) or a bar chart. 
+The results can be visualized in the form of a pie chart (default)
+or a bar chart. 
 ```{r}
 structuralTendencyPlot(P53_MOUSE)
 
@@ -163,7 +173,8 @@ structuralTendencyPlot(P53_MOUSE,
 
 In addition to the compositional profile of each residue, a summary of the 
 profile focused only on the structural tendency can be given by setting
-summarize = TRUE. The graphType is preseved.
+summarize = TRUE. This shifts the focus from amino acid identity to the general 
+composition. The graphType is preseved.
 
 ```{r}
 structuralTendencyPlot(P53_MOUSE,

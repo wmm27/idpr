@@ -1,10 +1,10 @@
 ---
-title: "iupred-vignette"
+title: "IUPred Vignette"
 author: "William McFadden"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{iupred-vignette}
+  %\VignetteIndexEntry{IUPred Vignette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -18,17 +18,13 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-library(idpr)
-```
-
 
 # Fetching IUPred Predictions of Intrinsic Disorder
 
 
 ## Quick Start
 
-The functions iupred(), iupredAnchor(), and iupredRedox() are all functions 
+The functions iupred(), iupredAnchor(), and iupredRedox() are all 
 designed to fetch predictions of intrinsic disorder from the IUPred2A REST API. 
 To fetch results, a UniProt ID is needed. 
 
@@ -36,13 +32,21 @@ Predictions are made on a scale of 0-1, where any residues with a score over
 0.5 are predicted to be in a disordered region, and any residue scoring below 
 0.5 are predicted to be ordered.
 
+iupredAnchor() and iupredRedox() provide contet-dependent predictions.
 
 ```{r}
+library(idpr) #Attach the package
+
 p53_ID <- "P04637"
 iupred(p53_ID,
        proteinName = "HUMAN P53")
 ```
 
+**If you use any iupred-based function, please cite the appropriate articles.**
+The following are the most recent papers (as of 6/2020)
+
+* [Mészároset al. (2018)](https://doi.org/10.1093/nar/gky384)
+* [Erdős & Dosztányi (2020)](https://doi.org/10.1002/cpbi.99)
 
 ## Background
 The primary structure of a protein, also known as the amino acid sequence, 
@@ -51,19 +55,19 @@ tools have been developed to make probabilistic predictions of intrinsic
 disorder based on various known properties of Intrinsically 
 Disordered Proteins (IDPs) (Li et al., 2015). 
 
-One example of these is IUPred2A. 
+Some examples of these come from IUPred2A. 
 IUPred2 analyzes an amino acid sequence and returns a score of 
 intrinsic disorder depending on a model of the estimated energy potential for 
 residue interactions (Mészáros, Erdős, & Dosztányi, 2018). This is because 
 structured proteins have the ability to create a network of interactions, while
 IDPs lack abundant interactions. The reduced number of interactions leads to an 
-IDPs lack of secondary and tertiary structure (Dosztányi, 2018). 
+IDP's lack of secondary and tertiary structure (Dosztányi, 2018). 
 
 Predictions are made on a scale of 0-1, where any residues with a score over 0.5 
 are predicted to be in a disordered region, and any residue scoring below 0.5
 are predicted to be ordered.
 
-IUPred2 website is located at https://iupred2a.elte.hu/. 
+The IUPred2A website is located at https://iupred2a.elte.hu/. 
 For detailed information on using IUPred2A, please refer to Erdős & Dosztányi
 (2020) “Analyzing protein disorder with IUPred2A”. Current Protocols in
 Bioinformatics, 70, e99. 
@@ -72,7 +76,7 @@ theory, and applications of IUPred2A.
 
 All iupred functions in **idpr** make a connection to the IUPred2A REST API 
 based on the type of analysis and UniProt accession number within the function’s
-arguments. To make this connection requires that the user to know the UniProt
+arguments. To make this connection, the user must provide the UniProt
 accession number for their protein of interest (UniProt Consortium, 2019). 
 Additionally, the user will need a connection to the internet. 
 The results are then formatted to match output of other **idpr** functions. 
@@ -89,11 +93,24 @@ iupred() has is the core prediction of intrinsic disorder.
 The argument iupredType =  is important to specify depending on the 
 goal of the analysis. 
 
+plotResults = FALSE returns a data frame with 3 columns. 
+The first column is "Position", which indicates the numeric position of the 
+residue in the submitted sequence. 
+The second column is "AA", which indicates the amino acid residue as a single
+letter. 
+The third column is  "IUPred2", which indicates the prediction of intrinsic 
+disorder by IUPred2. 
+
+```{r}
+library(idpr) #Attach the package
+```
+
+
 ### iupredType = "long"
 iupredType =  “long” is the default setting, and the setting that is recommended 
 for predicting intrinsic disorder in proteins (Dosztányi, 2018). 
-This prediction is similar to relevant disordered segments curated within 
-the DisProt Database (Dosztányi, 2018; Hatos et al., 2019). 
+This predits relevant disordered segments like those
+curated within the DisProt Database (Dosztányi, 2018; Hatos et al., 2019). 
 
 ```{r}
 p53_ID <- "P04637"
@@ -134,7 +151,9 @@ head(iupredShortDF)
 ### iupredType = "glob"
 iupredType =  “glob” is the setting that is to help reduce the noise of small 
 disordered regions in otherwise ordered regions and to help identify sequences 
-that are likely to have a specific and rigid fold (Dosztányi, 2018). 
+that are likely to have a specific and rigid fold. Its goal is to predict 
+regions that are not represented in crystallographic experiments 
+(Dosztányi, 2018). 
 ```{r}
 p53_ID <- "P04637"
 iupred(p53_ID,
@@ -176,7 +195,8 @@ iupredAnchor(p53_ID,
              proteinName = "HUMAN P53")
 ```
 
-The data frame has an additional column for ANCHOR2 scores
+The data frame for iupredAnchor has a similar layout to iupred(),
+with an additional column for ANCHOR2 scores.
 ```{r}
 iupredAnchorDF <- iupredAnchor(p53_ID, 
                                plotResults = FALSE)
@@ -184,7 +204,7 @@ head(iupredAnchorDF)
 ```
 
 ## iupredRedox
-Another element influencing the environmental chemistry is the redox potential. 
+Another factor influencing the environmental chemistry is the redox potential. 
 As mentioned before, under native conditions IDPs are unstructured, however when 
 entering a different environment higher-order structures may form and allow IDPs
 to execute their function (Kovacs et al., 2013).
@@ -244,11 +264,24 @@ sequenceMap(sequence = iupredLongDF$AA,
 ```
 
 
+## Getting the UniProt Accession
+
+To make a connection to the IUPred2A REST API, a UniProt Accession ID is 
+required. 
+If a user does not have the ID, it is reccomended to first search for it
+via the UniProt website at https://www.uniprot.org/ .
+If a user does not have the protein name or info to search, a BLAST search on
+UniProt may be helpful at https://www.uniprot.org/blast/ 
+(UniProt Consortium, 2019).
+
+
 ## References
 
 Dosztányi, Z. (2018). Prediction of protein disorder based on IUPred. 
 Protein Sci, 27(1), 331-340. doi:10.1002/pro.3334
 
+Erdős, G., & Dosztányi, Z. (2020). Analyzing protein disorder with IUPred2A. 
+Current Protocols in Bioinformatics, 70, e99. https://doi.org/10.1002/cpbi.99
 
 Hatos, A., Hajdu-Soltész, B., Monzon, A. M., Palopoli, N., Álvarez, L., 
 Aykac-Fas, B., . . . Piovesan, D. (2019). DisProt: intrinsic protein disorder
