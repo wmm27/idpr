@@ -7,7 +7,7 @@
 chargeCalculationGlobal(
   sequence,
   pKaSet = "IPC_protein",
-  pH = 7.2,
+  pH = 7,
   plotResults = FALSE,
   includeTermini = TRUE,
   sumTermini = TRUE,
@@ -18,27 +18,27 @@ chargeCalculationGlobal(
 }
 \arguments{
 \item{sequence}{amino acid sequence as a character string or vector of
-individual residues. alternativly a character string of the path to a
+individual residues. alternatively, a character string of the path to a
 .fasta / .fa file}
 
 \item{pKaSet}{A character string or data frame. "IPC_protein" by default.
 Character string to load specific, preloaded pKa sets.
- c("AA", "EMBOSS", "DTASelect", "Solomons", "Sillero", "Rodwell",
+ c("EMBOSS", "DTASelect", "Solomons", "Sillero", "Rodwell",
   "Lehninger", "Toseland", "Thurlkill", "Nozaki", "Dawson",
-  "Bjellqvist", "ProMoST", "IPC_protein", "IPC_peptide")
+  "Bjellqvist", "ProMoST", "Vollhardt", "IPC_protein", "IPC_peptide")
  Alternativly, the user may supply a custom pKa dataset.
  The format must be a data frame where:
  Column 1 must be a character vector of residues named "AA" AND
  Column 2 must be a numeric vector of pKa values.}
 
-\item{pH}{numeic value, 7.2 by default.
-The envioronmental pH used to calculate residue charge.}
+\item{pH}{numeric value, 7.0 by default.
+The environmental pH used to calculate residue charge.}
 
 \item{plotResults}{logical value, FALSE by default.
 This determines what is returned. If \code{plotResults = FALSE}, a
-dataframe is returned with the position, residue, and charge (-1 to +1). If
-\code{plotResults = TRUE}, a graphical output is returned (ggplot) showing
-the charge distribution.}
+data frame is returned with the position, residue, and charge (-1 to +1).
+If  \code{plotResults = TRUE}, a graphical output is returned (ggplot)
+showing the charge distribution.}
 
 \item{includeTermini, sumTermini}{Logical values, both TRUE by default. This
 determines how the calculation handles the N- and C- terminus.
@@ -47,7 +47,7 @@ amine and carboxyl groups at the ends of the peptide (When TRUE). These
 charges are ignored when \code{includeTermini = FALSE}. sumTermini
 determines if the charge of the first (likely Met, therefore uncharged),
 and final residue (varies) will be added to the termini charges, or if the
-N and C terminus will be returned as seperate residues.
+N and C terminus will be returned as separate residues.
 When \code{sumTermini = TRUE}, charges are summed. When
 \code{sumTermini = FALSE}, the N and C terminus are added as a unique
 residue in the DF. This will impact averages by increasing the sequence
@@ -64,14 +64,14 @@ Will not print if there is a custom dataset.}
 \item{...}{any additional parameters, especially those for plotting.}
 }
 \value{
-If \code{plotResults = FALSE}, a dataframe
+If \code{plotResults = FALSE}, a data frame
   is returned with the position, residue, and charge (-1 to +1). If
   \code{plotResults = TRUE}, a graphical output is returned (ggplot) showing
   the charge distribution.
 }
 \description{
 This function will determine the charge of a peptide using the
-  Henderson-Hasselbalch Equation. The output is a dataframe (default) or
+  Henderson-Hasselbalch Equation. The output is a data frame (default) or q
   plot of charge calculations along the peptide sequence. Charges are
   determined globally, or along the entire chain.
 }

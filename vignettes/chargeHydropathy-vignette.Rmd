@@ -167,15 +167,9 @@ plot(gg)
 ```
 
 Since it is a ggplot, the user can add additional parameters to the plot like 
-labels, custom themes, and other supported features.
-```{r}
-gg <- gg + ggplot2::theme_void() + #Add a different theme
-            ggplot2::annotate("text", #Add text annotations
-                    x = P53_msh - 0.05,
-                    y = P53_nc,
-                    label = "TP53\nSequences")
-plot(gg)
-```
+labels, custom themes, and other supported features. An example of this is
+shown in "Methods".
+
 
 If you do not wish to use the IPC_protein pKa set, you can change this to any 
 accepted by netCharge(). 
@@ -277,18 +271,6 @@ The window size can be specified as well by the "window" argument.
 ```{r}
 scaledHydropathyLocal(HUMAN_P53,
                        window = 3,
-                       plotResults = TRUE)
-```
-
-```{r}
-scaledHydropathyLocal(HUMAN_P53,
-                       window = 7,
-                       plotResults = TRUE)
-```
-
-```{r}
-scaledHydropathyLocal(HUMAN_P53,
-                       window = 11,
                        plotResults = TRUE)
 ```
 
@@ -432,9 +414,6 @@ the termini as seperate values, use sumTermini = FALSE. This will add 2 residues
 to the data frame as "NH3" and "COO"
 
 ```{r}
-chargeCalculationGlobal(HUMAN_P53,
-                        plotResults = TRUE,
-                        sumTermini = FALSE)
 P53_ccg <- chargeCalculationGlobal(HUMAN_P53,
                         sumTermini = FALSE)
 head(P53_ccg)
@@ -445,9 +424,6 @@ If you wish to completly ignore the termini for calculation, set includeTermini
 = FALSE. 
 
 ```{r}
-chargeCalculationGlobal(HUMAN_P53,
-                        plotResults = TRUE,
-                        includeTermini = FALSE)
 P53_ccg <- chargeCalculationGlobal(HUMAN_P53,
                         includeTermini = FALSE)
 head(P53_ccg)
@@ -491,17 +467,6 @@ chargeCalculationLocal(HUMAN_P53,
 The window size can be specified as well via the "window" argument. 
 **This must be an odd integer**
 
-```{r}
-chargeCalculationLocal(HUMAN_P53,
-                       window = 3,
-                       plotResults = TRUE)
-```
-
-```{r}
-chargeCalculationLocal(HUMAN_P53,
-                       window = 7,
-                       plotResults = TRUE)
-```
 
 ```{r}
 chargeCalculationLocal(HUMAN_P53,
@@ -563,12 +528,10 @@ Uversky, V. N. (2019). Intrinsically Disordered Proteins and Their “Mysterious
 (Meta)Physics. Frontiers in Physics, 7(10). doi:10.3389/fphy.2019.00010
 
 
-Uversky, V. N., Gillespie, J. R., & Fink, A. L. (2000).
-Why are “natively unfolded” proteins unstructured under physiologic conditions? 
-Proteins: Structure, Function, and Bioinformatics, 41(3), 415-427.
-doi:10.1002/1097-0134(20001115)41:3<415::AID-PROT130>3.0.CO;2-7
-
-
+Uversky, V. N., Gillespie, J. R., & Fink, A. L. (2000). 
+Why are “natively unfolded” proteins unstructured under physiologic conditions?.
+Proteins: structure, function, and bioinformatics, 41(3), 415-427.
+https://doi.org/10.1002/1097-0134(20001115)41:3<415::AID-PROT130>3.0.CO;2-7
 
 ### Additional Information
 R Version

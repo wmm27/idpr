@@ -1,29 +1,29 @@
 #' Protein Charge Calculation, Globally
 #'
 #' This function will determine the charge of a peptide using the
-#'   Henderson-Hasselbalch Equation. The output is a dataframe (default) or
+#'   Henderson-Hasselbalch Equation. The output is a data frame (default) or q
 #'   plot of charge calculations along the peptide sequence. Charges are
 #'   determined globally, or along the entire chain.
 #'
 #' @param sequence amino acid sequence as a character string or vector of
-#'    individual residues. alternativly a character string of the path to a
+#'    individual residues. alternatively, a character string of the path to a
 #'    .fasta / .fa file
 #' @param pKaSet A character string or data frame. "IPC_protein" by default.
 #'   Character string to load specific, preloaded pKa sets.
-#'    c("AA", "EMBOSS", "DTASelect", "Solomons", "Sillero", "Rodwell",
+#'    c("EMBOSS", "DTASelect", "Solomons", "Sillero", "Rodwell",
 #'     "Lehninger", "Toseland", "Thurlkill", "Nozaki", "Dawson",
-#'     "Bjellqvist", "ProMoST", "IPC_protein", "IPC_peptide")
+#'     "Bjellqvist", "ProMoST", "Vollhardt", "IPC_protein", "IPC_peptide")
 #'    Alternativly, the user may supply a custom pKa dataset.
 #'    The format must be a data frame where:
 #'    Column 1 must be a character vector of residues named "AA" AND
 #'    Column 2 must be a numeric vector of pKa values.
-#' @param pH numeic value, 7.2 by default.
-#'   The envioronmental pH used to calculate residue charge.
+#' @param pH numeric value, 7.0 by default.
+#'   The environmental pH used to calculate residue charge.
 #' @param plotResults logical value, FALSE by default.
 #'   This determines what is returned. If \code{plotResults = FALSE}, a
-#'   dataframe is returned with the position, residue, and charge (-1 to +1). If
-#'   \code{plotResults = TRUE}, a graphical output is returned (ggplot) showing
-#'   the charge distribution.
+#'   data frame is returned with the position, residue, and charge (-1 to +1).
+#'   If  \code{plotResults = TRUE}, a graphical output is returned (ggplot)
+#'   showing the charge distribution.
 #' @param includeTermini,sumTermini Logical values, both TRUE by default. This
 #'   determines how the calculation handles the N- and C- terminus.
 #'   includeTermini determines if the calculation will use the charge of the
@@ -31,7 +31,7 @@
 #'   charges are ignored when \code{includeTermini = FALSE}. sumTermini
 #'   determines if the charge of the first (likely Met, therefore uncharged),
 #'   and final residue (varies) will be added to the termini charges, or if the
-#'   N and C terminus will be returned as seperate residues.
+#'   N and C terminus will be returned as separate residues.
 #'   When \code{sumTermini = TRUE}, charges are summed. When
 #'   \code{sumTermini = FALSE}, the N and C terminus are added as a unique
 #'   residue in the DF. This will impact averages by increasing the sequence
@@ -43,7 +43,7 @@
 #' @param proteinName character string with length = 1.
 #'   optional setting to include the name in the plot title.
 #' @param ... any additional parameters, especially those for plotting.
-#' @return  If \code{plotResults = FALSE}, a dataframe
+#' @return  If \code{plotResults = FALSE}, a data frame
 #'   is returned with the position, residue, and charge (-1 to +1). If
 #'   \code{plotResults = TRUE}, a graphical output is returned (ggplot) showing
 #'   the charge distribution.
@@ -114,15 +114,15 @@
 #' }
 
 chargeCalculationGlobal <- function(
-sequence,
-pKaSet = "IPC_protein",
-pH = 7.2,
-plotResults = FALSE,
-includeTermini = TRUE,
-sumTermini = TRUE,
-proteinName = NA,
-printCitation = FALSE,
-...) {
+  sequence,
+  pKaSet = "IPC_protein",
+  pH = 7.0,
+  plotResults = FALSE,
+  includeTermini = TRUE,
+  sumTermini = TRUE,
+  proteinName = NA,
+  printCitation = FALSE,
+  ...) {
 
   seqCharacterVector <- sequenceCheck(
     sequence = sequence,
@@ -223,12 +223,12 @@ printCitation = FALSE,
   if (plotResults) {
 
     if (!is.na(proteinName)) {
-      plotTitle <- paste0("Disribution of Charged Residues in ", proteinName)
+      plotTitle <- paste0("Distribution of Charged Residues in ", proteinName)
     } else {
-      plotTitle <- "Disribution of Charged Residues"
+      plotTitle <- "Distribution of Charged Residues"
     }
     plotSubtitle <- paste0("Net Charge = ",
-                          totalCharge)
+                           totalCharge)
 
 
     gg <-  sequencePlot(
@@ -253,19 +253,20 @@ printCitation = FALSE,
 #'
 #' This calculates the charge, as determined by the Henderson-Hasselbalch
 #'   equation, for each window along the sequence. This function uses a
-#'   sliding window. The output is either a graph or dataframe of calculations.
+#'   sliding window. The output is either a graph or a data frame of
+#'   calculated charges.
 #' @inheritParams chargeCalculationGlobal
 #' @param sequence amino acid sequence as a single character string
 #'   or vector of single characters.
 #'   It also supports a single character string that specifies
-#'   the locaion of a .fasta or .fa file.
+#'   the location of a .fasta or .fa file.
 #' @param window a positive, odd integer. 7 by default.
 #'   Sets the size of sliding window, must be an odd number.
 #'   The window determines the number of residues to be analyzed and averaged
 #'   for each position along the sequence.
 #' @param plotResults logical value. TRUE by default.
-#'   If \code{plotResults = TRUE}, a ggplot of local charge is returned
-#'   If \code{plotResults = FALSE}, a dataframe of window charges are returned.
+#'   If \code{plotResults = TRUE}, a ggplot of window charges are returned.
+#'   If \code{plotResults = FALSE}, a data frame of window charges are returned.
 #' @param proteinName character string, optional. Used to add protein name
 #'   to the title in ggplot. Ignored if \code{plotResults = FALSE}.
 #' @return see plotResults argument
@@ -326,7 +327,7 @@ printCitation = FALSE,
 chargeCalculationLocal <- function(
   sequence,
   window = 7,
-  pH = 7.2,
+  pH = 7.0,
   pKaSet = "IPC_protein",
   printCitation = FALSE,
   plotResults = FALSE,
@@ -449,14 +450,19 @@ chargeCalculationLocal <- function(
 #' Protein Charge Calculation, Net Charge
 #'
 #' This function will determine the net charge of a peptide using the
-#'   Henderson-Hasselbalch Equation. The output is a numeric value. The output
-#'   is the total net charge, but can be the average net charge.
+#'   Henderson-Hasselbalch Equation. The output is a numeric value describing
+#'   the total net charge or the average net charge.
 #'
 #' @inheritParams chargeCalculationGlobal
 #' @param averaged logical value. FALSE by default.
 #'   When \code{averaged = FALSE}, the total net charge is returned.
 #'   When \code{averaged = TRUE}, the total net charge is averaged by the
 #'   sequence length. This gives a value of -1 to +1.
+#' @param includeTermini Logical value, TRUE by default. This
+#'   determines how the calculation handles the N- and C- terminus.
+#'   includeTermini determines if the calculation will use the charge of the
+#'   amine and carboxyl groups at the ends of the peptide (When TRUE). These
+#'   charges are ignored when \code{includeTermini = FALSE}.
 #' @return numeric value. Either the net charge or average net charge, depending
 #'   on the value of the averaged argument
 #' @family charge functions
@@ -514,7 +520,7 @@ chargeCalculationLocal <- function(
 netCharge <-
   function(sequence,
            pKaSet = "IPC_protein",
-           pH = 7.2,
+           pH = 7.0,
            includeTermini = TRUE,
            averaged = FALSE) {
 

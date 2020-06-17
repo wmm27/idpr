@@ -17,7 +17,7 @@ sequenceCheck(
 \item{sequence}{amino acid sequence as a single character string
 or vector of single characters.
 It also supports a single character string that specifies
-the locaion of a .fasta or .fa file.}
+the path to a .fasta or .fa file.}
 
 \item{method}{Required Setting.
 \code{method = c("stop", "warn")}. "stop" by default.

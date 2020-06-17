@@ -3,7 +3,7 @@
 \name{sequencePlot}
 \alias{sequencePlot}
 \title{Sequence Plot
-This is a graphical function used to visualize numreic
+This is a graphical function used to visualize numeric
   data along an amino acid sequence.}
 \usage{
 sequencePlot(
@@ -29,7 +29,7 @@ to position. This is the Y axis.}
 Prints horizontal lines. Set to NA to skip (default).
  *hline* specifies the location for a dashed,
 grey line to be printed underneath the plot's data line.
-Good for seperating cutoff values. *propertyLimits* specifies the location
+Good for separating cutoff values. *propertyLimits* specifies the location
 for a solid, black line to be printed. Good for showing maximum and
 minimum values.}
 
@@ -40,7 +40,7 @@ categorical (discrete) or continuous. Set to NA to skip (default).}
 \item{customColors}{optional vector of colors as character strings.
 Used to support custom plot colors. If property is a discrete scale, a
 character vector of colors with length = number of unique discrete
-obervations is required. If property is a continuous scale, a character
+observations is required. If property is a continuous scale, a character
 vector of the colors for c("highColor","lowColor","midColor").
 Set NA to skip custom colors (default). Ignored if
 \code{dynamicColor = NA}.}
@@ -59,7 +59,7 @@ a ggplot
 }
 \description{
 Sequence Plot
-This is a graphical function used to visualize numreic
+This is a graphical function used to visualize numeric
   data along an amino acid sequence.
 }
 \examples{

@@ -22,15 +22,15 @@
 #'   a data frame with both IUPred2 long and ANCHOR Predictions. Values are
 #'   fetched by the IUPred2A REST API.
 #'   \cr
-#'   \strong{iupredRedox()} is used to predict redox-senstitive regions that may
+#'   \strong{iupredRedox()} is used to predict redox-sensitive regions that may
 #'   experience induced folding upon changing environments.
 #'   This is a context-dependent predictor of disordered regions depending on
-#'   a reducing (plus) or oxidizing (minus) enviornment. The results can be
+#'   a reducing (plus) or oxidizing (minus) environment. The results can be
 #'   a ggplot with two IUPred2 long predictions, one for plus and another for
-#'   minus enviornments, with redox senstitive regions shaded (if predicted).
-#'   Alternativly, the results can be a data frame with both IUPred2 long plus
+#'   minus environments, with redox sensitive regions shaded (if predicted).
+#'   Alternatively, the results can be a data frame with both IUPred2 long plus
 #'   and minus predictions as well as a column of logical values where a residue
-#'   that is TRUE is predicted to be in a redox senstitive region. Values are
+#'   that is TRUE is predicted to be in a redox sensitive region. Values are
 #'   fetched by the IUPred2A REST API.
 #'   \cr \cr
 #'   IUPred2 website is located at \url{https://iupred2a.elte.hu/}.
@@ -52,11 +52,11 @@
 #'   to the title in ggplot. Ignored if \code{plotResults = FALSE}.
 #' @param plotResults logical value. TRUE by default.
 #'   If \code{plotResults = TRUE}, a ggplot of IUPred predictions is returned
-#'   If \code{plotResults = FALSE}, a dataframe of predictions is returned.
+#'   If \code{plotResults = FALSE}, a data frame of predictions is returned.
 #' @return see plotResults argument.
 #' @section Prediction Type:
 #'   Information from \url{https://iupred2a.elte.hu/help_new} on 5.22.20
-#'   Additionally, see the sources for futher details and source information.
+#'   Additionally, see the sources for further details and source information.
 #'   This is only relevant for iupred(). iupredAnchor() and iupredRedox()
 #'   always utilize "long" for data in the REST API.
 #'   \itemize{

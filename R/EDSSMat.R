@@ -9,7 +9,7 @@
 #'    predicted intrinsically disordered regions. When compared to other, more
 #'    frequently used substitution matrices (like BLOSUM and PAM), EDSSMat
 #'    had significantly smaller E-values when aligning regions of disorder.
-#'    Additionally, EDSSMat62 was shown to identfy both close and distant
+#'    Additionally, EDSSMat62 was shown to identify both close and distant
 #'    homologs of a specific IDP while other matrices could only identify some
 #'    close homologs. See the source article for additional information
 #'    and for comparisons to other matrices. \cr \cr
@@ -30,16 +30,16 @@
 #'
 #' @section Matrices:
 #'   There are 7 reported EDSSMat matrices. Each vary depending on the percent
-#'   identity treshold used to cluster protein sequences.
-#'   EDSSMat50 clustered proteins with 50\% idenity or higher,
-#'   EDSSMat62 clustered proteins with 62\% idenity or higher, etc. \cr
-#'   \strong{See Usage Section for avaliable matrices}
+#'   identity threshold used to cluster protein sequences.
+#'   EDSSMat50 clustered proteins with 50\% identity or higher,
+#'   EDSSMat62 clustered proteins with 62\% identity or higher, etc. \cr
+#'   \strong{See Usage Section for available matrices}
 #'
 #' @section Optimal Gap Parameters:
 #'   These values were described in the source article, and reported in
-#'   Supplemental Table S5. Therefore, it is reccomended to use these parameters
+#'   Supplemental Table S5. Therefore, it is recommended to use these parameters
 #'   for any alignment utilizing the respective EDSS matrix. These were
-#'   determined for 3 categories: Proteins contatining Less Disorder (LD),
+#'   determined for 3 categories: Proteins containing Less Disorder (LD),
 #'   defined as [0-20\%] disorder, Moderate Disorder (MD), defined as (20-40\%]
 #'   disorder, and High Disorder (HD), defined as (40-100\%] disorder. \cr
 #'   Please see the source article for additional information.
@@ -59,6 +59,7 @@
 #'   \url{https://doi.org/10.1038/s41598-019-52532-8}
 #' @family IDP-based Substitution Matrices
 #' @name EDSSMat
+
 NULL
 
 

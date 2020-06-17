@@ -2,18 +2,23 @@
 #'
 #' This function calculates the average net charge <R> and the average
 #'   scaled hydropathy <H> and visualizes the data. There are known boundaries
-#'   on the C-H plot that seperate extended and collapsed proteins. \cr
+#'   on the C-H plot that separate extended and collapsed proteins. \cr
+#'   This was originally described in Uversky et al. (2000)\cr
+#'   \url{https://doi.org/10.1002/1097-0134(20001115)41:3<415::AID-PROT130>3.0.CO;2-7}
+#'   . \cr
+#'   The plot returned is based on the charge-hydropathy plot from
+#'   Uversky (2016) \url{https://doi.org/10.1080/21690707.2015.1135015}. \cr
 #'   See Uversky (2019) \url{https://doi.org/10.3389/fphy.2019.00010} for
-#'   additional information. This plot has been referred to as a
-#'   "Uversky Plot".
+#'   additional information and a recent review on the topic.
+#'   This plot has also been referred to as a "Uversky Plot".
 #' @param sequence amino acid sequence (or pathway to a fasta file)
 #'   as a character string. Supports multiple sequences / files, as a
 #'   character vector of strings. Additionally, this supports a single protein
-#'   as character vectors. Multiple protiens are not supported as a character
+#'   as character vectors. Multiple proteins are not supported as a character
 #'   vector of single characters.
 #' @param displayInsolubility logical value, TRUE by default.
-#'   This adds (or removes when FALSE) the verticle line
-#'   seperating collapsed proteins and insoluble proteins
+#'   This adds (or removes when FALSE) the vertical line
+#'   separating collapsed proteins and insoluble proteins
 #' @param insolubleValue numerical value. 0.7 by default.
 #'   Ignored when \code{displayInsolubility = FALSE}. Plots the vertical line
 #'   \eqn{<H> = displayInsolubility}.
@@ -22,6 +27,8 @@
 #'   is only one protein, or to create a custom plot title for the output.
 #' @param pKaSet pKa set used for charge calculations. See
 #'   \code{\link{netCharge}} for additional details
+#' @param pH numeric value, 7.0 by default.
+#'   The environmental pH used to calculate residue charge.
 #' @param ... additional arguments to be passed to
 #'   \link[idpr:netCharge]{idpr::netCharge()},
 #'   \link[idpr:meanScaledHydropathy]{idpr::meanScaledHydropathy()} or
@@ -39,8 +46,15 @@
 #'   Journal of molecular biology, 157(1), 105-132. \cr
 #'   Uversky, V. N. (2019). Intrinsically Disordered Proteins and Their
 #'   “Mysterious” (Meta)Physics. Frontiers in Physics, 7(10).
-#'   \url{https://doi.org/10.3389/fphy.2019.00010}
-#'
+#'   \url{https://doi.org/10.3389/fphy.2019.00010} \cr
+#'   Uversky, V. N. (2016). Paradoxes and wonders of intrinsic disorder:
+#'   Complexity of simplicity. Intrinsically Disordered Proteins, 4(1),
+#'   e1135015. \url{https://doi.org/10.1080/21690707.2015.1135015} \cr
+#'   Uversky, V. N., Gillespie, J. R., & Fink, A. L. (2000).
+#'   Why are “natively unfolded” proteins unstructured under physiologic
+#'   conditions?. Proteins: structure, function, and bioinformatics, 41(3),
+#'   415-427.
+#'   \url{https://doi.org/10.1002/1097-0134(20001115)41:3<415::AID-PROT130>3.0.CO;2-7}
 #' @export
 #' @examples
 #' \dontrun{
@@ -88,6 +102,7 @@ chargeHydropathyPlot <- function(
   insolubleValue = 0.7,
   proteinName = NA,
   customPlotTitle = NA,
+  pH = 7.0,
   pKaSet = "IPC_protein",
   ...) {
 
@@ -115,7 +130,7 @@ chargeHydropathyPlot <- function(
     dataCollected$avg_net_charge[i] <-
       netCharge(sequence = sequence.i,
                 pKaSet = pKaSet,
-                pH = 7.2,
+                pH = pH,
                 includeTermini = TRUE,
                 averaged = TRUE)
 

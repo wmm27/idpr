@@ -22,7 +22,7 @@ Kyte, Jack, and Russell F. Doolittle.
 KDNorm
 }
 \description{
-A dataset contatining a measure of hydropathy for each amino acid residue
+A dataset containing a measure of hydropathy for each amino acid residue
   as reported by Kyte J. and Doolittle R.F. (1982). Values normalized from
   0 to 1. \cr If you use these values, please cite the source article.
 }

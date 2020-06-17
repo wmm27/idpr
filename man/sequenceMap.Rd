@@ -19,21 +19,21 @@ sequenceMap(
 \item{sequence}{amino acid sequence as a single character string
 or vector of single characters.
 It also supports a single character string that specifies
-the locaion of a .fasta or .fa file.}
+the path to a .fasta or .fa file.}
 
 \item{property}{a vector with length equal to sequence length.
 This is what is visualized on the function.
-Can be discrete or contnious values.}
+Can be discrete or continuous values.}
 
 \item{nbResidues}{numeric value, 30 by default.
 The number of residues to display on each row of the plot.
-It is not reccomended to be over 50 or under 10 for standard sequences.
+It is not recommended to be over 50 or under 10 for standard sequences.
 Optimal value may vary between sequences of extreme lengths.}
 
 \item{labelType}{character string, "both" by default.
 accepted values are \code{labelType = c("both", "AA", "number", "none")}.
 "both" shows both amino acid residue and residue number. "AA" and "number"
-show either the amino acid residue or the residue number, respectivly.
+show either the amino acid residue or the residue number, respectively.
 "none" only shows graphical values without labels.
 NOTE: When using "both", *everyN*, *labelLocation*, and *rotationAngle*
 all require vectors of length = 2 where the first value applies to the
@@ -43,7 +43,7 @@ require a single value. If a vector us provided, only the first value
 will be used.}
 
 \item{everyN}{numeric value or vector of numeric values with length = 2.
-This is used to show evey Nth amino acid and/or residue number.
+This is used to show every Nth amino acid and/or residue number.
 To show every value, set \code{everyN = 1} or \code{everyN = c(1, 1)}.}
 
 \item{labelLocation}{character string or vector of character strings
@@ -61,13 +61,12 @@ useful when printing many residue numbers.}
 \item{customColors}{vector of colors as character strings. NA by default.
 Used to support custom plot colors. If property is a discrete scale, a
   character vector of colors with length = number of unique discrete
-  obervations is required. If property is a continuous scale, a character
+  observations is required. If property is a continuous scale, a character
   vector of the colors for c("highColor","lowColor","midColor").
   Set NA to skip custom colors.}
 }
 \value{
-A ggplot. Can be plotted immediatly or
-  additional layers can be added.
+A ggplot.
 }
 \description{
 This is a graphical function used to visualize data along an

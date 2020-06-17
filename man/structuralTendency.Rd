@@ -16,7 +16,7 @@ structuralTendency(
 \item{sequence}{amino acid sequence as a single character string
 or vector of single characters.
 It also supports a single character string that specifies
-the locaion of a .fasta or .fa file.}
+the path to a .fasta or .fa file.}
 
 \item{disorderPromoting, disorderNeutral, orderPromoting}{character vectors
 of individual residues to be matched with the input sequence. Defaults:
@@ -26,25 +26,26 @@ of individual residues to be matched with the input sequence. Defaults:
      c("M", "N", "V", "H", "L", "F", "Y", "I", "W", "C")
   \item disorderNeutral = c("D", "T", "R")
 }
-It is not reccomended to change these.}
+It is not recommended to change these. These definitions are from
+Uversky (2013).}
 
 \item{printCitation}{logical, FALSE by default.
 When \code{printCitation = TRUE}, a citation to the paper
 categorizing the strucutral impact of each residue is printed.}
 }
 \value{
-a dataframe containing each residue from the sequence
+a data frame containing each residue from the sequence
   matched with its structural tendancy, defined by disorderPromoting,
   disorderNeutral, and orderPromoting.
   For convenient plotting see \code{\link{structuralTendencyPlot}}.
 }
 \description{
-Each amino acid residue has a  tendency to impact the order / disorder
+Each amino acid residue has a tendency to impact the order / disorder
   of the amino acid sequence. Some residues are disorder promoting, meaning
   they tend to favor disorder over ordered structures. These are typically
-  hydophillic, charged, or small residues. Order promoting residues tend
+  hydrophilic, charged, or small residues. Order promoting residues tend
   to be aliphatic, hydrophobic, aromatic, or form tertiary structures.
-  Disorder neutral residues neither favor order or disordered strucutres.
+  Disorder neutral residues neither favor order or disordered structures.
 }
 \examples{
 #Amino acid sequences can be character strings
@@ -72,7 +73,10 @@ exampleDF <- structuralTendency(aaString,
 head(exampleDF)
 }
 \references{
-Kulkarni, Prakash, and Vladimir N. Uversky. "Intrinsically
+Uversky, V. N. (2013). A decade and a half of protein intrinsic disorder:
+  Biology still waits for physics. Protein Science, 22(6), 693-724.
+  \url{https://doi.org/10.1002/pro.2261}. \cr
+  Kulkarni, Prakash, and Vladimir N. Uversky. "Intrinsically
   disordered proteins: the dark horse of the dark proteome."
   Proteomics 18.21-22 (2018): 1800061.
   \url{https://doi.org/10.1002/pmic.201800061}.

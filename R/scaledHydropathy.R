@@ -1,7 +1,7 @@
 #' Calculate the Average Scaled Hydropathy of an Amino Acid Sequence
 #'
 #' This is used to calculate the scaled hydropathy of an amino acid
-#'   sequence using a sliding window. The output is either a dataframe or graph
+#'   sequence using a sliding window. The output is either a data frame or graph
 #'   showing the calculated scores for each window along the sequence.
 #' @inheritParams sequenceCheck
 #'
@@ -283,7 +283,7 @@ scaledHydropathyGlobal <- function(
 #'
 #' This is used to calculate the scaled hydropathy of an amino acid
 #'   sequence for each residue in the sequence.
-#'   The output is either a dataframe or graph
+#'   The output is either a data frame or graph
 #'   showing the matched scores for each residue along the sequence.
 #'
 #' @inheritParams sequenceCheck
@@ -296,7 +296,7 @@ scaledHydropathyGlobal <- function(
 #' @param ... any additional parameters, especially those for plotting.
 #' @return if \code{plotResults = TRUE}, a graphical representation data.
 #'   Average is shown by the horizontal line.
-#'   If \code{plotResults = FALSE}, a dataframe is reported
+#'   If \code{plotResults = FALSE}, a data frame is reported
 #'   with each amino acid and each residue value shown.
 #'   Score for each residue shown in the column "Hydropathy".
 #' @family scaled hydropathy functions
@@ -396,11 +396,9 @@ scaledHydropathyGlobal <- function(
     return(hydropathyDF)
   }
 }
-
-
 #' Calculate the Mean Scaled Hydropathy
 #'
-#' This funciton utlilizes the scaledHydropathyGlobal() function and
+#' This function utilizes the scaledHydropathyGlobal() function and
 #'   easily returns the averaged hydropathy as a numeric value.
 #'
 #' @inheritParams sequenceCheck

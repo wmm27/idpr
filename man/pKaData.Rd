@@ -7,9 +7,9 @@
 \format{
 a data frame with 10 rows and 16 variables.
 \describe{
-   \item{AA}{Amino acid residues as a single letter. \cr Resudues are:
+   \item{AA}{Amino acid residues as a single letter. \cr Residues are:
      Cys (C), Asp (D), Glu (E), His (H), Lys (K), Arg (R), and Tyr (Y).\cr
-     N- and C-termini as NH2 and COOH, respectivly. "citation"
+     N- and C-termini as NH2 and COOH, respectively. "citation"
      in the final row}
    \item{EMBOSS}{pKa Dataset from
      \url{https://doi.org/10.1016/S0168-9525(00)02024-2}}
@@ -56,7 +56,7 @@ Biology Direct, 11(1), 55.
 pKaData
 }
 \description{
-A dataset contatining the various pKa accepted values for each charged amino
+A dataset containing the various pKa accepted values for each charged amino
   acid residue. N- and C-terminus values are also included. See "IPC -
   Isoelectric Point Calculator" Kozlowski (2016) for information on
   variability in pKa Data sets.
@@ -72,8 +72,8 @@ A dataset contatining the various pKa accepted values for each charged amino
  from data presented in IPC. When values could not be sourced to the original
  source, values were taken from Kozlowski (2016),
  \url{https://doi.org/10.1186/s13062-016-0159-9}. Both Kozlowski (2016) and
- the orignal source DOI (where avalible) or ISBN are provided within the
- Format section of this documention.
+ the original source DOI (where available) or ISBN are provided within the
+ Format section of this documentation.
 }
 
 \section{Full Citations}{

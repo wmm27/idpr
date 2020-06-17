@@ -15,7 +15,6 @@
 #' @return A data frame with rows containing the amino acid sequence, residue
 #'   position within the sequence, as well as the row and column of each
 #'   residue within the ggplot output of sequenceMap().
-#'
 #' @seealso \code{\link{sequenceMapCoordinates}} for mapping coordinates
 #' @export
 #' @examples
@@ -108,15 +107,15 @@ sequenceMapCoordinates <-
 #' @inheritParams sequenceCheck
 #' @param property a vector with length equal to sequence length.
 #'   This is what is visualized on the function.
-#'   Can be discrete or contnious values.
+#'   Can be discrete or continuous values.
 #' @param nbResidues numeric value, 30 by default.
 #'   The number of residues to display on each row of the plot.
-#'   It is not reccomended to be over 50 or under 10 for standard sequences.
+#'   It is not recommended to be over 50 or under 10 for standard sequences.
 #'   Optimal value may vary between sequences of extreme lengths.
 #' @param labelType character string, "both" by default.
 #'   accepted values are \code{labelType = c("both", "AA", "number", "none")}.
 #'   "both" shows both amino acid residue and residue number. "AA" and "number"
-#'   show either the amino acid residue or the residue number, respectivly.
+#'   show either the amino acid residue or the residue number, respectively.
 #'   "none" only shows graphical values without labels.
 #'   NOTE: When using "both", *everyN*, *labelLocation*, and *rotationAngle*
 #'   all require vectors of length = 2 where the first value applies to the
@@ -125,7 +124,7 @@ sequenceMapCoordinates <-
 #'   require a single value. If a vector us provided, only the first value
 #'   will be used.
 #' @param everyN numeric value or vector of numeric values with length = 2.
-#'   This is used to show evey Nth amino acid and/or residue number.
+#'   This is used to show every Nth amino acid and/or residue number.
 #'   To show every value, set \code{everyN = 1} or \code{everyN = c(1, 1)}.
 #' @param labelLocation character string or vector of character strings
 #'   with length = 2. When \code{labelLocation = "on"}, the text is layered
@@ -140,12 +139,11 @@ sequenceMapCoordinates <-
 #' @param customColors vector of colors as character strings. NA by default.
 #' Used to support custom plot colors. If property is a discrete scale, a
 #'   character vector of colors with length = number of unique discrete
-#'   obervations is required. If property is a continuous scale, a character
+#'   observations is required. If property is a continuous scale, a character
 #'   vector of the colors for c("highColor","lowColor","midColor").
 #'   Set NA to skip custom colors.
 #'
-#' @return A ggplot. Can be plotted immediatly or
-#'   additional layers can be added.
+#' @return A ggplot.
 #' @export
 #' @seealso \code{\link{sequenceMapCoordinates}} for mapping coordinates
 #' @examples
@@ -370,103 +368,3 @@ sequenceMap <- function(
   }
   return(gg)
 }
-
-#' Sequence Map Coordinates
-#'
-#' This is a function used to create a coordinate grid for the
-#'   \code{\link{sequenceMap}} function. It is based on the length of the
-#'   sequence being mapped, and how many residues per line are specified.
-#'   The function wraps the sequence to have a number of columns that is
-#'   the sequence length / number of residues per row, rounded up. \cr\cr
-#'   This is intended for use within the sequenceMap function, however, this
-#'   can also be used to identify the coordinates of residues within the ggplot
-#'   coordinate plane for addition annotations.
-#'
-#' @inheritParams sequenceMap
-#' @inheritParams sequenceCheck
-#'
-#' @return A data frame with rows containing the amino acid sequence, residue
-#'   position within the sequence, as well as the row and column of each
-#'   residue within the ggplot output of sequenceMap().
-#'
-#' @seealso \code{\link{sequenceMapCoordinates}} for mapping coordinates
-#' @export
-#' @examples
-#' #Amino acid sequences can be character strings
-#' aaString <- "ACDEFGHIKLMNPQRSTVWY"
-#' #Amino acid sequences can also be character vectors
-#' aaVector <- c("A", "C", "D", "E", "F",
-#'            "G", "H", "I", "K", "L",
-#'            "M", "N", "P", "Q", "R",
-#'            "S", "T", "V", "W", "Y")
-#' #Alternativly, .fasta files can also be used by providing
-#' ##The path to the file as a character string
-#'
-#' exampleDF <- sequenceMapCoordinates(aaString,
-#'                                   nbResidues = 10)
-#' head(exampleDF)
-#'
-#' exampleDF <- sequenceMapCoordinates(aaVector,
-#'                                  nbResidues = 10)
-#' head(exampleDF)
-#'
-#' \dontrun{
-#'  #Making a sequenceMap ggplot to annotate
-#' gg <- sequenceMap(sequence = tendencyDF$AA,
-#'             property = tendencyDF$Tendency,
-#'              nbResidues = 3,
-#'               labelType = "both")
-#'
-#' #Change the nbResidues to correspond to the sequenceMap setting
-#' mapCoordDF <- sequenceMapCoordinates(aaString,
-#'                                   nbResidues = 3)
-#' head(mapCoordDF)
-#'
-#' #subsetting for positive residues
-#' mapCoordDF_subset <- mapCoordDF$AA %in% c("K", "R", "H")
-#' mapCoordDF_subset <- mapCoordDF[mapCoordDF_subset,]
-#'
-#' #use mapCoordDF to annotate positive residues with a plus
-#' library(ggplot2)
-#' gg <- gg + geom_point(inherit.aes = FALSE,
-#'                     data = mapCoordDF_subset,
-#'                    aes(x = col + 0.5, #to center on the residue
-#'                        y = row + 0.2), #to move above on the residue
-#'                    color = "purple",
-#'                    size = 3,
-#'                    shape = 3)
-#' plot(gg)
-#' }
-
-sequenceMapCoordinates <-
-  function(sequence,
-           nbResidues = 30) {
-
-    seqCharacterVector <- sequenceCheck(
-      sequence = sequence,
-      method = "stop",
-      outputType = "vector",
-      supressOutputMessage = T)
-
-    seqLength <- length(seqCharacterVector)
-    seqDF <- data.frame(Position = c(1:seqLength),
-                        AA = seqCharacterVector)
-    nRows <- ceiling(seqLength / nbResidues)
-    rowVector <- rep(1, seqLength)
-    colVector <- c(1:seqLength)
-    if (nRows > 1) {
-      for (i in 1:(nRows)) {
-        iteration <- i - 1
-        row.i <- nRows - (iteration)
-        start.i <- 1 + nbResidues * (iteration)
-        end.i <- nbResidues +  nbResidues * (iteration)
-        rowVector[start.i:end.i] <- row.i
-        colVector[start.i:end.i] <- c(1:nbResidues)
-      }
-    }
-
-    seqDF$row <- rowVector[1:seqLength]
-    seqDF$col <- colVector[1:seqLength]
-
-    return(seqDF)
-  }

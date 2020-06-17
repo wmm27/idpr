@@ -12,7 +12,7 @@ scaledHydropathyGlobal(sequence, plotResults = FALSE, proteinName = NA, ...)
 \item{sequence}{amino acid sequence as a single character string
 or vector of single characters.
 It also supports a single character string that specifies
-the locaion of a .fasta or .fa file.}
+the path to a .fasta or .fa file.}
 
 \item{plotResults}{logical value, FALSE by default.
 If \code{plotResults = TRUE} a plot will be the output.
@@ -32,7 +32,7 @@ if \code{plotResults = TRUE}, a graphical representation data.
 
 if \code{plotResults = TRUE}, a graphical representation data.
   Average is shown by the horizontal line.
-  If \code{plotResults = FALSE}, a dataframe is reported
+  If \code{plotResults = FALSE}, a data frame is reported
   with each amino acid and each residue value shown.
   Score for each residue shown in the column "Hydropathy".
 }
@@ -44,7 +44,7 @@ This is used to calculate the scaled hydropathy of an amino acid
 
 This is used to calculate the scaled hydropathy of an amino acid
   sequence for each residue in the sequence.
-  The output is either a dataframe or graph
+  The output is either a data frame or graph
   showing the matched scores for each residue along the sequence.
 }
 \examples{

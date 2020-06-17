@@ -102,11 +102,6 @@ sequenceMap(
   sequence = tendencyDF$AA,
   property = tendencyDF$Tendency,
   labelType = "number") #Only residue numner labels
-
-sequenceMap(
-  sequence = tendencyDF$AA,
-  property = tendencyDF$Tendency,
-  labelType = "none") #No labels
 ```
 
 There is also the option of where to plot the labels. either "on" or 
@@ -161,26 +156,12 @@ sequenceMap(
   labelType = "number",
   labelLocation = "on",
   everyN = 10) #Every 10th residue is printed
-
-sequenceMap(
-  sequence = tendencyDF$AA,
-  property = tendencyDF$Tendency,
-  labelType = "number",
-  labelLocation = "on",
-  everyN = 30) #Every 30th residue is printed
 ```
 
 You can also change the number of residues on each line with nbResidues. 
 This helps improve visualization based on the sequence size. Visualizing a 
 larger sequence will likely benefit from a larger nbResidues value.
 ```{r}
-sequenceMap(
-  sequence = tendencyDF$AA,
-  property = tendencyDF$Tendency,
-  labelType = "number",
-  labelLocation = "on",
-  nbResidues = 30) #30 residues each row
-
 sequenceMap(
   sequence = tendencyDF$AA,
   property = tendencyDF$Tendency,
@@ -341,15 +322,7 @@ sequencePlot(
   position = exampleDF$Position,
   property = exampleDF$Charge)
 
-#Change / add the horizontal lines
-sequencePlot(
-position = exampleDF$Position,
-property = exampleDF$Charge,
-hline = 0.0,
-propertyLimits = c(-1.0, 1.0))
-
-
-#Adding a dynamic colors based on the property values
+#Adding a dynamic colors based on the property values and horizontal lines
 sequencePlot(
 position = exampleDF$Position,
   property = exampleDF$Charge,
@@ -359,7 +332,6 @@ dynamicColor = exampleDF$Charge,
 customColors = c("red", "blue", "grey50"),
 customTitle = "Charge of Each Residue / Terminus")
 ```
-
 
 
 

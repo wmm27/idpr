@@ -1,6 +1,6 @@
 #' Kyte and Doolittle Scaled Hydropathy Index
 #'
-#' A dataset contatining a measure of hydropathy for each amino acid residue
+#' A dataset containing a measure of hydropathy for each amino acid residue
 #'   as reported by Kyte J. and Doolittle R.F. (1982). Values normalized from
 #'   0 to 1. \cr If you use these values, please cite the source article.
 #' @format a data frame with 20 rows, one for each standard amino acid, and

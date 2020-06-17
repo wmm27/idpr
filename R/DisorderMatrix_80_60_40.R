@@ -1,12 +1,12 @@
 #' Disorder-based Substitution Matrices.
 #'
 #' \strong{The Disorder40, Disorder60, and Disorder85 Matrices were
-#'   deveveloped and described in
+#'   developed and described in
 #'   \href{https://doi.org/10.1093/molbev/msp277}{Brown et al. (2009)}.} \cr
 #'    In short: There are substitution scoring matrices used to align proteins
 #'    or regions which experience intrinsic disorder. The matrices were
 #'    calculated using pairwise sequence alignments of protein families
-#'    which here identified from 287 experimentally confirmed Intrinsially
+#'    which here identified from 287 experimentally confirmed Intrinsically
 #'    Disordered Proteins (IDPs). The IDPs contained at least 30 sequential
 #'    residues of intrinsic disorder and protein families were found using
 #'    BLAST.\cr There was not a comprehensive comparison to other frequently
@@ -70,6 +70,7 @@
 #' @family IDP-based Substitution Matrices
 #' @seealso EDSSMat62
 #' @name DisorderMat
+
 NULL
 
 

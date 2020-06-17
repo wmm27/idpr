@@ -16,7 +16,7 @@ scaledHydropathyLocal(
 \item{sequence}{amino acid sequence as a single character string
 or vector of single characters.
 It also supports a single character string that specifies
-the locaion of a .fasta or .fa file.}
+the path to a .fasta or .fa file.}
 
 \item{window}{a positive, odd integer. 7 by default.
 Sets the size of sliding window, must be an odd number.
@@ -38,7 +38,7 @@ see plotResults argument
 }
 \description{
 This is used to calculate the scaled hydropathy of an amino acid
-  sequence using a sliding window. The output is either a dataframe or graph
+  sequence using a sliding window. The output is either a data frame or graph
   showing the calculated scores for each window along the sequence.
 }
 \examples{

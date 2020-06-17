@@ -7,7 +7,7 @@
 chargeCalculationLocal(
   sequence,
   window = 7,
-  pH = 7.2,
+  pH = 7,
   pKaSet = "IPC_protein",
   printCitation = FALSE,
   plotResults = FALSE,
@@ -19,21 +19,21 @@ chargeCalculationLocal(
 \item{sequence}{amino acid sequence as a single character string
 or vector of single characters.
 It also supports a single character string that specifies
-the locaion of a .fasta or .fa file.}
+the location of a .fasta or .fa file.}
 
 \item{window}{a positive, odd integer. 7 by default.
 Sets the size of sliding window, must be an odd number.
 The window determines the number of residues to be analyzed and averaged
 for each position along the sequence.}
 
-\item{pH}{numeic value, 7.2 by default.
-The envioronmental pH used to calculate residue charge.}
+\item{pH}{numeric value, 7.0 by default.
+The environmental pH used to calculate residue charge.}
 
 \item{pKaSet}{A character string or data frame. "IPC_protein" by default.
 Character string to load specific, preloaded pKa sets.
- c("AA", "EMBOSS", "DTASelect", "Solomons", "Sillero", "Rodwell",
+ c("EMBOSS", "DTASelect", "Solomons", "Sillero", "Rodwell",
   "Lehninger", "Toseland", "Thurlkill", "Nozaki", "Dawson",
-  "Bjellqvist", "ProMoST", "IPC_protein", "IPC_peptide")
+  "Bjellqvist", "ProMoST", "Vollhardt", "IPC_protein", "IPC_peptide")
  Alternativly, the user may supply a custom pKa dataset.
  The format must be a data frame where:
  Column 1 must be a character vector of residues named "AA" AND
@@ -45,8 +45,8 @@ This allows for the user to easily obtain the dataset citation.
 Will not print if there is a custom dataset.}
 
 \item{plotResults}{logical value. TRUE by default.
-If \code{plotResults = TRUE}, a ggplot of local charge is returned
-If \code{plotResults = FALSE}, a dataframe of window charges are returned.}
+If \code{plotResults = TRUE}, a ggplot of window charges are returned.
+If \code{plotResults = FALSE}, a data frame of window charges are returned.}
 
 \item{proteinName}{character string, optional. Used to add protein name
 to the title in ggplot. Ignored if \code{plotResults = FALSE}.}
@@ -59,7 +59,8 @@ see plotResults argument
 \description{
 This calculates the charge, as determined by the Henderson-Hasselbalch
   equation, for each window along the sequence. This function uses a
-  sliding window. The output is either a graph or dataframe of calculations.
+  sliding window. The output is either a graph or a data frame of
+  calculated charges.
 }
 \examples{
  #Amino acid sequences can be character strings

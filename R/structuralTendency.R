@@ -1,12 +1,11 @@
 #' Structural Tendency of Amino Acid Residues
 #'
-#' Each amino acid residue has a  tendency to impact the order / disorder
+#' Each amino acid residue has a tendency to impact the order / disorder
 #'   of the amino acid sequence. Some residues are disorder promoting, meaning
 #'   they tend to favor disorder over ordered structures. These are typically
-#'   hydophillic, charged, or small residues. Order promoting residues tend
+#'   hydrophilic, charged, or small residues. Order promoting residues tend
 #'   to be aliphatic, hydrophobic, aromatic, or form tertiary structures.
-#'   Disorder neutral residues neither favor order or disordered strucutres.
-#'
+#'   Disorder neutral residues neither favor order or disordered structures.
 #' @inheritParams sequenceCheck
 #' @param printCitation logical, FALSE by default.
 #'    When \code{printCitation = TRUE}, a citation to the paper
@@ -19,13 +18,18 @@
 #'         c("M", "N", "V", "H", "L", "F", "Y", "I", "W", "C")
 #'      \item disorderNeutral = c("D", "T", "R")
 #'    }
-#'    It is not reccomended to change these.
-#' @return a dataframe containing each residue from the sequence
+#'    It is not recommended to change these. These definitions are from
+#'    Uversky (2013).
+#' @return a data frame containing each residue from the sequence
 #'   matched with its structural tendancy, defined by disorderPromoting,
 #'   disorderNeutral, and orderPromoting.
 #'   For convenient plotting see \code{\link{structuralTendencyPlot}}.
 #' @family structural tendency
-#' @references Kulkarni, Prakash, and Vladimir N. Uversky. "Intrinsically
+#' @references
+#'   Uversky, V. N. (2013). A decade and a half of protein intrinsic disorder:
+#'   Biology still waits for physics. Protein Science, 22(6), 693-724.
+#'   \url{https://doi.org/10.1002/pro.2261}. \cr
+#'   Kulkarni, Prakash, and Vladimir N. Uversky. "Intrinsically
 #'   disordered proteins: the dark horse of the dark proteome."
 #'   Proteomics 18.21-22 (2018): 1800061.
 #'   \url{https://doi.org/10.1002/pmic.201800061}.
@@ -91,14 +95,15 @@ structuralTendency <- function(
   structureTendencyDF$Position <- as.numeric(structureTendencyDF$Position)
 
   if (printCitation) {
-    residueCitation <- "Kulkarni, P., & Uversky, V. N. (2018).
-        Intrinsically disordered proteins: the dark horse of the dark proteome.
-        Proteomics, 18(21-22), 1800061."
+    residueCitation <- "Uversky, V. N. (2013).
+     A decade and a half of protein intrinsic disorder:
+     Biology still waits for physics.
+     Protein Science, 22(6), 693-724.
+     doi:10.1002/pro.2261"
     print(residueCitation)
   }
   return(structureTendencyDF)
 }
-
 
 
 
@@ -113,17 +118,17 @@ structuralTendency <- function(
 #'   graphType must be set to c("pie", "bar", "none").
 #'   When \code{graphType = "pie"}, the output is a pie chart.
 #'   When \code{graphType = "bar"}, the output is a bar chart.
-#'   When \code{graphType = "none"}, the output is the dataframe that would
+#'   When \code{graphType = "none"}, the output is the data frame that would
 #'   otherwise be used to plot the data.
 #' @param summarize logical value, FALSE by default.
-#'   When \code{summarize = TRUE}, each residue is agregated into Disorder
-#'   Tendancy Groups. (See \code{\link{structuralTendency}} for more details).
+#'   When \code{summarize = TRUE}, each residue is aggregated into Disorder
+#'   Tendency Groups. (See \code{\link{structuralTendency}} for more details).
 #'   When \code{summarize = FALSE}, residue identity is preserved and
-#'   the output is colored by Disorder Tendancy Groups.
+#'   the output is colored by Disorder Tendency Groups.
 #' @param alphabetical logical value, FALSE by default.
 #'   Order of residues on plot axis. Only relevant when
 #'    \code{summarize = FALSE}, otherwise is ignored.
-#'    If FALSE, ordering is grouped by Disorder Tendancy (P, E, S, ..., W, C).
+#'    If FALSE, ordering is grouped by Disorder Tendency (P, E, S, ..., W, C).
 #'    If TRUE, the residues are ordered alphabetically (A, C, D, E, ..., W, Y).
 #' @param proteinName, optional character string. NA by default.
 #'   Used to either add the name of the protein to the plot title.
@@ -138,14 +143,18 @@ structuralTendency <- function(
 #'         c("M", "N", "V", "H", "L", "F", "Y", "I", "W", "C")
 #'      \item disorderNeutral = c("D", "T", "R")
 #'    }
-#'    It is not reccomended to change these.
-#' @return a dataframe containing each residue from the sequence
-#'   matched with its structural tendancy, defined by disorderPromoting,
+#'    It is not recommended to change these.
+#' @return a data frame containing each residue from the sequence
+#'   matched with its structural tendency, defined by disorderPromoting,
 #'   disorderNeutral, and orderPromoting.
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
 #' @family structural tendency
-#' @references Kulkarni, Prakash, and Vladimir N. Uversky. "Intrinsically
+#' @references
+#'   Uversky, V. N. (2013). A decade and a half of protein intrinsic disorder:
+#'   Biology still waits for physics. Protein Science, 22(6), 693-724.
+#'   \url{https://doi.org/10.1002/pro.2261}. \cr
+#'   Kulkarni, Prakash, and Vladimir N. Uversky. "Intrinsically
 #'   disordered proteins: the dark horse of the dark proteome."
 #'   Proteomics 18.21-22 (2018): 1800061.
 #'   \url{https://doi.org/10.1002/pmic.201800061}.
@@ -197,7 +206,6 @@ structuralTendency <- function(
 #'               graphType = "bar",
 #'               alphabetical = TRUE)
 #' }
-
 structuralTendencyPlot <- function(
   sequence,
   graphType = "pie",

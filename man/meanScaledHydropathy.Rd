@@ -10,7 +10,7 @@ meanScaledHydropathy(sequence, roundScore = NA)
 \item{sequence}{amino acid sequence as a single character string
 or vector of single characters.
 It also supports a single character string that specifies
-the locaion of a .fasta or .fa file.}
+the path to a .fasta or .fa file.}
 
 \item{roundScore}{Number of decimals the score will be rounded to.
 NA by default.}
@@ -19,7 +19,7 @@ NA by default.}
 A numeric value equal to the Mean Scaled Hydropathy.
 }
 \description{
-This funciton utlilizes the scaledHydropathyGlobal() function and
+This function utilizes the scaledHydropathyGlobal() function and
   easily returns the averaged hydropathy as a numeric value.
 }
 \examples{
