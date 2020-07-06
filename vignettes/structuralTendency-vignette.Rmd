@@ -129,10 +129,10 @@ Dunker et al. (2001) defines these categories as:
 * Disorder-promoting: A, R, G, Q, S, P, E, and K
 * Order-promoting: W, C, F, I, Y, V, L, and N
 * Disorder‐neutral: H, M, T, and D.
-* (Dunker et al., 2001)
 
-structuralTendency allows for the user to use different definitions. 
-An example of this using the Dunker et al. (2001) definitions is below.
+structuralTendency allows for the user to specify different definitions. 
+An example of this using the Dunker et al. (2001) definitions rather than
+the default is below.
 
 ```{r}
 tendencyDF <- structuralTendency(P53_MOUSE,
@@ -157,7 +157,7 @@ structuralTendency.
 This function accepts the same arguments as structuralTendency()
 for sequence and definitions of residue tendency.
 
-The function will get the amino acid comosition for the protein and match
+The function will get the amino acid composition for the protein and match
 it to the tendency definition.
 
 The results can be visualized in the form of a pie chart (default)

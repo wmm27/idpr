@@ -128,10 +128,10 @@ chargeCalculationGlobal <- function(
     sequence = sequence,
     method = "stop",
     outputType = "vector",
-    supressOutputMessage = T)
+    supressOutputMessage = TRUE)
 
   seqLength <- length(seqCharacterVector)
-  positionVector <- 1:seqLength
+  positionVector <- seq_len(seqLength)
 
   if (!all(c(is.logical(plotResults),
              is.logical(includeTermini),
@@ -163,7 +163,7 @@ chargeCalculationGlobal <- function(
   if (is.data.frame(pKaSet)) {
     if (dim(pKaSet)[2] >= 2) {
       pKaUsed <- pKaSet
-      names(pKaUsed)[1:2] <- c("AA", "pKa")
+      names(pKaUsed)[c(1, 2)] <- c("AA", "pKa")
     } else {
       stop("Custom pKaSet must be a data frame with 2 (or more) columns.
            Column 1 must be a character vector of residues.
@@ -175,7 +175,7 @@ chargeCalculationGlobal <- function(
   iterations <- nrow(pKaUsed)
   pKaUsed$charge <- rep(NA, iterations)
 
-  for (i in 1:iterations) {
+  for (i in seq_len(iterations)) {
 
     residue.i <- pKaUsed[i, 1]
     pKa.i <- pKaUsed[i, 2]
@@ -338,7 +338,7 @@ chargeCalculationLocal <- function(
     sequence = sequence,
     method = "stop",
     outputType = "vector",
-    supressOutputMessage = T)
+    supressOutputMessage = TRUE)
   seqLength <- length(seqVector)
 
 
@@ -377,7 +377,7 @@ chargeCalculationLocal <- function(
   iterations <- nrow(pKaUsed)
   pKaUsed$charge <- rep(NA, iterations)
 
-  for (i in 1:iterations) {
+  for (i in seq_len(iterations)) {
     residue.i <- pKaUsed[i, 1]
     pKa.i <- pKaUsed[i, 2]
 
@@ -397,7 +397,7 @@ chargeCalculationLocal <- function(
   scoreVector <- rep(NA, numberResiduesAnalyzed)
 
   #----- Analysis
-  for (i in 1:numberResiduesAnalyzed) {
+  for (i in seq_len(numberResiduesAnalyzed)) {
     windowBegining <- i
     windowEnd      <- i + window - 1
     windowResidues <- seqVector[windowBegining:windowEnd]

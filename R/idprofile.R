@@ -127,15 +127,11 @@
 #'  }
 
 #' @examples
-#' \dontrun{
 #' #For most functions, a protein sequence is all that is needed.
 #'
 #' #The UniProt ID is optional but reccomened for IUPred results.
 #' proteinID <- "P04637"
-#' iupredDF <- iupred(proteinID,
-#'                    plotResults = FALSE)
-#' iupredSeq <- iupredDF$AA
-#'
+#' \dontrun{
 #' idprofile(
 #'   sequence = iupredSeq,
 #'   uniprotAccession = proteinID)

@@ -82,7 +82,7 @@ scaledHydropathyLocal <- function(
     sequence = sequence,
     method = "stop",
     outputType = "vector",
-    supressOutputMessage = T)
+    supressOutputMessage = TRUE)
 
   if ((window %% 2) == 0) {
     stop("Window must be an odd number")
@@ -105,7 +105,7 @@ scaledHydropathyLocal <- function(
 
   #----------
   #Analysis
-  for (i in 1:numberResiduesAnalyzed) {
+  for (i in seq_len(numberResiduesAnalyzed)) {
 
     windowBegining.i <- i
     windowEnd.i <- i + (window - 1)
@@ -231,7 +231,7 @@ scaledHydropathyGlobal <- function(
     sequence = sequence,
     method = "stop",
     outputType = "vector",
-    supressOutputMessage = T
+    supressOutputMessage = TRUE
   )
 
   if (!is.logical(plotResults)) {
@@ -243,7 +243,7 @@ scaledHydropathyGlobal <- function(
 
   scoreVector <- KDNorm$V2[match(seqCharacterVector, KDNorm$V1)]
 
-  hydropathyDF <- data.frame(Position = c(1:seqLength),
+  hydropathyDF <- data.frame(Position = seq_len(seqLength),
                              AA = seqCharacterVector,
                              Hydropathy = scoreVector)
 
@@ -349,8 +349,7 @@ scaledHydropathyGlobal <- function(
     sequence = sequence,
     method = "stop",
     outputType = "vector",
-    supressOutputMessage = T
-  )
+    supressOutputMessage = TRUE)
 
   if (!is.logical(plotResults)) {
     stop("plotResults must be a logical value")
@@ -361,7 +360,7 @@ scaledHydropathyGlobal <- function(
 
   scoreVector <- KDNorm$V2[match(seqCharacterVector, KDNorm$V1)]
 
-  hydropathyDF <- data.frame(Position = c(1:seqLength),
+  hydropathyDF <- data.frame(Position = seq_len(seqLength),
                              AA = seqCharacterVector,
                              Hydropathy = scoreVector)
 

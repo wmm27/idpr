@@ -64,7 +64,6 @@ This is used validate a sequence of amino acids.
   It can also be used to coerce a sequence into a specific format.
 }
 \examples{
-\dontrun{
  #Amino acid sequences can be character strings
 aaString <- "ACDEFGHIKLMNPQRSTVWY"
 #Amino acid sequences can also be character vectors
@@ -74,6 +73,7 @@ aaVector <- c("A", "C", "D", "E", "F",
            "S", "T", "V", "W", "Y")
 #Alternativly, .fasta files can also be used by providing
 ##The path to the file as a character string
+\dontrun{
 sequenceCheck(aaString)
 sequenceCheck(aaVector)
 

@@ -42,7 +42,6 @@
 #'   sequenceName. This allows the sequences to be called by the user.
 #' @export
 #' @examples
-#' \dontrun{
 #'  #Amino acid sequences can be character strings
 #' aaString <- "ACDEFGHIKLMNPQRSTVWY"
 #' #Amino acid sequences can also be character vectors
@@ -52,6 +51,7 @@
 #'            "S", "T", "V", "W", "Y")
 #' #Alternativly, .fasta files can also be used by providing
 #' ##The path to the file as a character string
+#' \dontrun{
 #' sequenceCheck(aaString)
 #' sequenceCheck(aaVector)
 #'
@@ -82,8 +82,8 @@ sequenceCheck <- function(
   method = "stop",
   outputType = "string",
   nonstandardResidues = NA,
-  supressAAWarning = F,
-  supressOutputMessage = F) {
+  supressAAWarning = FALSE,
+  supressOutputMessage = FALSE) {
 
   if (!all(is.character(sequence),
            is.character(method),
@@ -99,7 +99,7 @@ sequenceCheck <- function(
   #This section will confirm what to do with the amino acid sequence
   if (length(sequence) == 1) {
     #this is to see if the string is a .fasta / .fa file
-    if (grepl("\\.fa", sequence, ignore.case = T)) {
+    if (grepl("\\.fa", sequence, ignore.case = TRUE)) {
       sequence <- seqinr::read.fasta(file = sequence,
                                      seqtype = "AA",
                                      as.string = TRUE)
@@ -131,10 +131,10 @@ sequenceCheck <- function(
   }
   #-----
   #This section checks if the amino acid sequence contains invalid residues
-  aaError <- F
+  aaError <- FALSE
   #Used for returning messages later. Set to False unless there is an error
-  if (all(separatedSequence %in% aa) == F) {
-    aaError <- T #Used for returning messages later reporting an error
+  if (all(separatedSequence %in% aa) == FALSE) {
+    aaError <- TRUE #Used for returning messages later reporting an error
     invalidResidues <- separatedSequence[!(separatedSequence %in% aa)]
     invalidResidues <- unique(invalidResidues)
     warningMessage <- paste("Protein contains the following invalid residues: ",
@@ -158,11 +158,11 @@ sequenceCheck <- function(
   if (outputType == "vector") {
     outputSequence <- separatedSequence
   }
-  if (supressOutputMessage == F) {
-    if (aaError == F) {
+  if (supressOutputMessage == FALSE) {
+    if (aaError == FALSE) {
       validMessage <- paste("The sequence contains no invalid residues.")
     }
-    if (aaError == T) {
+    if (aaError == TRUE) {
       validMessage <- paste("INVALID SEQUENCE! There are invalid residues.")
     }
     message(validMessage)

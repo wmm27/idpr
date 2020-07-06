@@ -72,27 +72,27 @@ sequenceMapCoordinates <-
       sequence = sequence,
       method = "stop",
       outputType = "vector",
-      supressOutputMessage = T)
+      supressOutputMessage = TRUE)
 
     seqLength <- length(seqCharacterVector)
-    seqDF <- data.frame(Position = c(1:seqLength),
+    seqDF <- data.frame(Position = seq_len(seqLength),
                         AA = seqCharacterVector)
     nRows <- ceiling(seqLength / nbResidues)
     rowVector <- rep(1, seqLength)
-    colVector <- c(1:seqLength)
+    colVector <- seq_len(seqLength)
     if (nRows > 1) {
-      for (i in 1:(nRows)) {
+      for (i in seq_len(nRows)) {
         iteration <- i - 1
         row.i <- nRows - (iteration)
         start.i <- 1 + nbResidues * (iteration)
         end.i <- nbResidues +  nbResidues * (iteration)
         rowVector[start.i:end.i] <- row.i
-        colVector[start.i:end.i] <- c(1:nbResidues)
+        colVector[start.i:end.i] <- seq_len(nbResidues)
       }
     }
 
-    seqDF$row <- rowVector[1:seqLength]
-    seqDF$col <- colVector[1:seqLength]
+    seqDF$row <- rowVector[seq_len(seqLength)]
+    seqDF$col <- colVector[seq_len(seqLength)]
 
     return(seqDF)
   }
@@ -147,7 +147,6 @@ sequenceMapCoordinates <-
 #' @export
 #' @seealso \code{\link{sequenceMapCoordinates}} for mapping coordinates
 #' @examples
-#' \dontrun{
 #' #Get a data frame returned from another function
 #' aaVector <- c("A", "C", "D", "E", "F",
 #'               "G", "H", "I", "K", "L",
@@ -159,7 +158,7 @@ sequenceMapCoordinates <-
 #' ## Or as a discrete property
 #' exampleDF_disc <- structuralTendency(sequence = aaVector)
 #' head(exampleDF_disc)
-#'
+#' \dontrun{
 #' sequenceMap(sequence = exampleDF_cont$AA,
 #'           property = exampleDF_cont$Charge,
 #'          nbResidues = 3,
@@ -288,11 +287,11 @@ sequenceMap <- function(
       #-- Adding AA for "both"
       labelingVector <- seqDF$AA
       #---- Section to alter labels to be every Nth residue
-      includeVector <- c(T, rep(F, everyN[1] - 1))
+      includeVector <- c(TRUE, rep(FALSE, everyN[1] - 1))
       includeVectorLength <- length(includeVector)
       includeVectorRep <- seqLength / includeVectorLength
       includeVector <- rep(includeVector, includeVectorRep)
-      labelingVector[includeVector == F] <- NA
+      labelingVector[includeVector == FALSE] <- NA
       #---
       if (labelLocation[1] == "on") {
         yAdjust <- -0.25
@@ -310,11 +309,11 @@ sequenceMap <- function(
       #-- Adding numbers for "both"
       labelingVectorNumbers <- seqDF$Position
       #---- Section to alter labels to be every Nth residue
-      includeVectorNumber <- c(T, rep(F, everyN[2] - 1))
+      includeVectorNumber <- c(TRUE, rep(FALSE, everyN[2] - 1))
       includeVectorNumberLength <- length(includeVectorNumber)
       includeVectorRep <- seqLength / includeVectorNumberLength
       includeVectorNumber <- rep(includeVectorNumber, includeVectorRep)
-      labelingVectorNumbers[includeVectorNumber == F] <- NA
+      labelingVectorNumbers[includeVectorNumber == FALSE] <- NA
       #-----
       if (labelLocation[2] == "on") {
         yAdjust <- -0.25
@@ -343,11 +342,11 @@ sequenceMap <- function(
         yAdjust <- -0.70
       }
       #---- Section to alter labels to be every Nth residue
-      includeVector <- c(T, rep(F, everyN[1] - 1))
+      includeVector <- c(TRUE, rep(FALSE, everyN[1] - 1))
       includeVectorLength <- length(includeVector)
       includeVectorRep <- seqLength / includeVectorLength
       includeVector <- rep(includeVector, includeVectorRep)
-      labelingVector[includeVector == F] <- NA
+      labelingVector[includeVector == FALSE] <- NA
       gg <- gg + geom_text(aes(x = (col + 0.5) * 0.99,
                                y = row,
                                label = as.character(labelingVector),

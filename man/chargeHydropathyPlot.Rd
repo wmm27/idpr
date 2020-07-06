@@ -62,7 +62,6 @@ This function calculates the average net charge <R> and the average
   This plot has also been referred to as a "Uversky Plot".
 }
 \examples{
-\dontrun{
 #Amino acid sequences can be character strings
 aaString <- "ACDEFGHIKLMNPQRSTVWY"
 #Amino acid sequences can also be character vectors
@@ -72,7 +71,7 @@ aaVector <- c("A", "C", "D", "E", "F",
               "S", "T", "V", "W", "Y")
 #Alternativly, .fasta files can also be used by providing
 ##The path to the file as a character string
-
+\dontrun{
 chargeHydropathyPlot(sequence = aaString)
 chargeHydropathyPlot( sequence = aaVector)
 

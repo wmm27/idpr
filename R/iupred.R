@@ -158,7 +158,7 @@ iupred <- function(
   iupredSequence <- unlist(strsplit(iupredJson$sequence, ""))
   iupredSequence <- unlist(iupredSequence)
   seqLength <- length(iupredSequence)
-  iupredDF <- data.frame(Position = 1:seqLength,
+  iupredDF <- data.frame(Position = seq_len(seqLength),
                          AA = iupredSequence,
                          IUPred2 = iupredPrediction)
   #------
@@ -219,7 +219,7 @@ iupredAnchor <- function(
   iupredSequence <- unlist(strsplit(iupredJson$sequence, ""))
   iupredSequence <- unlist(iupredSequence)
   seqLength <- length(iupredSequence)
-  iupredDF <- data.frame(Position = 1:seqLength,
+  iupredDF <- data.frame(Position = seq_len(seqLength),
                          AA = iupredSequence,
                          IUPred2 = iupredPrediction,
                          ANCHOR2 = anchorPrediction)
@@ -286,7 +286,7 @@ iupredRedox <- function(
   iupredSequence <- unlist(strsplit(iupredJson$sequence, ""))
   iupredSequence <- unlist(iupredSequence)
   seqLength <- length(iupredSequence)
-  iupredDF <- data.frame(Position = 1:seqLength,
+  iupredDF <- data.frame(Position = seq_len(seqLength),
                          AA = iupredSequence,
                          iupredPlus = iupredPlus,
                          iupredMinus = iupredMinus)
@@ -309,7 +309,7 @@ iupredRedox <- function(
                           ggplot2::aes(x = Position))
 
     if (!is.null(redoxSenstitiveDF[1, 1])) {
-      gg <- gg + ggplot2::geom_rect(inherit.aes = F,
+      gg <- gg + ggplot2::geom_rect(inherit.aes = FALSE,
                                     data = redoxSenstitiveDF,
                                     ggplot2::aes_(xmin = ~ V1,
                                                  xmax = ~ V2,
@@ -347,7 +347,7 @@ iupredRedox <- function(
       senstitiveRegions <- unlist(Map(":",
                                       redoxSenstitiveDF$V1,
                                       redoxSenstitiveDF$V2))
-      senstitivePositions <- 1:seqLength %in% unlist(senstitiveRegions)
+      senstitivePositions <- seq_len(seqLength) %in% unlist(senstitiveRegions)
       iupredDF$redoxSensitive <- senstitivePositions
     } else {
       iupredDF$redoxSensitive <- rep(FALSE, nrow(iupredDF))

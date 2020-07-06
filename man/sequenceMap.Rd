@@ -73,7 +73,6 @@ This is a graphical function used to visualize data along an
   amino acid sequence.
 }
 \examples{
-\dontrun{
 #Get a data frame returned from another function
 aaVector <- c("A", "C", "D", "E", "F",
               "G", "H", "I", "K", "L",
@@ -85,7 +84,7 @@ head(exampleDF_cont)
 ## Or as a discrete property
 exampleDF_disc <- structuralTendency(sequence = aaVector)
 head(exampleDF_disc)
-
+\dontrun{
 sequenceMap(sequence = exampleDF_cont$AA,
           property = exampleDF_cont$Charge,
          nbResidues = 3,

@@ -57,7 +57,6 @@
 #'   \url{https://doi.org/10.1002/1097-0134(20001115)41:3<415::AID-PROT130>3.0.CO;2-7}
 #' @export
 #' @examples
-#' \dontrun{
 #' #Amino acid sequences can be character strings
 #' aaString <- "ACDEFGHIKLMNPQRSTVWY"
 #' #Amino acid sequences can also be character vectors
@@ -67,7 +66,7 @@
 #'               "S", "T", "V", "W", "Y")
 #' #Alternativly, .fasta files can also be used by providing
 #' ##The path to the file as a character string
-#'
+#' \dontrun{
 #' chargeHydropathyPlot(sequence = aaString)
 #' chargeHydropathyPlot( sequence = aaVector)
 #'
@@ -98,7 +97,7 @@
 
 chargeHydropathyPlot <- function(
   sequence,
-  displayInsolubility = T,
+  displayInsolubility = TRUE,
   insolubleValue = 0.7,
   proteinName = NA,
   customPlotTitle = NA,
@@ -225,7 +224,7 @@ chargeHydropathyPlot <- function(
   }
 
   gg <- gg +
-    ggplot2::geom_point() +
+    ggplot2::geom_point(color = "#92140C") +
     ggplot2::theme_minimal() +
     ggplot2::xlim(0, 1) +
     ggplot2::ylim(-1.125, 1) +

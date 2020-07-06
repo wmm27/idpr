@@ -54,9 +54,9 @@
 #' ##These residues are labeled as such from Dunker et al (2001),
 #' ##"Intrinsically disordered protein."
 #' exampleDF <- structuralTendency(aaString,
-#'                              disorderPromoting = c("A", "R", "G", "Q", "S", "P", "E", "K"),
-#'                              disorderNeutral = c("H", "M", "T", "D"),
-#'                              orderPromoting = c("W", "C", "F", "I", "Y", "V", "L", "N"))
+#'                disorderPromoting = c("A", "R", "G", "Q", "S", "P", "E", "K"),
+#'                disorderNeutral = c("H", "M", "T", "D"),
+#'                orderPromoting = c("W", "C", "F", "I", "Y", "V", "L", "N"))
 #' head(exampleDF)
 
 structuralTendency <- function(
@@ -64,13 +64,13 @@ structuralTendency <- function(
   disorderPromoting = c("P", "E", "S", "Q", "K", "A", "G"),
   disorderNeutral = c("D", "T", "R"),
   orderPromoting = c("M", "N", "V", "H", "L", "F", "Y", "I", "W", "C"),
-  printCitation = F) {
+  printCitation = FALSE) {
   #-----
   seqCharacterVector <- sequenceCheck(
     sequence = sequence,
     method = "stop",
     outputType = "vector",
-    supressOutputMessage = T)
+    supressOutputMessage = TRUE)
   sequenceLength <- length(seqCharacterVector)
 
   #----- Matches residue with tendency
@@ -86,7 +86,7 @@ structuralTendency <- function(
   structuralTendencyVector[neutralResidues] <- "Disorder Neutral"
 
   #----- makes the data frame for output
-  structureTendencyDF <- data.frame(Position = 1:sequenceLength,
+  structureTendencyDF <- data.frame(Position = seq_len(sequenceLength),
                                     AA = seqCharacterVector,
                                     Tendency = structuralTendencyVector)
 

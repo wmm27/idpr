@@ -63,7 +63,6 @@ This is a graphical function used to visualize numeric
   data along an amino acid sequence.
 }
 \examples{
-\dontrun{
 #Get a data frame returned from another function
 aaVector <- c("A", "C", "D", "E", "F",
            "G", "H", "I", "K", "L",
@@ -71,7 +70,7 @@ aaVector <- c("A", "C", "D", "E", "F",
            "S", "T", "V", "W", "Y")
 exampleDF <- chargeCalculationGlobal(sequence = aaVector)
 head(exampleDF)
-
+\dontrun{
 #Making a sequence plot
 sequencePlot(
   position = exampleDF$Position,

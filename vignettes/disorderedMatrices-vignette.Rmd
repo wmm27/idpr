@@ -27,7 +27,7 @@ amino acid composition and rate of evolution. The most commonly used amino
 acid substitution matrices (PAM and BLOSUM) are derived from or favor structured
 proteins and therefore are not the most appropriate to use when analyzing IDPs.
 The following amino acid substitution matrices are derived from sets of IDPs and
-thus are more appropriate.
+thus, are more appropriate.
 
 A detailed comparison is available at 
 [Trivedi & Nagarajaram, 2019](https://doi.org/10.1038/s41598-019-52532-8).  
@@ -151,9 +151,9 @@ for additional information and for comparisons to other matrices.
 EDSSMat62, like the other EDSS matrices, is derived from alignment blocks of
 computationally predicted IDPs. 
 [Trivedi & Nagarajaram, 2019](https://doi.org/10.1038/s41598-019-52532-8)  
-go into detail of methods and comparisons. EDSSMat62 the best preforming matrix
-in their study and was shown to identify both close and distant homologs of 
-Secretogranin-1, an IDP, while other matrices could only identify some 
+go into detail of methods and comparisons. EDSSMat62 is the best preforming 
+matrix in their study and was shown to identify both close and distant homologs 
+of Secretogranin-1, an IDP, while other matrices could only identify some 
 close homologs. On average, EDSSMat62 attained smaller E-values when aligning
 Highly Disordered (HD) proteins compared to BLOSUM and PAM matrices, and against
 some other disorder-based substitution matrices.
@@ -219,6 +219,11 @@ Information was accessed by DisProt, a database for IDPs (
 [Hatos et al., 2019](https://doi.org/10.1093/nar/gkz975)).
 (https://www.disprot.org/)
 
+These examples are to showcase the differences of BLOSUM62, a commonly used
+matrix that can be loaded into R via the **Biostrings** package, and 
+EDSSMat62, a matrix comes loaded with **idpr** specific for IDPs. 
+EDSSMat62 can be used with any function that accepts custom substitution 
+matrices, and these examples show some uses of it.
 
 **Cellular tumor antigen p53**
 
