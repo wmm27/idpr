@@ -117,25 +117,21 @@ exampleDF_SepTermini <- chargeCalculationGlobal(aaString,
 head(exampleDF_SepTermini)
 
 #plotResults = TRUE will output a ggplot as a line plot
-\dontrun{
   chargeCalculationGlobal(aaString,
-                          plot = T)
+                          plot = TRUE)
 
   #since it is a ggplot, you can change or annotate the plot
   gg <- chargeCalculationGlobal(aaVector,
                                 window = 3,
-                                plot = T)
+                                plot = TRUE)
   gg <- gg + ggplot2::ylab("Residue Charge")
   gg <- gg + ggplot2::geom_text(data = exampleDF,
                                 ggplot2::aes(label = AA,
                                              y = Charge + 0.1))
   plot(gg)
-}
 #alternativly, you can pass the data frame to sequenceMap()
-\dontrun{
 sequenceMap(sequence = exampleDF$AA,
             property = exampleDF$Charge)
-}
 }
 \seealso{
 \code{\link{pKaData}} for residue pKa values and

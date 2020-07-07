@@ -5,8 +5,6 @@
 \title{Protein Scaled Hydropathy Calculations}
 \usage{
 scaledHydropathyGlobal(sequence, plotResults = FALSE, proteinName = NA, ...)
-
-scaledHydropathyGlobal(sequence, plotResults = FALSE, proteinName = NA, ...)
 }
 \arguments{
 \item{sequence}{amino acid sequence as a single character string
@@ -26,22 +24,11 @@ optional setting to include the name in the plot title.}
 \value{
 if \code{plotResults = TRUE}, a graphical representation data.
   Average is shown by the horizontal line.
-  If \code{plotResults = FALSE}, a dataframe is reported
-  with each amino acid and each residue value shown.
-  Score for each residue shown in the column "Hydropathy".
-
-if \code{plotResults = TRUE}, a graphical representation data.
-  Average is shown by the horizontal line.
   If \code{plotResults = FALSE}, a data frame is reported
   with each amino acid and each residue value shown.
   Score for each residue shown in the column "Hydropathy".
 }
 \description{
-This is used to calculate the scaled hydropathy of an amino acid
-  sequence for each residue in the sequence.
-  The output is either a dataframe or graph
-  showing the matched scores for each residue along the sequence.
-
 This is used to calculate the scaled hydropathy of an amino acid
   sequence for each residue in the sequence.
   The output is either a data frame or graph
@@ -67,70 +54,25 @@ exampleDF <- scaledHydropathyGlobal(aaVector,
 head(exampleDF)
 
 #plotResults = TRUE will output a ggplot
-\dontrun{
   scaledHydropathyGlobal(aaString,
-                         plot = T)
+                         plotResults = TRUE)
 
   #since it is a ggplot, you can change or annotate the plot
   gg <- scaledHydropathyGlobal(aaVector,
-                               plot = T)
+                               plotResults = TRUE)
   gg <- gg + ggplot2::ylab("Local Hydropathy")
   gg <- gg + ggplot2::geom_text(data = exampleDF,
                                 ggplot2::aes(label = AA,
                                              y = Hydropathy + 0.1))
   plot(gg)
-}
-#Amino acid sequences can be character strings
-aaString <- "ACDEFGHIKLMNPQRSTVWY"
-#Amino acid sequences can also be character vectors
-aaVector <- c("A", "C", "D", "E", "F",
-              "G", "H", "I", "K", "L",
-           "M", "N", "P", "Q", "R",
-           "S", "T", "V", "W", "Y")
-#Alternativly, .fasta files can also be used by providing
-##The path to the file as a character string
-
-exampleDF <- scaledHydropathyGlobal(aaString,
-                                    plotResults = FALSE)
-head(exampleDF)
-
-exampleDF <- scaledHydropathyGlobal(aaVector,
-                                    plotResults = FALSE)
-head(exampleDF)
-
-#plotResults = TRUE will output a ggplot
-\dontrun{
-  scaledHydropathyGlobal(aaString,
-                         plot = T)
-
-  #since it is a ggplot, you can change or annotate the plot
-  gg <- scaledHydropathyGlobal(aaVector,
-                               plot = T)
-  gg <- gg + ggplot2::ylab("Local Hydropathy")
-  gg <- gg + ggplot2::geom_text(data = exampleDF,
-                                ggplot2::aes(label = AA,
-                                             y = Hydropathy + 0.1))
-  plot(gg)
-}
 }
 \references{
-Kyte, J., & Doolittle, R. F. (1982). A simple method for
-  displaying the hydropathic character of a protein.
-  Journal of molecular biology, 157(1), 105-132.
-
 Kyte, J., & Doolittle, R. F. (1982). A simple method for
   displaying the hydropathic character of a protein.
   Journal of molecular biology, 157(1), 105-132.
 }
 \seealso{
 \code{\link{KDNorm}} for residue values.
-
-\code{\link{KDNorm}} for residue values.
-
-Other scaled hydropathy functions: 
-\code{\link{KDNorm}},
-\code{\link{meanScaledHydropathy}()},
-\code{\link{scaledHydropathyLocal}()}
 
 Other scaled hydropathy functions: 
 \code{\link{KDNorm}},

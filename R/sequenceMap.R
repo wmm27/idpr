@@ -36,7 +36,8 @@
 #'                                  nbResidues = 10)
 #' head(exampleDF)
 #'
-#' \dontrun{
+#' #Getting a data frame for plotting with sequenceMap
+#'  tendencyDF <- structuralTendency(sequence = aaVector)
 #'  #Making a sequenceMap ggplot to annotate
 #' gg <- sequenceMap(sequence = tendencyDF$AA,
 #'             property = tendencyDF$Tendency,
@@ -44,7 +45,7 @@
 #'               labelType = "both")
 #'
 #' #Change the nbResidues to correspond to the sequenceMap setting
-#' mapCoordDF <- sequenceMapCoordinates(aaString,
+#' mapCoordDF <- sequenceMapCoordinates(aaVector,
 #'                                   nbResidues = 3)
 #' head(mapCoordDF)
 #'
@@ -62,7 +63,6 @@
 #'                    size = 3,
 #'                    shape = 3)
 #' plot(gg)
-#' }
 
 sequenceMapCoordinates <-
   function(sequence,
@@ -158,7 +158,6 @@ sequenceMapCoordinates <-
 #' ## Or as a discrete property
 #' exampleDF_disc <- structuralTendency(sequence = aaVector)
 #' head(exampleDF_disc)
-#' \dontrun{
 #' sequenceMap(sequence = exampleDF_cont$AA,
 #'           property = exampleDF_cont$Charge,
 #'          nbResidues = 3,
@@ -234,7 +233,7 @@ sequenceMapCoordinates <-
 #'                labelType = "both")
 #'
 #' #Change the nbResidues to correspond to the sequenceMap setting
-#' mapCoordDF <- sequenceMapCoordinates(aaString,
+#' mapCoordDF <- sequenceMapCoordinates(aaVector,
 #'                                   nbResidues = 3)
 #' head(mapCoordDF)
 #'
@@ -253,7 +252,6 @@ sequenceMapCoordinates <-
 #'                    shape = 3)
 #' plot(gg)
 #'
-#' }
 
 sequenceMap <- function(
   sequence,

@@ -6,7 +6,7 @@
 \usage{
 chargeHydropathyPlot(
   sequence,
-  displayInsolubility = T,
+  displayInsolubility = TRUE,
   insolubleValue = 0.7,
   proteinName = NA,
   customPlotTitle = NA,
@@ -71,7 +71,6 @@ aaVector <- c("A", "C", "D", "E", "F",
               "S", "T", "V", "W", "Y")
 #Alternativly, .fasta files can also be used by providing
 ##The path to the file as a character string
-\dontrun{
 chargeHydropathyPlot(sequence = aaString)
 chargeHydropathyPlot( sequence = aaVector)
 
@@ -96,7 +95,6 @@ chargeHydropathyPlot(
 chargeHydropathyPlot(
   sequence = multipleSeq,
   pKaSet = "EMBOSS")
- }
 
 }
 \references{

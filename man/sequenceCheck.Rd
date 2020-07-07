@@ -9,8 +9,8 @@ sequenceCheck(
   method = "stop",
   outputType = "string",
   nonstandardResidues = NA,
-  supressAAWarning = F,
-  supressOutputMessage = F
+  supressAAWarning = FALSE,
+  supressOutputMessage = FALSE
 )
 }
 \arguments{

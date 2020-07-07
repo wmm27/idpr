@@ -75,8 +75,6 @@ aaVector <- c("A", "C", "D", "E", "F",
               "S", "T", "V", "W", "Y")
 #Alternativly, .fasta files can also be used by providing
 ##The path to the file as a character string
-
-\dontrun{
 structuralTendencyPlot(aaString)
 structuralTendencyPlot(aaVector)
 
@@ -111,7 +109,6 @@ structuralTendencyPlot(aaString,
               orderPromoting = c("W", "C", "F", "I", "Y", "V", "L", "N"),
               graphType = "bar",
               alphabetical = TRUE)
-}
 }
 \references{
 Uversky, V. N. (2013). A decade and a half of protein intrinsic disorder:

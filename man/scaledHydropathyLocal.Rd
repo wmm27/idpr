@@ -71,20 +71,18 @@ exampleDF_window15 <- scaledHydropathyLocal(aaString,
 head(exampleDF_window15)
 
 #plotResults = TRUE will output a ggplot
-\dontrun{
   scaledHydropathyLocal(aaString,
-                        plot = T)
+                        plot = TRUE)
 
 #since it is a ggplot, you can change or annotate the plot
  gg <- scaledHydropathyLocal(aaVector,
                              window = 3,
-                             plot = T)
+                             plot = TRUE)
  gg <- gg + ggplot2::ylab("Local Hydropathy")
   gg <- gg + ggplot2::geom_text(data = exampleDF_window3,
                                ggplot2::aes(label = CenterResidue,
                                             y = WindowHydropathy + 0.1))
  plot(gg)
-}
 }
 \references{
 Kyte, J., & Doolittle, R. F. (1982). A simple method for

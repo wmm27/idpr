@@ -93,25 +93,21 @@
 #' head(exampleDF_SepTermini)
 #'
 #' #plotResults = TRUE will output a ggplot as a line plot
-#' \dontrun{
 #'   chargeCalculationGlobal(aaString,
-#'                           plot = T)
+#'                           plot = TRUE)
 #'
 #'   #since it is a ggplot, you can change or annotate the plot
 #'   gg <- chargeCalculationGlobal(aaVector,
 #'                                 window = 3,
-#'                                 plot = T)
+#'                                 plot = TRUE)
 #'   gg <- gg + ggplot2::ylab("Residue Charge")
 #'   gg <- gg + ggplot2::geom_text(data = exampleDF,
 #'                                 ggplot2::aes(label = AA,
 #'                                              y = Charge + 0.1))
 #'   plot(gg)
-#' }
 #' #alternativly, you can pass the data frame to sequenceMap()
-#' \dontrun{
 #' sequenceMap(sequence = exampleDF$AA,
 #'             property = exampleDF$Charge)
-#' }
 
 chargeCalculationGlobal <- function(
   sequence,
@@ -309,20 +305,19 @@ chargeCalculationGlobal <- function(
 #' head(exampleDF_EMBOSS)
 #'
 #' #plotResults = TRUE will output a ggplot
-#' \dontrun{
 #'   chargeCalculationLocal(aaString,
-#'                          plot = T)
+#'                          plot = TRUE)
 #'
 #'   #since it is a ggplot, you can change or annotate the plot
 #'   gg <- chargeCalculationLocal(aaVector,
 #'                                window = 3,
-#'                                plot = T)
+#'                                plot = TRUE)
 #'   gg <- gg + ggplot2::ylab("Local Charge")
 #'   gg <- gg + ggplot2::geom_text(data = exampleDF_window3,
 #'                                 ggplot2::aes(label = CenterResidue,
 #'                                              y = windowCharge + 0.1))
 #'  plot(gg)
-#'  }
+
 
 chargeCalculationLocal <- function(
   sequence,
@@ -525,7 +520,7 @@ netCharge <-
            averaged = FALSE) {
 
     if (!is.logical(averaged)) {
-      stop("averaged must be a logical value")
+     stop("averaged must be a logical value")
     }
 
     chargeDF <- chargeCalculationGlobal(

@@ -66,7 +66,6 @@
 #'               "S", "T", "V", "W", "Y")
 #' #Alternativly, .fasta files can also be used by providing
 #' ##The path to the file as a character string
-#' \dontrun{
 #' chargeHydropathyPlot(sequence = aaString)
 #' chargeHydropathyPlot( sequence = aaVector)
 #'
@@ -91,7 +90,6 @@
 #' chargeHydropathyPlot(
 #'   sequence = multipleSeq,
 #'   pKaSet = "EMBOSS")
-#'  }
 #'
 
 
@@ -110,14 +108,13 @@ chargeHydropathyPlot <- function(
   }
   #--- Calculating the C-H data for each protein
   nSequences <- length(sequence)
-
   dataCollected <- data.frame(matrix(nrow = nSequences,
                                      ncol = 3))
   names(dataCollected) <- c("sequence",
                             "avg_scaled_hydropathy",
                             "avg_net_charge")
 
-  for (i in 1:nSequences) {
+  for (i in seq_len(nSequences)) {
 
     sequence.i <- sequence[i]
 
@@ -207,7 +204,6 @@ chargeHydropathyPlot <- function(
 
   xLabel <- paste("Mean Scaled Hydropathy")
   yLabel <- paste("Mean Net Charge")
-
   if (is.na(customPlotTitle)) {
     if (nSequences == 1 &&
         !is.na(proteinName)) {
@@ -222,7 +218,6 @@ chargeHydropathyPlot <- function(
   } else {
     ggTitle <- customPlotTitle
   }
-
   gg <- gg +
     ggplot2::geom_point(color = "#92140C") +
     ggplot2::theme_minimal() +

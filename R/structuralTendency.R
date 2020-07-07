@@ -169,8 +169,7 @@ structuralTendency <- function(
 #'               "S", "T", "V", "W", "Y")
 #' #Alternativly, .fasta files can also be used by providing
 #' ##The path to the file as a character string
-#'
-#' \dontrun{
+
 #' structuralTendencyPlot(aaString)
 #' structuralTendencyPlot(aaVector)
 #'
@@ -205,7 +204,7 @@ structuralTendency <- function(
 #'               orderPromoting = c("W", "C", "F", "I", "Y", "V", "L", "N"),
 #'               graphType = "bar",
 #'               alphabetical = TRUE)
-#' }
+
 structuralTendencyPlot <- function(
   sequence,
   graphType = "pie",

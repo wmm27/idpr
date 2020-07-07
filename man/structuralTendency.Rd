@@ -9,7 +9,7 @@ structuralTendency(
   disorderPromoting = c("P", "E", "S", "Q", "K", "A", "G"),
   disorderNeutral = c("D", "T", "R"),
   orderPromoting = c("M", "N", "V", "H", "L", "F", "Y", "I", "W", "C"),
-  printCitation = F
+  printCitation = FALSE
 )
 }
 \arguments{
@@ -67,9 +67,9 @@ head(exampleDF)
 ##These residues are labeled as such from Dunker et al (2001),
 ##"Intrinsically disordered protein."
 exampleDF <- structuralTendency(aaString,
-                             disorderPromoting = c("A", "R", "G", "Q", "S", "P", "E", "K"),
-                             disorderNeutral = c("H", "M", "T", "D"),
-                             orderPromoting = c("W", "C", "F", "I", "Y", "V", "L", "N"))
+               disorderPromoting = c("A", "R", "G", "Q", "S", "P", "E", "K"),
+               disorderNeutral = c("H", "M", "T", "D"),
+               orderPromoting = c("W", "C", "F", "I", "Y", "V", "L", "N"))
 head(exampleDF)
 }
 \references{

@@ -84,7 +84,6 @@ head(exampleDF_cont)
 ## Or as a discrete property
 exampleDF_disc <- structuralTendency(sequence = aaVector)
 head(exampleDF_disc)
-\dontrun{
 sequenceMap(sequence = exampleDF_cont$AA,
           property = exampleDF_cont$Charge,
          nbResidues = 3,
@@ -160,7 +159,7 @@ gg <- sequenceMap(sequence = exampleDF_disc$AA,
                labelType = "both")
 
 #Change the nbResidues to correspond to the sequenceMap setting
-mapCoordDF <- sequenceMapCoordinates(aaString,
+mapCoordDF <- sequenceMapCoordinates(aaVector,
                                   nbResidues = 3)
 head(mapCoordDF)
 
@@ -178,7 +177,6 @@ gg <- gg + geom_point(inherit.aes = FALSE,
                    shape = 3)
 plot(gg)
 
-}
 }
 \seealso{
 \code{\link{sequenceMapCoordinates}} for mapping coordinates

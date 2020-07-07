@@ -97,20 +97,18 @@ exampleDF_EMBOSS <- chargeCalculationLocal(aaString,
 head(exampleDF_EMBOSS)
 
 #plotResults = TRUE will output a ggplot
-\dontrun{
   chargeCalculationLocal(aaString,
-                         plot = T)
+                         plot = TRUE)
 
   #since it is a ggplot, you can change or annotate the plot
   gg <- chargeCalculationLocal(aaVector,
                                window = 3,
-                               plot = T)
+                               plot = TRUE)
   gg <- gg + ggplot2::ylab("Local Charge")
   gg <- gg + ggplot2::geom_text(data = exampleDF_window3,
                                 ggplot2::aes(label = CenterResidue,
                                              y = windowCharge + 0.1))
  plot(gg)
- }
 }
 \seealso{
 \code{\link{pKaData}} for residue pKa values and citations. See

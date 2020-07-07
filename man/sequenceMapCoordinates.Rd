@@ -51,7 +51,8 @@ exampleDF <- sequenceMapCoordinates(aaVector,
                                  nbResidues = 10)
 head(exampleDF)
 
-\dontrun{
+#Getting a data frame for plotting with sequenceMap
+ tendencyDF <- structuralTendency(sequence = aaVector)
  #Making a sequenceMap ggplot to annotate
 gg <- sequenceMap(sequence = tendencyDF$AA,
             property = tendencyDF$Tendency,
@@ -59,7 +60,7 @@ gg <- sequenceMap(sequence = tendencyDF$AA,
               labelType = "both")
 
 #Change the nbResidues to correspond to the sequenceMap setting
-mapCoordDF <- sequenceMapCoordinates(aaString,
+mapCoordDF <- sequenceMapCoordinates(aaVector,
                                   nbResidues = 3)
 head(mapCoordDF)
 
@@ -77,7 +78,6 @@ gg <- gg + geom_point(inherit.aes = FALSE,
                    size = 3,
                    shape = 3)
 plot(gg)
-}
 }
 \seealso{
 \code{\link{sequenceMapCoordinates}} for mapping coordinates

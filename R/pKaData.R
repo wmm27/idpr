@@ -106,4 +106,3 @@
 #' \url{doi:10.1186/s13062-016-0159-9}
 #' @seealso \code{\link{hendersonHasselbalch}}
 "pKaData"
-

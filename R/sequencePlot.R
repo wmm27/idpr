@@ -41,7 +41,6 @@
 #'            "S", "T", "V", "W", "Y")
 #' exampleDF <- chargeCalculationGlobal(sequence = aaVector)
 #' head(exampleDF)
-#' \dontrun{
 #' #Making a sequence plot
 #' sequencePlot(
 #'   position = exampleDF$Position,
@@ -63,7 +62,6 @@
 #' dynamicColor = exampleDF$Charge,
 #' customColors = c("red", "blue", "grey50"),
 #' customTitle = "Charge of Each Residue / Terminus")
-#' }
 
 sequencePlot <- function(
   position,
