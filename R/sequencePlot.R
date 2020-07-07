@@ -63,70 +63,52 @@
 #' customColors = c("red", "blue", "grey50"),
 #' customTitle = "Charge of Each Residue / Terminus")
 
-sequencePlot <- function(
-  position,
-  property,
-  hline = NA,
-  propertyLimits = NA,
-  dynamicColor = NA,
-  customColors = NA,
-  midpoint = hline,
-  customTitle = NA) {
+sequencePlot <- function(position, property,
+    hline = NA,
+    propertyLimits = NA,
+    dynamicColor = NA,
+    customColors = NA,
+    midpoint = hline,
+    customTitle = NA) {
 
-dataDF <- data.frame(position = position,
-                     property = property)
+    dataDF <- data.frame(position = position, property = property)
+    gg <- ggplot2::ggplot(dataDF, aes(x = position))
 
-gg <- ggplot2::ggplot(dataDF, aes(x = position))
-
-if (!is.na(hline)) {
-  gg <- gg + ggplot2::geom_hline(yintercept = hline,
-                                 linetype = "dotdash",
-                                 color = "gray13",
-                                 size = 1,
-                                 alpha = 0.5)
-}
-
-if (!is.na(dynamicColor[1])) {
-  gg <- gg + ggplot2::geom_line(aes(y = property,
-                                    color = property),
-                                linetype = "solid")
-
-  if (!is.na(customColors[1])) {
-    if (plyr::is.discrete(property)) {
-      gg <- gg + ggplot2::scale_color_manual(values = customColors)
-    } else {
-
-      if (is.na(midpoint)) {
-        midpoint <- sum(propertyLimits) / length(propertyLimits)
-      }
-      gg <- gg + ggplot2::scale_color_gradient2(high = customColors[1],
-                                                low = customColors[2],
-                                                mid = customColors[3],
-                                                midpoint = midpoint)
+    if (!is.na(hline)) {
+        gg <- gg + ggplot2::geom_hline(yintercept = hline,
+                                        linetype = "dotdash", color = "gray13",
+                                        size = 1, alpha = 0.5)
     }
-  }
-
-} else {
-  gg <- gg + ggplot2::geom_line(aes(y = property),
-                                linetype = "solid")
-}
-
-
-
-if (!is.na(customTitle)) {
-  gg <- gg + ggplot2::labs(title = customTitle,
-                           x = "Residue",
-                           y = "Score")
-} else {
-  gg <- gg + ggplot2::labs(x = "Residue",
-                           y = "Score")
-}
-
-gg <- gg + ggplot2::theme_minimal() +
-  ggplot2::theme(legend.position = "none")
-
-if (!is.na(propertyLimits[1])) {
-  gg <- gg + ggplot2::geom_hline(yintercept = propertyLimits, color = "gray2")
-}
-return(gg)
+    if (!is.na(dynamicColor[1])) {
+        gg <- gg + ggplot2::geom_line(aes(y = property, color = property),
+                                    linetype = "solid")
+        if (!is.na(customColors[1])) {
+            if (plyr::is.discrete(property)) {
+                gg <- gg + ggplot2::scale_color_manual(values = customColors)
+            } else {
+                if (is.na(midpoint)) {
+                    midpoint <- sum(propertyLimits) / length(propertyLimits)
+                }
+            gg <- gg + ggplot2::scale_color_gradient2(high = customColors[1],
+                                                        low = customColors[2],
+                                                        mid = customColors[3],
+                                                        midpoint = midpoint)
+            }
+        }
+    } else {
+        gg <- gg + ggplot2::geom_line(aes(y = property),  linetype = "solid")
+    }
+    if (!is.na(customTitle)) {
+        gg <- gg + ggplot2::labs(title = customTitle,
+                                x = "Residue", y = "Score")
+    } else {
+        gg <- gg + ggplot2::labs(x = "Residue", y = "Score")
+    }
+    gg <- gg + ggplot2::theme_minimal() +
+                ggplot2::theme(legend.position = "none")
+    if (!is.na(propertyLimits[1])) {
+        gg <- gg + ggplot2::geom_hline(yintercept = propertyLimits,
+                                        color = "gray2")
+    }
+    return(gg)
 }

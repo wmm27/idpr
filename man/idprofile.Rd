@@ -8,6 +8,7 @@ idprofile(
   sequence,
   uniprotAccession = NA,
   proteinName = NA,
+  iupredType = "long",
   window = 9,
   pH = 7.2,
   pKaSet = "IPC_protein",
@@ -15,8 +16,7 @@ idprofile(
   structuralTendencySummarize = FALSE,
   disorderPromoting = c("P", "E", "S", "Q", "K", "A", "G"),
   disorderNeutral = c("D", "T", "R"),
-  orderPromoting = c("M", "N", "V", "H", "L", "F", "Y", "I", "W", "C"),
-  iupredType = "long"
+  orderPromoting = c("M", "N", "V", "H", "L", "F", "Y", "I", "W", "C")
 )
 }
 \arguments{
@@ -30,6 +30,18 @@ Default is NA. Keep as NA if you do not have a UniProt Accession.}
 
 \item{proteinName}{character string, optional.
 Used to add protein name to the title in ggplot.}
+
+\item{iupredType}{character string specifying the type of IUPred2 prediction
+to retrieve. Can be c("long", "short", "glob", "anchor", "redox"). "long"
+by default. "long", "short", and "glob" use the \code{\link{iupred}}
+function and specify the type of plot. Both "redox" and "anchor" use "long"
+for predictions, but are context dependent. "anchor" uses
+\code{\link{iupredAnchor}} to get predictions of disorder with IUPred2 and
+predictions of induced folding based on ANCHOR2 predictions (Shown with a
+red line). "redox" uses \code{\link{iupredRedox}} to make predictions of
+disorder based on environmental conditions. Regions of predicted
+environmental sensitivity are highlighted. See the respective functions
+for more details. This is skipped if uniprotAccession = NA.}
 
 \item{window}{a positive, odd integer. 7 by default.
 Sets the size of sliding window, must be an odd number.
@@ -70,18 +82,6 @@ of individual residues to be matched with the input sequence. Defaults:
 }
 It is not recommended to change these. Arguments passed to
 \code{\link{structuralTendencyPlot}}}
-
-\item{iupredType}{character string specifying the type of IUPred2 prediction
-to retrieve. Can be c("long", "short", "glob", "anchor", "redox"). "long"
-by default. "long", "short", and "glob" use the \code{\link{iupred}}
-function and specify the type of plot. Both "redox" and "anchor" use "long"
-for predictions, but are context dependent. "anchor" uses
-\code{\link{iupredAnchor}} to get predictions of disorder with IUPred2 and
-predictions of induced folding based on ANCHOR2 predictions (Shown with a
-red line). "redox" uses \code{\link{iupredRedox}} to make predictions of
-disorder based on environmental conditions. Regions of predicted
-environmental sensitivity are highlighted. See the respective functions
-for more details. This is skipped if uniprotAccession = NA.}
 }
 \value{
 4 or 5 plots, depending if a UniProt Accession is provided.

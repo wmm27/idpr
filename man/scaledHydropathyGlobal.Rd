@@ -40,8 +40,8 @@ aaString <- "ACDEFGHIKLMNPQRSTVWY"
 #Amino acid sequences can also be character vectors
 aaVector <- c("A", "C", "D", "E", "F",
               "G", "H", "I", "K", "L",
-           "M", "N", "P", "Q", "R",
-           "S", "T", "V", "W", "Y")
+              "M", "N", "P", "Q", "R",
+              "S", "T", "V", "W", "Y")
 #Alternativly, .fasta files can also be used by providing
 ##The path to the file as a character string
 

@@ -78,96 +78,87 @@
 
 
 sequenceCheck <- function(
-  sequence,
-  method = "stop",
-  outputType = "string",
-  nonstandardResidues = NA,
-  supressAAWarning = FALSE,
-  supressOutputMessage = FALSE) {
-
-  if (!all(is.character(sequence),
-           is.character(method),
-           is.character(outputType))) {
-    stop("Error: sequence, method, and outputType must be character vectors.
-     Please check variable type.")
-  }
-  if (!(method %in% c("stop", "warn"))) {
-    stop('Error: method is not equal to a valid term.
-         Set method equal to "Stop" or "Warn"')
-  }
-  #-----
-  #This section will confirm what to do with the amino acid sequence
-  if (length(sequence) == 1) {
-    #this is to see if the string is a .fasta / .fa file
-    if (grepl("\\.fa", sequence, ignore.case = TRUE)) {
-      sequence <- seqinr::read.fasta(file = sequence,
-                                     seqtype = "AA",
-                                     as.string = TRUE)
-      sequence <- unlist(sequence)
+    sequence,
+    method = "stop",
+    outputType = "string",
+    nonstandardResidues = NA,
+    supressAAWarning = FALSE,
+    supressOutputMessage = FALSE) {
+    if (!all(is.character(sequence), is.character(method),
+        is.character(outputType))) {
+        stop("Error: sequence, method, and outputType must be character vectors.
+            Please check variable type.")
     }
-    separatedSequence <- strsplit(sequence, "")
-    names(separatedSequence) <- NULL
-    separatedSequence <- unlist(separatedSequence)
-  } else {
-    separatedSequence <- sequence
-  }
-  #-----
-  #This setion sets the residues which are considered valid residues
-  aa <- "ACDEFGHIKLMNPQRSTVWY"
-  aa <- strsplit(aa, "")
-  aa <- unlist(aa)
-  if (!is.na(nonstandardResidues)) {
-    aa <- c(aa, nonstandardResidues)
-
-    if (!supressAAWarning) {
-      warningMessage <-
-        paste("This validation allows the following non-standard amino acids: ",
-              nonstandardResidues,
-              ". If this is an error, please set nonstandardResidues = NA . ",
-              "If this is not an error, please set supressAAWarning = T. ",
-              sep = "")
-      warning(warningMessage)
+    if (!(method %in% c("stop", "warn"))) {
+        stop('Error: method is not equal to a valid term.
+            Set method equal to "Stop" or "Warn"')
     }
-  }
-  #-----
-  #This section checks if the amino acid sequence contains invalid residues
-  aaError <- FALSE
-  #Used for returning messages later. Set to False unless there is an error
-  if (all(separatedSequence %in% aa) == FALSE) {
-    aaError <- TRUE #Used for returning messages later reporting an error
-    invalidResidues <- separatedSequence[!(separatedSequence %in% aa)]
-    invalidResidues <- unique(invalidResidues)
-    warningMessage <- paste("Protein contains the following invalid residues: ",
-                            invalidResidues,
-                            ". ",
-                            sep = "")
-    #makes the message to report what invalid residues are in the sequence
-    #--- below reports the error
-    if (method == "stop") {
-      stop(warningMessage)
+    #-----
+    #This section will confirm what to do with the amino acid sequence
+    if (length(sequence) == 1) {
+        #this is to see if the string is a .fasta / .fa file
+        if (grepl("\\.fa", sequence, ignore.case = TRUE)) {
+        sequence <- unlist(seqinr::read.fasta(file = sequence, seqtype = "AA",
+                                        as.string = TRUE))
+        }
+        separatedSequence <- strsplit(sequence, "")
+        names(separatedSequence) <- NULL
+        separatedSequence <- unlist(separatedSequence)
     } else {
-      warning(warningMessage)
+        separatedSequence <- sequence
     }
-    #--- below reports the error
-  }
-  #------
-  #this section creates the output
-  if (outputType == "string") {
-    outputSequence <- paste(separatedSequence, sep = "", collapse = "")
-  }
-  if (outputType == "vector") {
-    outputSequence <- separatedSequence
-  }
-  if (supressOutputMessage == FALSE) {
-    if (aaError == FALSE) {
-      validMessage <- paste("The sequence contains no invalid residues.")
+    #----- Test for valid residues
+    aa <- "ACDEFGHIKLMNPQRSTVWY"
+    aa <- strsplit(aa, "")
+    aa <- unlist(aa)
+    if (!is.na(nonstandardResidues)) {
+        aa <- c(aa, nonstandardResidues)
+        if (!supressAAWarning) {
+            warningMessage <- paste(
+            "This validation allows the following non-standard amino acids: ",
+                nonstandardResidues,
+                ". If this is an error, please set nonstandardResidues = NA . ",
+                "If this is not an error, please set supressAAWarning = T. ",
+                sep = "")
+            warning(warningMessage)
+        }
     }
-    if (aaError == TRUE) {
-      validMessage <- paste("INVALID SEQUENCE! There are invalid residues.")
+    #-----
+    #This section checks if the amino acid sequence contains invalid residues
+    aaError <- FALSE
+    #Used for returning messages later. Set to False unless there is an error
+    if (all(separatedSequence %in% aa) == FALSE) {
+        aaError <- TRUE #Used for returning messages later reporting an error
+        invalidResidues <- separatedSequence[!(separatedSequence %in% aa)]
+        invalidResidues <- unique(invalidResidues)
+        warningMessage <- paste(
+                            "Protein contains the following invalid residues: ",
+                            invalidResidues, ". ", sep = "")
+        #--- below reports the error
+        if (method == "stop") {
+            stop(warningMessage)
+        } else {
+            warning(warningMessage)
+        }
+        #--- below reports the error
     }
-    message(validMessage)
-  }
-  if (!outputType == "none") {
-    return(outputSequence)
-  }
+    #------
+    #this section creates the output
+    if (outputType == "string") {
+        outputSequence <- paste(separatedSequence, sep = "", collapse = "")
+    }
+    if (outputType == "vector") {
+        outputSequence <- separatedSequence
+    }
+    if (supressOutputMessage == FALSE) {
+        if (aaError == FALSE) {
+            validMessage <- paste("The sequence contains no invalid residues.")
+        }
+        if (aaError == TRUE) {
+            validMessage <-
+                paste("INVALID SEQUENCE! There are invalid residues.")
+        }
+        message(validMessage)
+    }
+    if (!outputType == "none") { return(outputSequence) }
 }

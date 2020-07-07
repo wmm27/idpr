@@ -138,220 +138,147 @@
 
 #----
 iupred <- function(
-  uniprotAccession,
-  iupredType = "long",
-  plotResults = TRUE,
-  proteinName = NA) {
+    uniprotAccession,
+    iupredType = "long",
+    plotResults = TRUE,
+    proteinName = NA) {
+    #------
+    #Connecting to IUPred2A REST API
+    iupredURL <- paste("https://iupred2a.elte.hu/iupred2a/",
+                        iupredType, "/", uniprotAccession, ".json", sep = "")
+    iupredJson <- jsonlite::fromJSON(iupredURL)
+    #-----
+    #Reformatting data to be consistent in formatting across idpr
+    iupredPrediction <- iupredJson$iupred2
+    iupredSequence <- unlist(strsplit(iupredJson$sequence, ""))
+    iupredSequence <- unlist(iupredSequence)
+    seqLength <- length(iupredSequence)
+    iupredDF <- data.frame(Position = seq_len(seqLength),
+                            AA = iupredSequence,
+                            IUPred2 = iupredPrediction)
+    #Returning fetched results
+    if (plotResults) {
+        plotTitle <- "Prediction of Intrinsic Disorder"
+        if (!is.na(proteinName)) {
+            plotTitle <- paste("Prediction of Intrinsic Disorder in ",
+                                proteinName,
+                                sep = "")
+        }
+        plotSubtitle <- paste("By IUPred2A ", iupredJson$type, sep = "")
+        gg <- sequencePlot(
+                position = iupredDF$Position,
+                property = iupredDF$IUPred2,
+                hline = 0.5,
+                dynamicColor = iupredDF$IUPred2,
+                customColors = c("darkolivegreen3", "darkorchid1", "grey65"),
+                customTitle = NA,
+                propertyLimits = c(0, 1))
 
-  #------
-  #Connecting to IUPred2A REST API
-  iupredURL <- paste("https://iupred2a.elte.hu/iupred2a/",
-                     iupredType,
-                     "/",
-                     uniprotAccession,
-                     ".json",
-                     sep = "")
-  iupredJson <- jsonlite::fromJSON(iupredURL)
-  #-----
-  #Reformatting data to be consistent in formatting across idpr
-  iupredPrediction <- iupredJson$iupred2
-  iupredSequence <- unlist(strsplit(iupredJson$sequence, ""))
-  iupredSequence <- unlist(iupredSequence)
-  seqLength <- length(iupredSequence)
-  iupredDF <- data.frame(Position = seq_len(seqLength),
-                         AA = iupredSequence,
-                         IUPred2 = iupredPrediction)
-  #------
-  #Returning
-  if (plotResults) {
-    if (!is.na(proteinName)) {
-      plotTitle <- paste("Prediction of Intrinsic Disorder in ",
-                         proteinName,
-                         sep = "")
+        gg <- gg + ggplot2::labs(title = plotTitle, subtitle = plotSubtitle)
+        return(gg)
     } else {
-      plotTitle <- "Prediction of Intrinsic Disorder"
+        return(iupredDF)
     }
-    jsonType <- iupredJson$type
-    plotSubtitle <- paste("By IUPred2A ",
-                          jsonType,
-                          sep = "")
-
-    gg <-  sequencePlot(
-      position = iupredDF$Position,
-      property = iupredDF$IUPred2,
-      hline = 0.5,
-      dynamicColor = iupredDF$IUPred2,
-      customColors = c("darkolivegreen3", "darkorchid1", "grey65"),
-      customTitle = NA,
-      propertyLimits = c(0, 1))
-
-    gg <- gg + ggplot2::labs(title = plotTitle,
-                             subtitle = plotSubtitle)
-    return(gg)
-  } else {
-    return(iupredDF)
-  }
-
 }
-
 
 #' @rdname iupred
 #' @export
-#----
 iupredAnchor <- function(
-  uniprotAccession,
-  plotResults = TRUE,
-  proteinName = NA) {
-
-  #------
-  #Connecting to IUPred2A REST API
-  iupredURL <- paste("https://iupred2a.elte.hu/iupred2a/",
-                     "anchor",
-                     "/",
-                     uniprotAccession,
-                     ".json",
-                     sep = "")
-  iupredJson <- jsonlite::fromJSON(iupredURL)
-  #-----
-  #Reformatting data to be consistent in formatting across idpr
-  iupredPrediction <- iupredJson$iupred2
-  anchorPrediction <- iupredJson$anchor2
-  iupredSequence <- unlist(strsplit(iupredJson$sequence, ""))
-  iupredSequence <- unlist(iupredSequence)
-  seqLength <- length(iupredSequence)
-  iupredDF <- data.frame(Position = seq_len(seqLength),
-                         AA = iupredSequence,
-                         IUPred2 = iupredPrediction,
-                         ANCHOR2 = anchorPrediction)
-  #------
-  #Returning
-  if (plotResults) {
-    if (!is.na(proteinName)) {
-      plotTitle <- paste("Prediction of Intrinsic Disorder in ",
-                         proteinName,
-                         sep = "")
+    uniprotAccession,
+    plotResults = TRUE,
+    proteinName = NA) {
+    #---- Connecting to IUPred2A REST API
+    iupredURL <- paste("https://iupred2a.elte.hu/iupred2a/anchor/",
+                        uniprotAccession, ".json", sep = "")
+    iupredJson <- jsonlite::fromJSON(iupredURL)
+    #----- Reformatting data to be consistent in formatting across idpr
+    iupredPrediction <- iupredJson$iupred2
+    anchorPrediction <- iupredJson$anchor2
+    iupredSequence <- unlist(strsplit(iupredJson$sequence, ""))
+    iupredSequence <- unlist(iupredSequence)
+    seqLength <- length(iupredSequence)
+    iupredDF <- data.frame(Position = seq_len(seqLength),
+                            AA = iupredSequence,
+                            IUPred2 = iupredPrediction,
+                            ANCHOR2 = anchorPrediction)
+    #------ Returning results
+    if (plotResults) {
+        plotTitle <- "Prediction of Intrinsic Disorder"
+        if (!is.na(proteinName)) {
+            plotTitle <- paste("Prediction of Intrinsic Disorder in ",
+                                proteinName, sep = "")
+        }
+        plotSubtitle <- paste("By IUPred2A ", iupredJson$type,
+                                " and ANCHOR2", sep = "")
+        gg <- sequencePlot(
+            position = iupredDF$Position,
+            property = iupredDF$IUPred2,
+            hline = 0.5,
+            dynamicColor = iupredDF$IUPred2,
+            customColors = c("darkolivegreen3", "darkorchid1", "grey65"),
+            customTitle = NA,
+            propertyLimits = c(0, 1))
+        gg <-  gg + ggplot2::geom_line(data = iupredDF,
+                    ggplot2::aes_(x = ~ Position,
+                                y = ~ ANCHOR2),
+                                color = "#92140C",
+                                inherit.aes = FALSE)
+        gg <- gg + ggplot2::labs(title = plotTitle, subtitle = plotSubtitle)
+        return(gg)
     } else {
-      plotTitle <- "Prediction of Intrinsic Disorder"
+        return(iupredDF)
     }
-    jsonType <- iupredJson$type
-    plotSubtitle <- paste("By IUPred2A ",
-                          jsonType,
-                          " and ANCHOR2",
-                          sep = "")
-
-    gg <- sequencePlot(
-      position = iupredDF$Position,
-      property = iupredDF$IUPred2,
-      hline = 0.5,
-      dynamicColor = iupredDF$IUPred2,
-      customColors = c("darkolivegreen3", "darkorchid1", "grey65"),
-      customTitle = NA,
-      propertyLimits = c(0, 1))
-    gg <- gg + ggplot2::geom_line(data = iupredDF,
-                                  ggplot2::aes_(x = ~ Position,
-                                               y = ~ ANCHOR2),
-                                  color = "#92140C",
-                                  inherit.aes = FALSE)
-    gg <- gg + ggplot2::labs(title = plotTitle,
-                             subtitle = plotSubtitle)
-    return(gg)
-  } else {
-    return(iupredDF)
-  }
-
 }
 
 #' @rdname iupred
 #' @export
-iupredRedox <- function(
-  uniprotAccession,
-  plotResults = TRUE,
-  proteinName = NA) {
-
-  #------
-  #Connecting to IUPred2A REST API
-  iupredURL <- paste("https://iupred2a.elte.hu/iupred2a/",
-                     "redox",
-                     "/",
-                     uniprotAccession,
-                     ".json",
-                     sep = "")
-  iupredJson <- jsonlite::fromJSON(iupredURL)
-  #-----
-  #Reformatting data to be consistent in formatting across idpr
-  iupredPlus <- iupredJson$iupred2_redox_plus
-  iupredMinus <- iupredJson$iupred2_redox_minus
-  redoxSenstitiveMat <- iupredJson$redox_sensitive_regions
-  redoxSenstitiveDF <- as.data.frame(redoxSenstitiveMat)
-  iupredSequence <- unlist(strsplit(iupredJson$sequence, ""))
-  iupredSequence <- unlist(iupredSequence)
-  seqLength <- length(iupredSequence)
-  iupredDF <- data.frame(Position = seq_len(seqLength),
-                         AA = iupredSequence,
-                         iupredPlus = iupredPlus,
-                         iupredMinus = iupredMinus)
-  #------
-  #Returning
-  if (plotResults) {
-    if (!is.na(proteinName)) {
-      plotTitle <- paste("Prediction of Intrinsic Disorder in ",
-                         proteinName,
-                         sep = "")
+iupredRedox <-
+    function(uniprotAccession, plotResults = TRUE, proteinName = NA) {
+    iupredURL <- paste("https://iupred2a.elte.hu/iupred2a/redox/",
+                        uniprotAccession, ".json", sep = "")
+    iupredJson <- jsonlite::fromJSON(iupredURL)
+    iupredPlus <- iupredJson$iupred2_redox_plus
+    iupredMinus <- iupredJson$iupred2_redox_minus
+    redoxSenstitiveDF <- as.data.frame(iupredJson$redox_sensitive_regions)
+    iupredSequence <- unlist(strsplit(iupredJson$sequence, ""))
+    seqLength <- length(iupredSequence)
+    iupredDF <- data.frame(Position = seq_len(seqLength), AA = iupredSequence,
+                            iupredPlus = iupredPlus, iupredMinus = iupredMinus)
+    if (plotResults) {
+        plotTitle <- "Prediction of Intrinsic Disorder"
+        if (!is.na(proteinName)) {
+            plotTitle <- paste("Prediction of Intrinsic Disorder in ",
+                                proteinName, sep = "")
+        }
+        plotSubtitle <- paste("By IUPred2 ", iupredJson$type,
+                            "|Based on Environmental Redox State", sep = "")
+        gg <- ggplot2::ggplot(iupredDF, ggplot2::aes(x = Position))
+        if (!is.null(redoxSenstitiveDF[1, 1])) {
+            gg <- gg + ggplot2::geom_rect(inherit.aes = FALSE,
+                    data = redoxSenstitiveDF, alpha = 0.5, fill = "#5DD39E",
+                    ggplot2::aes_(xmin = ~ V1, xmax = ~ V2, ymin = 0, ymax = 1))
+        }
+        gg <- gg + ggplot2::geom_hline(yintercept = 0.5, size = 1, alpha = 0.5,
+                                    linetype = "dotdash", color = "gray13") +
+                ggplot2::geom_line(linetype = "solid",
+                        ggplot2::aes(y = iupredMinus, color = "iupredMin")) +
+                ggplot2::geom_line(linetype = "solid",
+                        ggplot2::aes(y = iupredPlus, color = "iupredPlus")) +
+                ggplot2::scale_color_manual(labels = c("Plus", "Minus"),
+                        name = "Redox-Sensitive\nDisorder Prediction",
+                values = c("iupredPlus" = "#BF3EFF", "iupredMin" = "#348AA7")) +
+                ggplot2::labs(title = plotTitle, subtitle = plotSubtitle,
+                        x = "Residue", y = "Score") + ggplot2::theme_minimal() +
+                ggplot2::geom_hline(yintercept = c(0, 1), color = "gray2")
+        return(gg)
     } else {
-      plotTitle <- "Prediction of Intrinsic Disorder"
+        iupredDF$redoxSensitive <- rep(FALSE, nrow(iupredDF))
+        if (!is.null(redoxSenstitiveDF[1, 1])) { #overwrites if present
+            senstitiveRegions <- unlist(Map(":", redoxSenstitiveDF$V1,
+                                                redoxSenstitiveDF$V2))
+            iupredDF$redoxSensitive <-
+                seq_len(seqLength) %in% unlist(senstitiveRegions)
+        }
+        return(iupredDF)
     }
-    jsonType <- iupredJson$type
-    plotSubtitle <- paste("By IUPred2 ",
-                          jsonType,
-                          "|Based on Environmental Redox State",
-                          sep = "")
-    gg <- ggplot2::ggplot(iupredDF,
-                          ggplot2::aes(x = Position))
-
-    if (!is.null(redoxSenstitiveDF[1, 1])) {
-      gg <- gg + ggplot2::geom_rect(inherit.aes = FALSE,
-                                    data = redoxSenstitiveDF,
-                                    ggplot2::aes_(xmin = ~ V1,
-                                                 xmax = ~ V2,
-                                                 ymin = 0,
-                                                 ymax = 1),
-                                    alpha = 0.5,
-                                    fill = "#5DD39E")
-    }
-    legendTitle <- "Redox-Sensitive\nDisorder Prediction"
-    gg <- gg + ggplot2::geom_hline(yintercept = 0.5,
-                                   linetype = "dotdash",
-                                   color = "gray13",
-                                   size = 1,
-                                   alpha = 0.5)
-    gg <- gg + ggplot2::geom_line(ggplot2::aes(y = iupredMinus,
-                                               color = "iupredMin"),
-                                  linetype = "solid") +
-      ggplot2::geom_line(ggplot2::aes(y = iupredPlus,
-                                      color = "iupredPlus"),
-                         linetype = "solid") +
-      ggplot2::scale_color_manual(values = c("iupredPlus" = "#BF3EFF",
-                                             "iupredMin" = "#348AA7"),
-                                  labels = c("Plus",
-                                             "Minus"),
-                                  name = legendTitle)
-    gg <- gg + ggplot2::labs(title = plotTitle,
-                             subtitle = plotSubtitle,
-                             x = "Residue",
-                             y = "Score") +
-      ggplot2::theme_minimal() +
-      ggplot2::geom_hline(yintercept = c(0, 1), color = "gray2")
-    return(gg)
-  } else {
-    if (!is.null(redoxSenstitiveDF[1, 1])) {
-      senstitiveRegions <- unlist(Map(":",
-                                      redoxSenstitiveDF$V1,
-                                      redoxSenstitiveDF$V2))
-      senstitivePositions <- seq_len(seqLength) %in% unlist(senstitiveRegions)
-      iupredDF$redoxSensitive <- senstitivePositions
-    } else {
-      iupredDF$redoxSensitive <- rep(FALSE, nrow(iupredDF))
-    }
-    return(iupredDF)
-  }
 }

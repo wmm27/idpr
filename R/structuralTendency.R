@@ -60,49 +60,49 @@
 #' head(exampleDF)
 
 structuralTendency <- function(
-  sequence,
-  disorderPromoting = c("P", "E", "S", "Q", "K", "A", "G"),
-  disorderNeutral = c("D", "T", "R"),
-  orderPromoting = c("M", "N", "V", "H", "L", "F", "Y", "I", "W", "C"),
-  printCitation = FALSE) {
-  #-----
-  seqCharacterVector <- sequenceCheck(
-    sequence = sequence,
-    method = "stop",
-    outputType = "vector",
-    supressOutputMessage = TRUE)
-  sequenceLength <- length(seqCharacterVector)
+    sequence,
+    disorderPromoting = c("P", "E", "S", "Q", "K", "A", "G"),
+    disorderNeutral = c("D", "T", "R"),
+    orderPromoting = c("M", "N", "V", "H", "L", "F", "Y", "I", "W", "C"),
+    printCitation = FALSE) {
+    #-----
+    seqCharacterVector <- sequenceCheck(
+        sequence = sequence,
+        method = "stop",
+        outputType = "vector",
+        supressOutputMessage = TRUE)
+    sequenceLength <- length(seqCharacterVector)
 
-  #----- Matches residue with tendency
-  structuralTendencyVector <- rep(NA, sequenceLength)
+    #----- Matches residue with tendency
+    structuralTendencyVector <- rep(NA, sequenceLength)
 
-  disorderedResidues <- seqCharacterVector %in% disorderPromoting
-  structuralTendencyVector[disorderedResidues] <- "Disorder Promoting"
+    disorderedResidues <- seqCharacterVector %in% disorderPromoting
+    structuralTendencyVector[disorderedResidues] <- "Disorder Promoting"
 
-  orderedResidues <- seqCharacterVector %in% orderPromoting
-  structuralTendencyVector[orderedResidues] <- "Order Promoting"
+    orderedResidues <- seqCharacterVector %in% orderPromoting
+    structuralTendencyVector[orderedResidues] <- "Order Promoting"
 
-  neutralResidues <- seqCharacterVector %in% disorderNeutral
-  structuralTendencyVector[neutralResidues] <- "Disorder Neutral"
+    neutralResidues <- seqCharacterVector %in% disorderNeutral
+    structuralTendencyVector[neutralResidues] <- "Disorder Neutral"
 
-  #----- makes the data frame for output
-  structureTendencyDF <- data.frame(Position = seq_len(sequenceLength),
-                                    AA = seqCharacterVector,
-                                    Tendency = structuralTendencyVector)
+    #----- makes the data frame for output
+    structureTendencyDF <- data.frame(Position = seq_len(sequenceLength),
+                                        AA = seqCharacterVector,
+                                        Tendency = structuralTendencyVector)
 
-  structureTendencyDF$AA <- as.character(structureTendencyDF$AA)
-  structureTendencyDF$Tendency <- as.character(structureTendencyDF$Tendency)
-  structureTendencyDF$Position <- as.numeric(structureTendencyDF$Position)
+    structureTendencyDF$AA <- as.character(structureTendencyDF$AA)
+    structureTendencyDF$Tendency <- as.character(structureTendencyDF$Tendency)
+    structureTendencyDF$Position <- as.numeric(structureTendencyDF$Position)
 
-  if (printCitation) {
-    residueCitation <- "Uversky, V. N. (2013).
-     A decade and a half of protein intrinsic disorder:
-     Biology still waits for physics.
-     Protein Science, 22(6), 693-724.
-     doi:10.1002/pro.2261"
-    print(residueCitation)
-  }
-  return(structureTendencyDF)
+    if (printCitation) {
+        residueCitation <- "Uversky, V. N. (2013).
+            A decade and a half of protein intrinsic disorder:
+            Biology still waits for physics.
+            Protein Science, 22(6), 693-724.
+            doi:10.1002/pro.2261"
+        print(residueCitation)
+    }
+    return(structureTendencyDF)
 }
 
 
@@ -205,108 +205,76 @@ structuralTendency <- function(
 #'               graphType = "bar",
 #'               alphabetical = TRUE)
 
-structuralTendencyPlot <- function(
-  sequence,
-  graphType = "pie",
-  summarize = FALSE,
-  proteinName = NA,
-  alphabetical = FALSE,
-  disorderPromoting = c("P", "E", "S", "Q", "K", "A", "G"),
-  disorderNeutral = c("D", "T", "R"),
-  orderPromoting = c("M", "N", "V", "H", "L", "F", "Y", "I", "W", "C"),
-  ...) {  #How to order output results (summarize = F)
-
-  #---
-
-  if (is.logical(summarize) == FALSE ||
-      is.logical(alphabetical) == FALSE) {
-    stop("summarize and alphabetical must be logical values")
-  }
-  if (!graphType %in% c("pie", "bar", "none")) {
-    stop('invalid argument for graphType.
-       Set graphType = c("pie", "bar", "none")')
-  }
-
-  structuralTendencyDF <- structuralTendency(sequence = sequence,
-                                          disorderPromoting = disorderPromoting,
-                                          disorderNeutral = disorderNeutral,
-                                          orderPromoting = orderPromoting)
-  sequenceLength <- nrow(structuralTendencyDF)
-
-  if (summarize) {
-    structuralTendencyDF <- data.frame(table(structuralTendencyDF$Tendency))
-    names(structuralTendencyDF) <- c("Tendency", "Total")
-    structuralTendencyDF$Frequency <- structuralTendencyDF$Total /
-      sequenceLength * 100
-    structuralTendencyDF$AA <- as.character(structuralTendencyDF$Tendency)
-
-  } else {
-
-    structuralTendencyDF <- structuralTendencyDF[, 2:3]
-    residueFrequencyDF <- data.frame(table(structuralTendencyDF$AA))
-    names(residueFrequencyDF) <- c("AA", "Total")
-    structuralTendencyDF <- unique(structuralTendencyDF)
-    structuralTendencyDF <- merge(structuralTendencyDF, residueFrequencyDF)
-    structuralTendencyDF$Frequency <- round(structuralTendencyDF$Total /
-                                              sequenceLength * 100, 3)
-    names(structuralTendencyDF) <- c("AA", "Tendency", "Total", "Frequency")
-
-    if (!alphabetical) {
-      aaOrder <- c("P", "E", "S", "Q", "K", "A", "G",
-                   "D", "T", "R",
-                   "M", "N", "V", "H", "L", "F", "Y", "I", "W", "C")
-      structuralTendencyDF$AA <- factor(structuralTendencyDF$AA,
-                                        levels = aaOrder)
+structuralTendencyPlot <- function(sequence, graphType = "pie",
+    summarize = FALSE, proteinName = NA, alphabetical = FALSE,
+    disorderPromoting = c("P", "E", "S", "Q", "K", "A", "G"),
+    disorderNeutral = c("D", "T", "R"),
+    orderPromoting = c("M", "N", "V", "H", "L", "F", "Y", "I", "W", "C"),
+    ...) {
+    if (is.logical(summarize) == FALSE || is.logical(alphabetical) == FALSE) {
+        stop("summarize and alphabetical must be logical values")
     }
-  }
-  if (!graphType == "none") {
-    if (graphType == "bar") {
-      gg <- ggplot2::ggplot(data = structuralTendencyDF,
-                            ggplot2::aes_(x = ~ AA,
-                                          y = ~ Frequency,
-                                          fill = ~ Tendency,
-                                          group = ~ Tendency)) +
-        ggplot2::geom_bar(stat = "identity") +
-        ggplot2::theme_bw()
+    if (!graphType %in% c("pie", "bar", "none")) {
+        stop('invalid argument for graphType. Please see documentation')
     }
-    if (graphType == "pie") {
-      #------Data needs mutated to label residues
-      structuralTendencyDF <- structuralTendencyDF %>%
-        dplyr::arrange(dplyr::desc(.data$Tendency)) %>%
-        dplyr::mutate(prop = .data$Total / sum(.data$Total) * 100) %>%
-        dplyr::mutate(ypos = cumsum(.data$prop) - 0.5 * .data$prop)
-      gg <- ggplot2::ggplot(structuralTendencyDF,
-                            ggplot2::aes_(x = "",
-                                          y = ~ prop,
-                                          fill = ~ Tendency)) +
-        ggplot2::geom_bar(stat = "identity",
-                          width = 1,
-                          color = "white") +
-        ggplot2::coord_polar("y",
-                             start = 0) +
-        ggplot2::theme_void() +
-        ggplot2::geom_text(ggplot2::aes_(y = ~ ypos,
-                                         label = ~ AA),
-                           color = "white",
-                           size = 4)
-    }
-
-    if (!is.na(proteinName)) {
-      plotTitle <- paste("Compositional Profile of ",
-                         proteinName,
-                         sep = "", collapse = "")
+    structuralTendencyDF <- structuralTendency(sequence = sequence,
+                                        disorderPromoting = disorderPromoting,
+                                        disorderNeutral = disorderNeutral,
+                                        orderPromoting = orderPromoting)
+    sequenceLength <- nrow(structuralTendencyDF)
+    if (summarize) {
+        structuralTendencyDF <- data.frame(table(structuralTendencyDF$Tendency))
+        names(structuralTendencyDF) <- c("Tendency", "Total")
+        structuralTendencyDF$Frequency <- structuralTendencyDF$Total /
+                                                sequenceLength * 100
+        structuralTendencyDF$AA <- as.character(structuralTendencyDF$Tendency)
     } else {
-      plotTitle <- "Compositional Profile"
+        structuralTendencyDF <- structuralTendencyDF[, 2:3]
+        residueFrequencyDF <- data.frame(table(structuralTendencyDF$AA))
+        names(residueFrequencyDF) <- c("AA", "Total")
+        structuralTendencyDF <- unique(structuralTendencyDF)
+        structuralTendencyDF <- merge(structuralTendencyDF, residueFrequencyDF)
+        structuralTendencyDF$Frequency <- round(structuralTendencyDF$Total /
+                                                sequenceLength * 100, 3)
+        names(structuralTendencyDF) <- c("AA", "Tendency", "Total", "Frequency")
+        if (!alphabetical) {
+            aaOrder <- c("P", "E", "S", "Q", "K", "A", "G", "D", "T", "R",
+                        "M", "N", "V", "H", "L", "F", "Y", "I", "W", "C")
+            structuralTendencyDF$AA <- factor(structuralTendencyDF$AA,
+                                                levels = aaOrder)
+        }
     }
-
-    yTitle <- "Amino Acid Composition (as % of sequence length)"
-    gg <- gg + ggplot2::labs(title = plotTitle,
-                             y = yTitle)
-    gg <- gg +
-      ggplot2::theme(legend.position = "top",
-                     plot.title = ggplot2::element_text(hjust = 0.5))
-    return(gg)
-  } else {
-    return(structuralTendencyDF)
-  }
+    if (!graphType == "none") {
+        if (graphType == "bar") {
+            gg <- ggplot2::ggplot(data = structuralTendencyDF,
+                            ggplot2::aes_(x = ~ AA, y = ~ Frequency,
+                                    fill = ~ Tendency,  group = ~ Tendency)) +
+                    ggplot2::geom_bar(stat = "identity") + ggplot2::theme_bw()
+        }
+        if (graphType == "pie") {
+            #------Data needs mutated to label residues
+            structuralTendencyDF <- structuralTendencyDF %>%
+                dplyr::arrange(dplyr::desc(.data$Tendency)) %>%
+                dplyr::mutate(prop = .data$Total / sum(.data$Total) * 100) %>%
+                dplyr::mutate(ypos = cumsum(.data$prop) - 0.5 * .data$prop)
+            gg <- ggplot2::ggplot(structuralTendencyDF,
+                        ggplot2::aes_(x = "", y = ~ prop, fill = ~ Tendency)) +
+            ggplot2::geom_bar(stat = "identity", width = 1, color = "white") +
+            ggplot2::coord_polar("y", start = 0) + ggplot2::theme_void() +
+            ggplot2::geom_text(ggplot2::aes_(y = ~ ypos, label = ~ AA),
+                              color = "white", size = 4)
+        }
+        plotTitle <- "Compositional Profile"
+        if (!is.na(proteinName)) {
+            plotTitle <- paste("Compositional Profile of ", proteinName,
+                           sep = "", collapse = "")
+        }
+        yTitle <- "Amino Acid Composition (as % of sequence length)"
+        gg <- gg + ggplot2::labs(title = plotTitle, y = yTitle) +
+        ggplot2::theme(legend.position = "top",
+                       plot.title = ggplot2::element_text(hjust = 0.5))
+        return(gg)
+    } else {
+        return(structuralTendencyDF)
+    }
 }

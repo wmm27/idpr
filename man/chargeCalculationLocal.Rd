@@ -7,11 +7,11 @@
 chargeCalculationLocal(
   sequence,
   window = 7,
+  proteinName = NA,
   pH = 7,
   pKaSet = "IPC_protein",
   printCitation = FALSE,
   plotResults = FALSE,
-  proteinName = NA,
   ...
 )
 }
@@ -25,6 +25,9 @@ the location of a .fasta or .fa file.}
 Sets the size of sliding window, must be an odd number.
 The window determines the number of residues to be analyzed and averaged
 for each position along the sequence.}
+
+\item{proteinName}{character string, optional. Used to add protein name
+to the title in ggplot. Ignored if \code{plotResults = FALSE}.}
 
 \item{pH}{numeric value, 7.0 by default.
 The environmental pH used to calculate residue charge.}
@@ -47,9 +50,6 @@ Will not print if there is a custom dataset.}
 \item{plotResults}{logical value. TRUE by default.
 If \code{plotResults = TRUE}, a ggplot of window charges are returned.
 If \code{plotResults = FALSE}, a data frame of window charges are returned.}
-
-\item{proteinName}{character string, optional. Used to add protein name
-to the title in ggplot. Ignored if \code{plotResults = FALSE}.}
 
 \item{...}{any additional parameters, especially those for plotting.}
 }

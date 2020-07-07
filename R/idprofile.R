@@ -146,74 +146,53 @@
 #'   structuralTendencyType = "pie")
 #' }
 
-idprofile <- function(sequence,
-                      uniprotAccession = NA,
-                      proteinName = NA,
-                      window = 9,
-                      pH = 7.2,
-                      pKaSet = "IPC_protein",
-                      structuralTendencyType = "bar",
-                      structuralTendencySummarize = FALSE,
-                      disorderPromoting = c("P", "E", "S", "Q", "K", "A", "G"),
-                      disorderNeutral = c("D", "T", "R"),
-                      orderPromoting = c("M", "N", "V", "H", "L",
-                                         "F", "Y", "I", "W", "C"),
-                      iupredType = "long"
-) {
-
-  #---- General Plots
-  rhPlot <- chargeHydropathyPlot(sequence = sequence,
-                                 pH = pH,
-                                 pKaSet = pKaSet,
-                                 proteinName = proteinName)
-  chargePlot <- chargeCalculationLocal(sequence = sequence,
-                                       window = window,
-                                       plotResults = TRUE,
-                                       pH = pH,
-                                       proteinName = proteinName)
-  hydropPlot <- scaledHydropathyLocal(sequence = sequence,
-                                      window = window,
-                                      plotResults = TRUE,
-                                      pKaSet = pKaSet,
-                                      proteinName = proteinName)
-  tendencyPlot <- structuralTendencyPlot(sequence = sequence,
+idprofile <- function(sequence, uniprotAccession = NA,
+                    proteinName = NA, iupredType = "long",
+                    window = 9,
+                    pH = 7.2, pKaSet = "IPC_protein",
+                    structuralTendencyType = "bar",
+                    structuralTendencySummarize = FALSE,
+                    disorderPromoting = c("P", "E", "S", "Q", "K", "A", "G"),
+                    disorderNeutral = c("D", "T", "R"),
+                    orderPromoting = c("M", "N", "V", "H", "L",
+                                        "F", "Y", "I", "W", "C")) {
+    #---- General Plots
+    rhPlot <- chargeHydropathyPlot(sequence = sequence, pH = pH,
+                                    pKaSet = pKaSet, proteinName = proteinName)
+    chargePlot <- chargeCalculationLocal(sequence = sequence, window = window,
+                                        plotResults = TRUE, pH = pH,
+                                        proteinName = proteinName)
+    hydropPlot <- scaledHydropathyLocal(sequence = sequence,  window = window,
+                                        plotResults = TRUE, pKaSet = pKaSet,
+                                        proteinName = proteinName)
+    tendencyPlot <- structuralTendencyPlot(sequence = sequence,
                                         graphType = structuralTendencyType,
                                         summarize = structuralTendencySummarize,
                                         disorderPromoting = disorderPromoting,
                                         disorderNeutral = disorderNeutral,
                                         orderPromoting = orderPromoting,
                                         proteinName = proteinName)
-  #-------- Adding IUPred Plot based on which type
-  if (!is.na(uniprotAccession)) {
-    if (iupredType %in% c("long", "short", "glob")) {
-      iupredPlot <- iupred(uniprotAccession,
-                           iupredType = iupredType,
-                           plotResults = TRUE,
-                           proteinName = proteinName)
+    #-------- Adding IUPred Plot based on which type
+    if (!is.na(uniprotAccession)) {
+        if (iupredType %in% c("long", "short", "glob")) {
+            iupredPlot <- iupred(uniprotAccession, iupredType = iupredType,
+                                plotResults = TRUE, proteinName = proteinName)
+        }
+        if (iupredType == "anchor") {
+            iupredPlot <- iupredAnchor(uniprotAccession, plotResults = TRUE,
+                                        proteinName = proteinName)
+        }
+        if (iupredType == "redox") {
+            iupredPlot <- iupredRedox(uniprotAccession, plotResults = TRUE,
+                                        proteinName = proteinName)
+        }
+    } else {
+        iupredPlot <- ggplot2::ggplot() +
+                        ggplot2::annotate("text", x = 1, y = 1,
+                                        label = "No Uniprot Accession provided.
+                                            \nIUPred plot skipped") +
+                        ggplot2::theme_void()
     }
-    if (iupredType == "anchor") {
-      iupredPlot <- iupredAnchor(uniprotAccession,
-                                 plotResults = TRUE,
-                                 proteinName = proteinName)
-    }
-    if (iupredType == "redox") {
-      iupredPlot <- iupredRedox(uniprotAccession,
-                                plotResults = TRUE,
-                                proteinName = proteinName)
-    }
-  } else {
-    iupredPlot <- ggplot2::ggplot() +
-      ggplot2::annotate("text",
-                        x = 1,
-                        y = 1,
-                        label = "No Uniprot Accession provided.\n
-                                   IUPred plot skipped") +
-      ggplot2::theme_void()
-  }
-  plotList <- list((rhPlot),
-                   (tendencyPlot),
-                   (chargePlot),
-                   (hydropPlot),
-                   (iupredPlot))
-  return(plotList)
+    plotList <- list(rhPlot, tendencyPlot, chargePlot, hydropPlot, iupredPlot)
+    return(plotList)
 }

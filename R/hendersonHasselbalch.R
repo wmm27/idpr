@@ -59,35 +59,30 @@
 #'   residue = "K")
 #'
 hendersonHasselbalch <- function(
-  pKa,
-  pH = 7.0,
-  residue) {
-  #residue supports the exact aa c('C','D','E','H','K','R','Y'),
-  #termini c("COOH","COO","NH2","NH3"), or
-  #property c('acid','base','positive','negative')
+    pKa,
+    pH = 7.0,
+    residue) {
 
-  validAcidicResidues <- c("D", "E", "C", "Y",
-                           "acid", "negative",
-                           "COOH", "COO")
-  validBasicResidues <-  c("H", "K", "R",
-                           "base", "positive",
-                           "NH2", "NH3")
-  #---- Validating Input
-  if (!residue %in% c(validAcidicResidues, validBasicResidues)) {
-    stop("Please set residue equal to an accepted value.")
-  }
-  if (is.numeric(pKa) == FALSE ||
-      is.numeric(pH) == FALSE) {
-    stop("pKa and pH each require one numeric value")
-  }
-
-  #------ Calculations depending on residue type
-  if (residue %in% validAcidicResidues) {
-    charge <- -1 / (1 + 10 ^ (pKa - pH))
-    return(charge)
-  }
-  if (residue %in% validBasicResidues) {
-    charge <- 1 / (1 + 10 ^ (pH - pKa))
-    return(charge)
-  }
+    validAcidicResidues <- c("D", "E", "C", "Y",
+                            "acid", "negative",
+                            "COOH", "COO")
+    validBasicResidues <-  c("H", "K", "R",
+                            "base", "positive",
+                            "NH2", "NH3")
+    #---- Validating Input
+    if (!residue %in% c(validAcidicResidues, validBasicResidues)) {
+        stop("Please set residue equal to an accepted value.")
+    }
+    if (is.numeric(pKa) == FALSE || is.numeric(pH) == FALSE) {
+        stop("pKa and pH each require one numeric value")
+    }
+    #------ Calculations depending on residue type
+    if (residue %in% validAcidicResidues) {
+        charge <- -1 / (1 + 10 ^ (pKa - pH))
+        return(charge)
+    }
+    if (residue %in% validBasicResidues) {
+        charge <- 1 / (1 + 10 ^ (pH - pKa))
+        return(charge)
+    }
 }

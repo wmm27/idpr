@@ -94,137 +94,123 @@
 
 
 chargeHydropathyPlot <- function(
-  sequence,
-  displayInsolubility = TRUE,
-  insolubleValue = 0.7,
-  proteinName = NA,
-  customPlotTitle = NA,
-  pH = 7.0,
-  pKaSet = "IPC_protein",
-  ...) {
+    sequence,
+    displayInsolubility = TRUE,
+    insolubleValue = 0.7,
+    proteinName = NA,
+    customPlotTitle = NA,
+    pH = 7.0,
+    pKaSet = "IPC_protein",
+    ...) {
 
-  if (nchar(sequence[1]) == 1) {
-  sequence <- paste(sequence, sep = "", collapse = "")
-  }
-  #--- Calculating the C-H data for each protein
-  nSequences <- length(sequence)
-  dataCollected <- data.frame(matrix(nrow = nSequences,
-                                     ncol = 3))
-  names(dataCollected) <- c("sequence",
+    if (nchar(sequence[1]) == 1) {
+        sequence <- paste(sequence, sep = "", collapse = "")
+    }
+    #--- Calculating the C-H data for each protein
+    nSequences <- length(sequence)
+    dataCollected <- data.frame(matrix(nrow = nSequences,
+                                        ncol = 3))
+    names(dataCollected) <- c("sequence",
                             "avg_scaled_hydropathy",
                             "avg_net_charge")
 
-  for (i in seq_len(nSequences)) {
-
-    sequence.i <- sequence[i]
-
-    dataCollected$sequence[i] <- sequence.i
-
-    dataCollected$avg_scaled_hydropathy[i] <-
-      meanScaledHydropathy(sequence = sequence.i)
-
-    dataCollected$avg_net_charge[i] <-
-      netCharge(sequence = sequence.i,
-                pKaSet = pKaSet,
-                pH = pH,
-                includeTermini = TRUE,
-                averaged = TRUE)
-
-  }
-
-  # ---- Math for plotting lines
-  #The equations for the lines are:
-  #  Boundary seperating IDPs and compact proteins
-  #   <R> = 2.785 * <H> - 1.151
-  #   <R> = -2.785 * <H> + 1.151
-  #  Limits of CH space
-  #   <R> = 1.125 * <H> - 1.125
-  #   <R> = 1.000 - <H>
-  #  Insoluble line
-  #   <H> = 0.700 (or custom value)
-
-  intersectionPointX <- (1.151 * 2) / (2.785 * 2)
-
-  positiveBoundaryX <- (1.151 + 1) / (1 + 2.785)
-  positiveBoundaryY <- (-1 * positiveBoundaryX) + 1
-
-  negativeBoundaryX <- (1.151 + 1.125) / (1.125 + 2.785)
-  negativeBoundaryY <- 1.125 * negativeBoundaryX - 1.125
-
-  # --- making the ggplot
-  gg <- ggplot2::ggplot(dataCollected, aes_(x = ~ avg_scaled_hydropathy,
-                                           y = ~ avg_net_charge))
-
-  gg <- gg + ggplot2::geom_segment(aes(x = intersectionPointX,
-                                       y = 0,
-                                       xend = positiveBoundaryX,
-                                       yend = positiveBoundaryY))
-  gg <- gg + ggplot2::geom_segment(aes(x = intersectionPointX,
-                                       y = 0,
-                                       xend = negativeBoundaryX,
-                                       yend = negativeBoundaryY))
-  if (displayInsolubility) {
-
-    if (!is.numeric(insolubleValue)) {
-      stop("insolubleValue must be a numeric value.")
+    for (i in seq_len(nSequences)) {
+        sequence.i <- sequence[i]
+        dataCollected$sequence[i] <- sequence.i
+        dataCollected$avg_scaled_hydropathy[i] <-
+            meanScaledHydropathy(sequence = sequence.i)
+        dataCollected$avg_net_charge[i] <-
+            netCharge(sequence = sequence.i,
+                        pKaSet = pKaSet,
+                        pH = pH,
+                        includeTermini = TRUE,
+                        averaged = TRUE)
     }
 
-    insolubleMax <- (-1 * insolubleValue) + 1
-    insolubleMin <-  (1.125 * insolubleValue) - 1.125
+    # ---- Math for plotting lines
+    #The equations for the lines are:
+    #  Boundary seperating IDPs and compact proteins
+    #   <R> = 2.785 * <H> - 1.151
+    #   <R> = -2.785 * <H> + 1.151
+    #  Limits of CH space
+    #   <R> = 1.125 * <H> - 1.125
+    #   <R> = 1.000 - <H>
+    #  Insoluble line
+    #   <H> = 0.700 (or custom value)
 
-    gg <- gg + ggplot2::geom_segment(aes(x = insolubleValue,
-                                         y = insolubleMax,
-                                         xend = insolubleValue,
-                                         yend = insolubleMin))
+    intersectionPointX <- (1.151 * 2) / (2.785 * 2)
+
+    positiveBoundaryX <- (1.151 + 1) / (1 + 2.785)
+    positiveBoundaryY <- (-1 * positiveBoundaryX) + 1
+
+    negativeBoundaryX <- (1.151 + 1.125) / (1.125 + 2.785)
+    negativeBoundaryY <- 1.125 * negativeBoundaryX - 1.125
+
+    # --- making the ggplot
+    gg <- ggplot2::ggplot(dataCollected,
+                        aes_(x = ~ avg_scaled_hydropathy, y = ~ avg_net_charge))
+    gg <- gg + ggplot2::geom_segment(aes(x = intersectionPointX,
+                                        y = 0,
+                                        xend = positiveBoundaryX,
+                                        yend = positiveBoundaryY))
+    gg <- gg + ggplot2::geom_segment(aes(x = intersectionPointX,
+                                        y = 0,
+                                        xend = negativeBoundaryX,
+                                        yend = negativeBoundaryY))
+    if (displayInsolubility) {
+        if (!is.numeric(insolubleValue)) {
+            stop("insolubleValue must be a numeric value.")
+        }
+        insolubleMax <- (-1 * insolubleValue) + 1
+        insolubleMin <-  (1.125 * insolubleValue) - 1.125
+        gg <- gg + ggplot2::geom_segment(aes(x = insolubleValue,
+                                            y = insolubleMax,
+                                            xend = insolubleValue,
+                                            yend = insolubleMin))
     gg <- gg +
-      ggplot2::geom_label(aes(x = 0.85, y = 0.35,
-                              label = "Insoluble Proteins")) +
-      ggplot2:: geom_label(aes(x = 0.7, y = 0.5,
-                               label = "Collapsed Proteins"))
-  } else {
+        ggplot2::geom_label(aes(x = 0.85, y = 0.35,
+                                label = "Insoluble Proteins")) +
+        ggplot2:: geom_label(aes(x = 0.7, y = 0.5,
+                                label = "Collapsed Proteins"))
+    } else {
+        gg <- gg +
+            ggplot2::geom_label(ggplot2::aes(x = 0.8,
+                                            y = 0.4,
+                                            label = "Collapsed Proteins"))
+    }
+
     gg <- gg +
-      ggplot2::geom_label(ggplot2::aes(x = 0.8,
-                                       y = 0.4,
-                                       label = "Collapsed Proteins"))
-  }
+        ggplot2::geom_label(ggplot2::aes(x = 0.4,
+                                        y = 0.8,
+                                        label = "Extended IDPs"))
 
-  gg <- gg +
-    ggplot2::geom_label(ggplot2::aes(x = 0.4,
-                                     y = 0.8,
-                                     label = "Extended IDPs"))
+    #Values cannot exceede the logical space within the C-H plot
+    gg <- gg +
+        ggplot2::geom_segment(ggplot2::aes(x = 1, y = 0,
+                                            xend = 0, yend = 1)) +
+        ggplot2::geom_segment(ggplot2::aes(x = 1, y = 0,
+                                            xend = 0, yend = -1.125)) +
+        ggplot2::geom_segment(ggplot2::aes(x = 0, y = 1,
+                                            xend = 0, yend = -1.125))
+    xLabel <- paste("Mean Scaled Hydropathy")
+    yLabel <- paste("Mean Net Charge")
 
-  #Values cannot exceede the logical space within the C-H plot
-  gg <- gg +
-    ggplot2::geom_segment(ggplot2::aes(x = 1, y = 0,
-                                       xend = 0, yend = 1)) +
-    ggplot2::geom_segment(ggplot2::aes(x = 1, y = 0,
-                                       xend = 0, yend = -1.125)) +
-    ggplot2::geom_segment(ggplot2::aes(x = 0, y = 1,
-                                       xend = 0, yend = -1.125))
-
-  xLabel <- paste("Mean Scaled Hydropathy")
-  yLabel <- paste("Mean Net Charge")
-  if (is.na(customPlotTitle)) {
-    if (nSequences == 1 &&
-        !is.na(proteinName)) {
-      ggTitle <- paste("Charge-Hydropathy Plot of ",
-                       proteinName,
-                       sep = "", collapse = "")
+    if (is.na(customPlotTitle)) {
+        if (nSequences == 1 &&
+            !is.na(proteinName)) {
+            ggTitle <- paste("Charge-Hydropathy Plot of ", proteinName,
+                            sep = "", collapse = "")
+        }
+        if (nSequences > 1 ||
+            is.na(proteinName)) {
+            ggTitle <- "Charge-Hydropathy Plot"
+        }
+    } else {
+        ggTitle <- customPlotTitle
     }
-    if (nSequences > 1 ||
-        is.na(proteinName)) {
-      ggTitle <- "Charge-Hydropathy Plot"
-    }
-  } else {
-    ggTitle <- customPlotTitle
-  }
-  gg <- gg +
-    ggplot2::geom_point(color = "#92140C") +
-    ggplot2::theme_minimal() +
-    ggplot2::xlim(0, 1) +
-    ggplot2::ylim(-1.125, 1) +
-    ggplot2::labs(y = yLabel,
-                  x = xLabel,
-                  title = ggTitle)
-  return(gg)
+    gg <- gg + ggplot2::geom_point(color = "#92140C") +
+        ggplot2::theme_minimal() + ggplot2::xlim(0, 1) +
+        ggplot2::ylim(-1.125, 1) + ggplot2::labs(y = yLabel, x = xLabel,
+                                                    title = ggTitle)
+    return(gg)
 }

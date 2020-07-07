@@ -64,15 +64,13 @@
 #'                    shape = 3)
 #' plot(gg)
 
-sequenceMapCoordinates <-
-  function(sequence,
-           nbResidues = 30) {
+sequenceMapCoordinates <- function(sequence, nbResidues = 30) {
 
     seqCharacterVector <- sequenceCheck(
-      sequence = sequence,
-      method = "stop",
-      outputType = "vector",
-      supressOutputMessage = TRUE)
+        sequence = sequence,
+        method = "stop",
+        outputType = "vector",
+        supressOutputMessage = TRUE)
 
     seqLength <- length(seqCharacterVector)
     seqDF <- data.frame(Position = seq_len(seqLength),
@@ -81,21 +79,19 @@ sequenceMapCoordinates <-
     rowVector <- rep(1, seqLength)
     colVector <- seq_len(seqLength)
     if (nRows > 1) {
-      for (i in seq_len(nRows)) {
-        iteration <- i - 1
-        row.i <- nRows - (iteration)
-        start.i <- 1 + nbResidues * (iteration)
-        end.i <- nbResidues +  nbResidues * (iteration)
-        rowVector[start.i:end.i] <- row.i
-        colVector[start.i:end.i] <- seq_len(nbResidues)
-      }
+        for (i in seq_len(nRows)) {
+            iteration <- i - 1
+            row.i <- nRows - (iteration)
+            start.i <- 1 + nbResidues * (iteration)
+            end.i <- nbResidues +  nbResidues * (iteration)
+            rowVector[start.i:end.i] <- row.i
+            colVector[start.i:end.i] <- seq_len(nbResidues)
+        }
     }
-
     seqDF$row <- rowVector[seq_len(seqLength)]
     seqDF$col <- colVector[seq_len(seqLength)]
-
     return(seqDF)
-  }
+}
 
 
 #' Sequence Map Function
@@ -254,114 +250,98 @@ sequenceMapCoordinates <-
 #'
 
 sequenceMap <- function(
-  sequence,
-  property,
-  nbResidues = 30,
-  labelType = "both",
-  everyN = c(1, 10),
-  labelLocation = c("on", "below"),
-  rotationAngle = c(0, 0),
-  customColors = NA) {
-
-  seqDF <- sequenceMapCoordinates(sequence = sequence,
-                                  nbResidues = nbResidues)
-  seqLength <- nrow(seqDF)
-  seqDF$Property <- property
-  nRows <- ceiling(seqLength / nbResidues)
-
-  # ---- plot
-  gg <- ggplot(data = seqDF,
-               aes_(x = ~ col,
-                   y = ~ row,
-                   fill = ~ Property)) +
-    geom_bin2d(binwidth = c(0.99, 0.5),
-               aes_(group = ~ Property)) +
-    ggplot2::theme_void()  +
-    ggplot2::ylim(0, nRows + 0.25) +
+    sequence,
+    property,
+    nbResidues = 30,
+    labelType = "both",
+    everyN = c(1, 10),
+    labelLocation = c("on", "below"),
+    rotationAngle = c(0, 0),
+    customColors = NA) {
+    seqDF <- sequenceMapCoordinates(sequence = sequence,
+                                    nbResidues = nbResidues)
+    seqLength <- nrow(seqDF)
+    seqDF$Property <- property
+    nRows <- ceiling(seqLength / nbResidues)
+    # ---- plot
+    gg <- ggplot(data = seqDF, aes_(x = ~ col, y = ~ row, fill = ~ Property)) +
+    geom_bin2d(binwidth = c(0.99, 0.5), aes_(group = ~ Property)) +
+    ggplot2::theme_void() + ggplot2::ylim(0, nRows + 0.25) +
     theme(legend.position = "top")
-  #--- labeling
-  if (!labelType == "none") {
-    if (labelType == "both") {
-      #-- Adding AA for "both"
-      labelingVector <- seqDF$AA
-      #---- Section to alter labels to be every Nth residue
-      includeVector <- c(TRUE, rep(FALSE, everyN[1] - 1))
-      includeVectorLength <- length(includeVector)
-      includeVectorRep <- seqLength / includeVectorLength
-      includeVector <- rep(includeVector, includeVectorRep)
-      labelingVector[includeVector == FALSE] <- NA
-      #---
-      if (labelLocation[1] == "on") {
-        yAdjust <- -0.25
-      }
-      if (labelLocation[1] == "below") {
-        yAdjust <- -0.70
-      }
-      gg <- gg + geom_text(aes(x = (col + 0.5) * 0.99,
-                               y = row,
-                               label = as.character(labelingVector),
-                               angle = rotationAngle[1]),
-                           size = 3,
-                           nudge_y = yAdjust,
-                           na.rm = TRUE)
-      #-- Adding numbers for "both"
-      labelingVectorNumbers <- seqDF$Position
-      #---- Section to alter labels to be every Nth residue
-      includeVectorNumber <- c(TRUE, rep(FALSE, everyN[2] - 1))
-      includeVectorNumberLength <- length(includeVectorNumber)
-      includeVectorRep <- seqLength / includeVectorNumberLength
-      includeVectorNumber <- rep(includeVectorNumber, includeVectorRep)
-      labelingVectorNumbers[includeVectorNumber == FALSE] <- NA
-      #-----
-      if (labelLocation[2] == "on") {
-        yAdjust <- -0.25
-      }
-      if (labelLocation[2] == "below") {
-        yAdjust <- -0.70
-      }
-      gg <- gg + geom_text(aes(x = (col + 0.5) * 0.99,
-                               y = row,
-                               label = as.character(labelingVectorNumbers),
-                               angle = rotationAngle[2]),
-                           size = 3,
-                           nudge_y = yAdjust,
-                           na.rm = TRUE)
-    } else {
-      if (labelType == "AA") {
-        labelingVector <- seqDF$AA
-      }
-      if (labelType == "number") {
-        labelingVector <- seqDF$Position
-      }
-      if (labelLocation[1] == "on") {
-        yAdjust <- -0.25
-      }
-      if (labelLocation[1] == "below") {
-        yAdjust <- -0.70
-      }
-      #---- Section to alter labels to be every Nth residue
-      includeVector <- c(TRUE, rep(FALSE, everyN[1] - 1))
-      includeVectorLength <- length(includeVector)
-      includeVectorRep <- seqLength / includeVectorLength
-      includeVector <- rep(includeVector, includeVectorRep)
-      labelingVector[includeVector == FALSE] <- NA
-      gg <- gg + geom_text(aes(x = (col + 0.5) * 0.99,
-                               y = row,
-                               label = as.character(labelingVector),
-                               angle = rotationAngle[1]),
-                           size = 3,
-                           nudge_y = yAdjust,
-                           na.rm = TRUE)
+    #--- labeling
+    if (!labelType == "none") {
+        if (labelType == "both") {
+            #-- Adding AA for "both"
+            labelingVector <- seqDF$AA
+            #---- Section to alter labels to be every Nth residue
+            includeVector <- c(TRUE, rep(FALSE, everyN[1] - 1))
+            includeVectorLength <- length(includeVector)
+            includeVectorRep <- seqLength / includeVectorLength
+            includeVector <- rep(includeVector, includeVectorRep)
+            labelingVector[includeVector == FALSE] <- NA
+            #---
+                if (labelLocation[1] == "on") {
+                    yAdjust <- -0.25
+                }
+                if (labelLocation[1] == "below") {
+                    yAdjust <- -0.70
+                }
+            gg <- gg + geom_text(aes(x = (col + 0.5) * 0.99, y = row,
+                                    label = as.character(labelingVector),
+                                    angle = rotationAngle[1]),
+                                size = 3, nudge_y = yAdjust, na.rm = TRUE)
+            #-- Adding numbers for "both"
+            labelingVectorNumbers <- seqDF$Position
+            #---- Section to alter labels to be every Nth residue
+            includeVectorNumber <- c(TRUE, rep(FALSE, everyN[2] - 1))
+            includeVectorNumberLength <- length(includeVectorNumber)
+            includeVectorRep <- seqLength / includeVectorNumberLength
+            includeVectorNumber <- rep(includeVectorNumber, includeVectorRep)
+            labelingVectorNumbers[includeVectorNumber == FALSE] <- NA
+            #-----
+            if (labelLocation[2] == "on") {
+                yAdjust <- -0.25
+            }
+            if (labelLocation[2] == "below") {
+                yAdjust <- -0.70
+            }
+            gg <- gg + geom_text(aes(x = (col + 0.5) * 0.99, y = row,
+                                label = as.character(labelingVectorNumbers),
+                                angle = rotationAngle[2]),
+                            size = 3, nudge_y = yAdjust, na.rm = TRUE)
+        } else {
+            if (labelType == "AA") {
+                labelingVector <- seqDF$AA
+            }
+            if (labelType == "number") {
+                labelingVector <- seqDF$Position
+            }
+            if (labelLocation[1] == "on") {
+                yAdjust <- -0.25
+            }
+            if (labelLocation[1] == "below") {
+                yAdjust <- -0.70
+            }
+            #---- Section to alter labels to be every Nth residue
+            includeVector <- c(TRUE, rep(FALSE, everyN[1] - 1))
+            includeVectorLength <- length(includeVector)
+            includeVectorRep <- seqLength / includeVectorLength
+            includeVector <- rep(includeVector, includeVectorRep)
+            labelingVector[includeVector == FALSE] <- NA
+            gg <- gg + geom_text(aes(x = (col + 0.5) * 0.99, y = row,
+                                label = as.character(labelingVector),
+                                angle = rotationAngle[1]),
+                                size = 3, nudge_y = yAdjust, na.rm = TRUE)
+        }
     }
-  }
-  if (!is.na(customColors[1])) {
-    if (plyr::is.discrete(seqDF$Property)) {
-      gg <- gg + ggplot2::scale_fill_manual(values = customColors)
-    } else {
-      gg <- gg + ggplot2::scale_fill_gradient2(high = customColors[1],
-                                               low = customColors[2],
-                                               mid = customColors[3])
+    if (!is.na(customColors[1])) {
+        if (plyr::is.discrete(seqDF$Property)) {
+            gg <- gg + ggplot2::scale_fill_manual(values = customColors)
+        } else {
+            gg <- gg + ggplot2::scale_fill_gradient2(high = customColors[1],
+                                                        low = customColors[2],
+                                                        mid = customColors[3])
+        }
     }
-  }
-  return(gg)
+    return(gg)
 }

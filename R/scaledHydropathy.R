@@ -66,92 +66,54 @@
 #'                                             y = WindowHydropathy + 0.1))
 #'  plot(gg)
 
-scaledHydropathyLocal <- function(
-  sequence,
-  window = 9,
-  plotResults = TRUE,
-  proteinName = NA,
-  ...) {
-
-  seqVector <- sequenceCheck(
-    sequence = sequence,
-    method = "stop",
-    outputType = "vector",
-    supressOutputMessage = TRUE)
-
-  if ((window %% 2) == 0) {
-    stop("Window must be an odd number")
-  }
-
-  if (!all(c(is.logical(plotResults)))) {
-    stop("plotResults and centerResidue
-         require logical values")
-  }
-
-  names(seqVector) <- NULL
-  seqLength <- length(seqVector)
-  numberResiduesAnalyzed <- seqLength - (window - 1)
-
-  #--------
-  positionVector <- ((window - 1) / 2 + 1): (seqLength - (window - 1) / 2)
-  centerResidueVector <- seqVector[positionVector]
-  windowVector <- rep(NA, numberResiduesAnalyzed)
-  scoreVector <- rep(NA, numberResiduesAnalyzed)
-
-  #----------
-  #Analysis
-  for (i in seq_len(numberResiduesAnalyzed)) {
-
-    windowBegining.i <- i
-    windowEnd.i <- i + (window - 1)
-
-    sequenceWindow <- seqVector[windowBegining.i:windowEnd.i]
-    windowVector[i] <- paste0(sequenceWindow, collapse = "")
-
-    windowValues <- KDNorm$V2[match(sequenceWindow, KDNorm$V1)]
-    #match gets the positions of the letters in the kdnorm table.
-    #then the values of the normalized table is gathered based on the positions,
-    # and is stored into the windowValues var
-
-    scoreVector[i] <- sum(windowValues) / window
-    #This is the hydropathy for the residue based on the window size
-  }
-
-  windowDF <- data.frame(Position = positionVector,
-                         Window = windowVector,
-                         CenterResidue = centerResidueVector,
-                         WindowHydropathy = scoreVector)
-  #---------
-  #Output
-  if (plotResults) {
-
-    if (!is.na(proteinName)) {
-      plotTitle <- paste0("Measurement of Scaled Hydropathy in ", proteinName)
-    } else {
-      plotTitle <- "Measurement of Scaled Hydropathy"
+scaledHydropathyLocal <- function(sequence, window = 9,
+    plotResults = TRUE, proteinName = NA, ...) {
+    seqVector <- sequenceCheck(sequence = sequence, method = "stop",
+        outputType = "vector", supressOutputMessage = TRUE)
+    if ((window %% 2) == 0) {
+        stop("Window must be an odd number")
     }
-    meanScaledHydropathyValue <- meanScaledHydropathy(sequence = sequence,
-                                                      roundScore = 3)
-    plotSubtitle <- paste0("Window Size = ",
-                           window,
-                           " ; Average Scaled Hydropathy = ",
-                           meanScaledHydropathyValue)
-    gg <-  sequencePlot(
-      position = windowDF$Position,
-      property = windowDF$WindowHydropathy,
-      hline = meanScaledHydropathyValue,
-      dynamicColor = windowDF$WindowHydropathy,
-      customColors = c("chocolate1", "skyblue3", "grey65"),
-      customTitle = NA,
-      propertyLimits = c(0, 1))
-
-    gg <- gg + ggplot2::labs(title = plotTitle,
-                             subtitle = plotSubtitle)
-    return(gg)
-
-  } else { #returns the DF
-    return(windowDF)
-  }
+    if (!all(c(is.logical(plotResults)))) {
+        stop("plotResults and centerResidue require logical values")
+    }
+    names(seqVector) <- NULL
+    seqLength <- length(seqVector)
+    numberResiduesAnalyzed <- seqLength - (window - 1)
+    positionVector <- ((window - 1) / 2 + 1): (seqLength - (window - 1) / 2)
+    centerResidueVector <- seqVector[positionVector]
+    windowVector <- rep(NA, numberResiduesAnalyzed)
+    scoreVector <- rep(NA, numberResiduesAnalyzed)
+    for (i in seq_len(numberResiduesAnalyzed)) {
+        sequenceWindow <- seqVector[i:(i + (window - 1))]
+        windowVector[i] <- paste0(sequenceWindow, collapse = "")
+        windowValues <- KDNorm$V2[match(sequenceWindow, KDNorm$V1)]
+        scoreVector[i] <- sum(windowValues) / window
+    }
+    windowDF <- data.frame(Position = positionVector, Window = windowVector,
+                            CenterResidue = centerResidueVector,
+                            WindowHydropathy = scoreVector)
+    if (plotResults) {
+        plotTitle <- "Measurement of Scaled Hydropathy"
+        if (!is.na(proteinName)) {
+            plotTitle <-
+                paste0("Measurement of Scaled Hydropathy in ", proteinName)
+        }
+        meanScaledHydropathyValue <- meanScaledHydropathy(sequence = sequence,
+                                                            roundScore = 3)
+        plotSubtitle <- paste0("Window Size = ", window,
+                                " ; Average Scaled Hydropathy = ",
+                                meanScaledHydropathyValue)
+        gg <-  sequencePlot(position = windowDF$Position,
+                        property = windowDF$WindowHydropathy,
+                        hline = meanScaledHydropathyValue,
+                        dynamicColor = windowDF$WindowHydropathy,
+                        customColors = c("chocolate1", "skyblue3", "grey65"),
+                        customTitle = NA, propertyLimits = c(0, 1))
+        gg <- gg + ggplot2::labs(title = plotTitle, subtitle = plotSubtitle)
+        return(gg)
+    } else { #returns the DF
+        return(windowDF)
+    }
 }
 
 #' Protein Scaled Hydropathy Calculations
@@ -162,7 +124,6 @@ scaledHydropathyLocal <- function(
 #'   showing the matched scores for each residue along the sequence.
 #'
 #' @inheritParams sequenceCheck
-
 #' @param plotResults logical value, FALSE by default.
 #'   If \code{plotResults = TRUE} a plot will be the output.
 #'   If \code{plotResults = FALSE} the output is a data frame for each residue.
@@ -186,8 +147,8 @@ scaledHydropathyLocal <- function(
 #' #Amino acid sequences can also be character vectors
 #' aaVector <- c("A", "C", "D", "E", "F",
 #'               "G", "H", "I", "K", "L",
-#'            "M", "N", "P", "Q", "R",
-#'            "S", "T", "V", "W", "Y")
+#'               "M", "N", "P", "Q", "R",
+#'               "S", "T", "V", "W", "Y")
 #' #Alternativly, .fasta files can also be used by providing
 #' ##The path to the file as a character string
 #'
@@ -213,67 +174,49 @@ scaledHydropathyLocal <- function(
 #'   plot(gg)
 
 scaledHydropathyGlobal <- function(
-  sequence,
-  plotResults = FALSE,
-  proteinName = NA,
-  ...) {
-
-  seqCharacterVector <- sequenceCheck(
-    sequence = sequence,
-    method = "stop",
-    outputType = "vector",
-    supressOutputMessage = TRUE)
-
-  if (!is.logical(plotResults)) {
-    stop("plotResults must be a logical value")
-  }
-
-  seqLength <- length(seqCharacterVector)
-
-
-  scoreVector <- KDNorm$V2[match(seqCharacterVector, KDNorm$V1)]
-
-  hydropathyDF <- data.frame(Position = seq_len(seqLength),
-                             AA = seqCharacterVector,
-                             Hydropathy = scoreVector)
-
-  if (plotResults) {
-
-    meanScaledHydropathy <- sum(hydropathyDF$Hydropathy) / seqLength
-    meanScaledHydropathy <- round(meanScaledHydropathy, 3)
-
-
-    if (!is.na(proteinName)) {
-      plotTitle <- paste0("Scaled Hydropathy of ", proteinName)
-    } else {
-      plotTitle <- "Scaled Hydropathy"
+    sequence,
+    plotResults = FALSE,
+    proteinName = NA,
+    ...) {
+    seqCharacterVector <- sequenceCheck(sequence = sequence, method = "stop",
+                                        outputType = "vector",
+                                        supressOutputMessage = TRUE)
+    if (!is.logical(plotResults)) {
+        stop("plotResults must be a logical value")
     }
-    plotSubtitle <- paste0("Average Scaled Hydropathy = ",
-                           meanScaledHydropathy)
-
-    gg <-  sequencePlot(
-      position = hydropathyDF$Position,
-      property = hydropathyDF$Hydropathy,
-      hline = meanScaledHydropathy,
-      dynamicColor = hydropathyDF$Hydropathy,
-      customColors = c("chocolate1", "skyblue3", "grey65"),
-      customTitle = NA,
-      propertyLimits = c(0, 1))
-
-    gg <- gg + ggplot2::labs(title = plotTitle,
-                             subtitle = plotSubtitle)
-
-    return(gg)
-  } else {
-    return(hydropathyDF)
-  }
+    seqLength <- length(seqCharacterVector)
+    scoreVector <- KDNorm$V2[match(seqCharacterVector, KDNorm$V1)]
+    hydropathyDF <- data.frame(Position = seq_len(seqLength),
+                                AA = seqCharacterVector,
+                                Hydropathy = scoreVector)
+    if (plotResults) {
+        meanScaledHydropathy <- sum(hydropathyDF$Hydropathy) / seqLength
+        meanScaledHydropathy <- round(meanScaledHydropathy, 3)
+        plotTitle <- "Scaled Hydropathy"
+        if (!is.na(proteinName)) {
+            plotTitle <- paste0("Scaled Hydropathy of ", proteinName)
+        }
+        plotSubtitle <- paste0("Average Scaled Hydropathy = ",
+                                meanScaledHydropathy)
+        gg <-  sequencePlot(
+                        position = hydropathyDF$Position,
+                        property = hydropathyDF$Hydropathy,
+                        hline = meanScaledHydropathy,
+                        dynamicColor = hydropathyDF$Hydropathy,
+                        customColors = c("chocolate1", "skyblue3", "grey65"),
+                        customTitle = NA,
+                        propertyLimits = c(0, 1))
+        gg <- gg + ggplot2::labs(title = plotTitle, subtitle = plotSubtitle)
+        return(gg)
+    } else {
+        return(hydropathyDF)
+    }
 }
 
 #' Calculate the Mean Scaled Hydropathy
 #'
 #' This function utilizes the scaledHydropathyGlobal() function and
 #'   easily returns the averaged hydropathy as a numeric value.
-#'
 #' @inheritParams sequenceCheck
 #' @param roundScore Number of decimals the score will be rounded to.
 #'   NA by default.
@@ -298,20 +241,17 @@ scaledHydropathyGlobal <- function(
 #'  meanScaledHydropathy(aaString)
 #'  meanScaledHydropathy(aaVector)
 
-meanScaledHydropathy <-
-  function(sequence,
-           roundScore = NA) {
-
+meanScaledHydropathy <- function(sequence, roundScore = NA) {
     hydropDF <- scaledHydropathyGlobal(sequence = sequence,
-                                       plotOutput = FALSE)
+                                        plotOutput = FALSE)
     seqLength <- nrow(hydropDF)
     totalHydrop <- sum(hydropDF$Hydropathy)
     avgHydrop <- totalHydrop / seqLength
 
     if (is.na(roundScore)) {
-      return(avgHydrop)
+        return(avgHydrop)
     } else {
-      avgHydrop <- round(avgHydrop, roundScore)
-      return(avgHydrop)
+        avgHydrop <- round(avgHydrop, roundScore)
+        return(avgHydrop)
     }
-  }
+}
