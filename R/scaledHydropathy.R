@@ -23,6 +23,15 @@
 #'   displaying the hydropathic character of a protein.
 #'   Journal of molecular biology, 157(1), 105-132.
 #' @export
+#' @section Plot Colors:
+#'   For users who wish to keep a common aesthetic, the following colors are
+#'   used when plotResults = TRUE. \cr
+#'   \itemize{
+#'   \item Dynamic line colors: \itemize{
+#'   \item Close to 0 = "skyblue3" or "#6CA6CD"
+#'   \item Close to 1 = "chocolate1" or "#FF7F24"
+#'   \item Close to midpoint = "grey65" or "#A6A6A6"}}
+#'
 #' @examples
 #' #Amino acid sequences can be character strings
 #' aaString <- "ACDEFGHIKLMNPQRSTVWY"
@@ -31,7 +40,7 @@
 #'               "G", "H", "I", "K", "L",
 #'               "M", "N", "P", "Q", "R",
 #'               "S", "T", "V", "W", "Y")
-#' #Alternativly, .fasta files can also be used by providing
+#' #Alternatively, .fasta files can also be used by providing
 #'   ##The path to the file as a character string.
 #'
 #' exampleDF <- scaledHydropathyLocal(aaString,
@@ -140,6 +149,15 @@ scaledHydropathyLocal <- function(sequence, window = 9,
 #' @references Kyte, J., & Doolittle, R. F. (1982). A simple method for
 #'   displaying the hydropathic character of a protein.
 #'   Journal of molecular biology, 157(1), 105-132.
+#' @section Plot Colors:
+#'   For users who wish to keep a common aesthetic, the following colors are
+#'   used when plotResults = TRUE. \cr
+#'   \itemize{
+#'   \item Dynamic line colors: \itemize{
+#'   \item Close to 0 = "skyblue3" or "#6CA6CD"
+#'   \item Close to 1 = "chocolate1" or "#FF7F24"
+#'   \item Close to midpoint = "grey65" or "#A6A6A6"}}
+#'
 #' @export
 #' @examples
 #' #Amino acid sequences can be character strings
@@ -149,7 +167,7 @@ scaledHydropathyLocal <- function(sequence, window = 9,
 #'               "G", "H", "I", "K", "L",
 #'               "M", "N", "P", "Q", "R",
 #'               "S", "T", "V", "W", "Y")
-#' #Alternativly, .fasta files can also be used by providing
+#' #Alternatively, .fasta files can also be used by providing
 #' ##The path to the file as a character string
 #'
 #' exampleDF <- scaledHydropathyGlobal(aaString,
@@ -235,7 +253,7 @@ scaledHydropathyGlobal <- function(
 #'               "G", "H", "I", "K", "L",
 #'               "M", "N", "P", "Q", "R",
 #'               "S", "T", "V", "W", "Y")
-#'  #Alternativly, .fasta files can also be used by providing
+#'  #Alternatively, .fasta files can also be used by providing
 #'
 #' #Calculate the mean scaled hydropathy
 #'  meanScaledHydropathy(aaString)

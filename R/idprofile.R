@@ -1,4 +1,4 @@
-#' IDPRofile From idpr Package
+#' IDp PRofile From idpr Package
 #'
 #' The IDPRofile is a summation of many features of the idpr package,
 #'   conveniently grouped into one function for quick analysis. This combines
@@ -129,19 +129,21 @@
 #' @examples
 #' #For most functions, a protein sequence is all that is needed.
 #'
-#' #The UniProt ID is optional but reccomened for IUPred results.
+#' #The UniProt ID is optional but recommended for IUPred results.
 #' proteinID <- "P04637"
+#' p53Seq <- idpr:::TP53Sequences[2]
 #' \dontrun{
 #' idprofile(
-#'   sequence = iupredSeq,
+#'   sequence = p53Seq,
 #'   uniprotAccession = proteinID)
 #'
 #'
 #' #changing the iupred to redox
 #' ## and getting a pie chart for structuralTendency.
 #' idprofile(
-#'   sequence = iupredSeq,
+#'   sequence = p53Seq,
 #'   uniprotAccession = proteinID,
+#'   pKaSet = EMBOSS,
 #'   iupredType = "redox",
 #'   structuralTendencyType = "pie")
 #' }

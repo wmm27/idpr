@@ -76,7 +76,7 @@ DUNMat
 }
 
 \seealso{
-EDSSMat62
+EDSSMat62 and the Disordered Matrices Vignette within idpr
 
 Other IDP-based Substitution Matrices: 
 \code{\link{DisorderMat}},

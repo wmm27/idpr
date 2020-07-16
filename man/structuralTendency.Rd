@@ -30,8 +30,9 @@ It is not recommended to change these. These definitions are from
 Uversky (2013).}
 
 \item{printCitation}{logical, FALSE by default.
-When \code{printCitation = TRUE}, a citation to the paper
-categorizing the strucutral impact of each residue is printed.}
+When \code{printCitation = TRUE}, a citation to Uversky, V. N. (2013)
+is printed. This is the paper categorizing the structural impact of each
+residue that is used as the default settings.}
 }
 \value{
 a data frame containing each residue from the sequence
@@ -45,7 +46,7 @@ Each amino acid residue has a tendency to impact the order / disorder
   they tend to favor disorder over ordered structures. These are typically
   hydrophilic, charged, or small residues. Order promoting residues tend
   to be aliphatic, hydrophobic, aromatic, or form tertiary structures.
-  Disorder neutral residues neither favor order or disordered structures.
+  Disorder neutral residues neither favor order nor disordered structures.
 }
 \examples{
 #Amino acid sequences can be character strings
@@ -55,7 +56,7 @@ aaVector <- c("A", "C", "D", "E", "F",
               "G", "H", "I", "K", "L",
               "M", "N", "P", "Q", "R",
              "S", "T", "V", "W", "Y")
-#Alternativly, .fasta files can also be used by providing
+#Alternatively, .fasta files can also be used by providing
 ##The path to the file as a character string
 
 exampleDF <- structuralTendency(aaString)

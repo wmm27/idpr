@@ -2,9 +2,7 @@
 % Please edit documentation in R/sequencePlot.R
 \name{sequencePlot}
 \alias{sequencePlot}
-\title{Sequence Plot
-This is a graphical function used to visualize numeric
-  data along an amino acid sequence.}
+\title{Sequence Plot}
 \usage{
 sequencePlot(
   position,
@@ -58,7 +56,6 @@ Set to NA to skip (default).}
 a ggplot
 }
 \description{
-Sequence Plot
 This is a graphical function used to visualize numeric
   data along an amino acid sequence.
 }

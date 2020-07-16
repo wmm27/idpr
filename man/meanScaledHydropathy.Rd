@@ -30,7 +30,7 @@ aaVector <- c("A", "C", "D", "E", "F",
               "G", "H", "I", "K", "L",
               "M", "N", "P", "Q", "R",
               "S", "T", "V", "W", "Y")
- #Alternativly, .fasta files can also be used by providing
+ #Alternatively, .fasta files can also be used by providing
 
 #Calculate the mean scaled hydropathy
  meanScaledHydropathy(aaString)

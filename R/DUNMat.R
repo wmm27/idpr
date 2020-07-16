@@ -58,5 +58,5 @@
 #'   Rep 9, 16380 (2019).
 #'   \url{https://doi.org/10.1038/s41598-019-52532-8}
 #' @family IDP-based Substitution Matrices
-#' @seealso EDSSMat62
+#' @seealso EDSSMat62 and the Disordered Matrices Vignette within idpr
 "DUNMat"

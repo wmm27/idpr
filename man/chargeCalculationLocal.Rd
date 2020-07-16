@@ -37,7 +37,7 @@ Character string to load specific, preloaded pKa sets.
  c("EMBOSS", "DTASelect", "Solomons", "Sillero", "Rodwell",
   "Lehninger", "Toseland", "Thurlkill", "Nozaki", "Dawson",
   "Bjellqvist", "ProMoST", "Vollhardt", "IPC_protein", "IPC_peptide")
- Alternativly, the user may supply a custom pKa dataset.
+ Alternatively, the user may supply a custom pKa dataset.
  The format must be a data frame where:
  Column 1 must be a character vector of residues named "AA" AND
  Column 2 must be a numeric vector of pKa values.}
@@ -62,6 +62,17 @@ This calculates the charge, as determined by the Henderson-Hasselbalch
   sliding window. The output is either a graph or a data frame of
   calculated charges.
 }
+\section{Plot Colors}{
+
+  For users who wish to keep a common aesthetic, the following colors are
+  used when plotResults = TRUE. \cr
+  \itemize{
+  \item Dynamic line colors: \itemize{
+  \item Close to -1 = "#92140C"
+  \item Close to +1 = "#348AA7"
+  \item Close to 0 (midpoint) = "grey65" or "#A6A6A6"}}
+}
+
 \examples{
  #Amino acid sequences can be character strings
 aaString <- "ACDEFGHIKLMNPQRSTVWY"
@@ -70,7 +81,7 @@ aaVector <- c("A", "C", "D", "E", "F",
               "G", "H", "I", "K", "L",
               "M", "N", "P", "Q", "R",
               "S", "T", "V", "W", "Y")
-#Alternativly, .fasta files can also be used by providing
+#Alternatively, .fasta files can also be used by providing
 # a character string of the path to the file.
 exampleDF <- chargeCalculationLocal(aaString)
 exampleDF <- chargeCalculationLocal(aaVector)

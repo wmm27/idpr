@@ -31,7 +31,7 @@ otherwise be used to plot the data.}
 \item{summarize}{logical value, FALSE by default.
 When \code{summarize = TRUE}, each residue is aggregated into Disorder
 Tendency Groups. (See \code{\link{structuralTendency}} for more details).
-When \code{summarize = FALSE}, residue identity is preserved and
+When \code{summarize = FALSE}, residue identity is preserved, and
 the output is colored by Disorder Tendency Groups.}
 
 \item{proteinName, }{optional character string. NA by default.
@@ -65,6 +65,17 @@ a data frame containing each residue from the sequence
 \description{
 Convenient graphing for the \code{\link{structuralTendency}} function.
 }
+\section{Plot Colors}{
+
+  For users who wish to keep a common aesthetic, the following colors are
+  used when graphType = "bar" or "pie" \cr
+  \itemize{
+  \item Disorder Neutral = "#F0B5B3"
+  \item Disorder Promoting = "darkolivegreen3" or "#A2CD5A"
+  \item Order Promoting = "darkorchid1" or "#BF3EFF"
+  }
+}
+
 \examples{
 #Amino acid sequences can be character strings
 aaString <- "ACDEFGHIKLMNPQRSTVWY"
@@ -73,7 +84,7 @@ aaVector <- c("A", "C", "D", "E", "F",
               "G", "H", "I", "K", "L",
               "M", "N", "P", "Q", "R",
               "S", "T", "V", "W", "Y")
-#Alternativly, .fasta files can also be used by providing
+#Alternatively, .fasta files can also be used by providing
 ##The path to the file as a character string
 structuralTendencyPlot(aaString)
 structuralTendencyPlot(aaVector)

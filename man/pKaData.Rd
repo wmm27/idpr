@@ -68,8 +68,9 @@ A dataset containing the various pKa accepted values for each charged amino
 
  Values for NH2 and COOH are averages of values provided within the
  Lehringer, ProMoST, and Volhardt datasets.
- Lehringer and VolhardtBoth are the Seventh edition. Lehringer varies
- from data presented in IPC. When values could not be sourced to the original
+ Lehringer and Volhardt both are the Seventh edition. Lehringer varies
+ from data presented in the IPC paper. \cr
+ When values could not be sourced to the original
  source, values were taken from Kozlowski (2016),
  \url{https://doi.org/10.1186/s13062-016-0159-9}. Both Kozlowski (2016) and
  the original source DOI (where available) or ISBN are provided within the

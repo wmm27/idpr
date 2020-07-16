@@ -212,8 +212,9 @@ to execute their function (Kovacs et al., 2013).
 iupredRedox() is used to predict redox-sensitive regions that may experience 
 induced folding upon changing environments. This is a context-dependent 
 predictor of disordered regions depending on a reducing (plus) or 
-oxidizing (minus) environment. The prediction is done by modifying all 
-cystine residues to serine when simulating a “redox-minus” environment.
+oxidizing (minus) environment. The prediction is done by replacing all 
+cystine residues to serine when simulating a reducing or
+“redox-plus” environment.
 This eliminates any structural stabilization by disulfide bonds 
 (Mészáros et al., 2018).
 
@@ -227,7 +228,7 @@ iupredRedox(p53_ID,
 ```
 
 The data frame has two IUPred2 long scores. One in a redox-plus environment
-(Normal prediction) and a redox-minus environment (Cys --> Ser). 
+(Cys --> Ser) and a redox-minus environment (standard prediction). 
 An additional column is provided of logical values indicating if a redox 
 sensitive region was predicted. When redoxSensitive == TRUE, the residue is 
 predicted to be in a redox sensitive region, when FALSE the residue is not 

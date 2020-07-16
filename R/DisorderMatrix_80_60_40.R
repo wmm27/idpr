@@ -12,8 +12,8 @@
 #'    BLAST.\cr There was not a comprehensive comparison to other frequently
 #'    used substitution matrices (like BLOSUM and PAM) in terms of improving IDP
 #'    sequence alignments. The authors note that the purpose of these
-#'    matrices were to compare evolutionary characteristics of disordered and
-#'    ordered proteins.  Please see the source material for additional
+#'    matrices were made to compare evolutionary characteristics of disordered
+#'    and ordered proteins.  Please see the source material for additional
 #'    information.\cr \cr
 #'   \href{https://doi.org/10.1038/s41598-019-52532-8}{Trivedi and
 #'    Nagarajaram (2019)} compared EDSSMat62 against all three Disordered
@@ -41,8 +41,8 @@
 #'     }
 #'
 #' @section Optimal Gap Parameters:
-#'  As mentioned in the Description, the intended use of these matrices were
-#'    not to improve sequence alignments. Therefore no gap penalty values are
+#'  As mentioned in the Description, the intended use of these matrices was
+#'    not to improve sequence alignments. Therefore, no gap penalty values are
 #'    provided.
 #'
 #'   It should also be noted that a more recent work,
@@ -68,7 +68,7 @@
 #'   Rep 9, 16380 (2019).
 #'   \url{https://doi.org/10.1038/s41598-019-52532-8}
 #' @family IDP-based Substitution Matrices
-#' @seealso EDSSMat62
+#' @seealso Disordered Matrices Vignette within the idpr package and EDSSMat62
 #' @name DisorderMat
 
 NULL

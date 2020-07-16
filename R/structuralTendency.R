@@ -5,11 +5,12 @@
 #'   they tend to favor disorder over ordered structures. These are typically
 #'   hydrophilic, charged, or small residues. Order promoting residues tend
 #'   to be aliphatic, hydrophobic, aromatic, or form tertiary structures.
-#'   Disorder neutral residues neither favor order or disordered structures.
+#'   Disorder neutral residues neither favor order nor disordered structures.
 #' @inheritParams sequenceCheck
 #' @param printCitation logical, FALSE by default.
-#'    When \code{printCitation = TRUE}, a citation to the paper
-#'    categorizing the strucutral impact of each residue is printed.
+#'    When \code{printCitation = TRUE}, a citation to Uversky, V. N. (2013)
+#'    is printed. This is the paper categorizing the structural impact of each
+#'    residue that is used as the default settings.
 #' @param disorderPromoting,disorderNeutral,orderPromoting character vectors
 #'    of individual residues to be matched with the input sequence. Defaults:
 #'    \itemize{
@@ -42,7 +43,7 @@
 #'               "G", "H", "I", "K", "L",
 #'               "M", "N", "P", "Q", "R",
 #'              "S", "T", "V", "W", "Y")
-#' #Alternativly, .fasta files can also be used by providing
+#' #Alternatively, .fasta files can also be used by providing
 #' ##The path to the file as a character string
 #'
 #' exampleDF <- structuralTendency(aaString)
@@ -123,7 +124,7 @@ structuralTendency <- function(
 #' @param summarize logical value, FALSE by default.
 #'   When \code{summarize = TRUE}, each residue is aggregated into Disorder
 #'   Tendency Groups. (See \code{\link{structuralTendency}} for more details).
-#'   When \code{summarize = FALSE}, residue identity is preserved and
+#'   When \code{summarize = FALSE}, residue identity is preserved, and
 #'   the output is colored by Disorder Tendency Groups.
 #' @param alphabetical logical value, FALSE by default.
 #'   Order of residues on plot axis. Only relevant when
@@ -158,6 +159,16 @@ structuralTendency <- function(
 #'   disordered proteins: the dark horse of the dark proteome."
 #'   Proteomics 18.21-22 (2018): 1800061.
 #'   \url{https://doi.org/10.1002/pmic.201800061}.
+#'
+#' @section Plot Colors:
+#'   For users who wish to keep a common aesthetic, the following colors are
+#'   used when graphType = "bar" or "pie" \cr
+#'   \itemize{
+#'   \item Disorder Neutral = "#F0B5B3"
+#'   \item Disorder Promoting = "darkolivegreen3" or "#A2CD5A"
+#'   \item Order Promoting = "darkorchid1" or "#BF3EFF"
+#'   }
+#'
 #' @export
 #' @examples
 #' #Amino acid sequences can be character strings
@@ -167,7 +178,7 @@ structuralTendency <- function(
 #'               "G", "H", "I", "K", "L",
 #'               "M", "N", "P", "Q", "R",
 #'               "S", "T", "V", "W", "Y")
-#' #Alternativly, .fasta files can also be used by providing
+#' #Alternatively, .fasta files can also be used by providing
 #' ##The path to the file as a character string
 
 #' structuralTendencyPlot(aaString)
@@ -215,7 +226,7 @@ structuralTendencyPlot <- function(sequence, graphType = "pie",
         stop("summarize and alphabetical must be logical values")
     }
     if (!graphType %in% c("pie", "bar", "none")) {
-        stop('invalid argument for graphType. Please see documentation')
+        stop("invalid argument for graphType. Please see documentation")
     }
     structuralTendencyDF <- structuralTendency(sequence = sequence,
                                         disorderPromoting = disorderPromoting,
@@ -272,7 +283,8 @@ structuralTendencyPlot <- function(sequence, graphType = "pie",
         yTitle <- "Amino Acid Composition (as % of sequence length)"
         gg <- gg + ggplot2::labs(title = plotTitle, y = yTitle) +
         ggplot2::theme(legend.position = "top",
-                       plot.title = ggplot2::element_text(hjust = 0.5))
+                       plot.title = ggplot2::element_text(hjust = 0.5)) +
+        ggplot2::scale_fill_manual(values = c("#F0B5B3", "#A2CD5A", "#BF3EFF"))
         return(gg)
     } else {
         return(structuralTendencyDF)

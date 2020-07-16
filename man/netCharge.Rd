@@ -22,7 +22,7 @@ Character string to load specific, preloaded pKa sets.
  c("EMBOSS", "DTASelect", "Solomons", "Sillero", "Rodwell",
   "Lehninger", "Toseland", "Thurlkill", "Nozaki", "Dawson",
   "Bjellqvist", "ProMoST", "Vollhardt", "IPC_protein", "IPC_peptide")
- Alternativly, the user may supply a custom pKa dataset.
+ Alternatively, the user may supply a custom pKa dataset.
  The format must be a data frame where:
  Column 1 must be a character vector of residues named "AA" AND
  Column 2 must be a numeric vector of pKa values.}
@@ -58,7 +58,7 @@ aaVector <- c("A", "C", "D", "E", "F",
               "G", "H", "I", "K", "L",
               "M", "N", "P", "Q", "R",
               "S", "T", "V", "W", "Y")
-#Alternativly, .fasta files can also be used by providing a character string
+#Alternatively, .fasta files can also be used by providing a character string
  # of the path to the file.
 
 #Calculate the Net Charge

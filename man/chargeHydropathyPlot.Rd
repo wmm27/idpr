@@ -61,6 +61,15 @@ This function calculates the average net charge <R> and the average
   additional information and a recent review on the topic.
   This plot has also been referred to as a "Uversky Plot".
 }
+\section{Plot Colors}{
+
+  For users who wish to keep a common aesthetic, the following colors are
+  used when plotResults = TRUE. \cr
+  \itemize{
+  \item Point(s) = "chocolate1" or "#ff7f24"
+  \item Lines = "black"}
+}
+
 \examples{
 #Amino acid sequences can be character strings
 aaString <- "ACDEFGHIKLMNPQRSTVWY"
@@ -69,7 +78,7 @@ aaVector <- c("A", "C", "D", "E", "F",
               "G", "H", "I", "K", "L",
               "M", "N", "P", "Q", "R",
               "S", "T", "V", "W", "Y")
-#Alternativly, .fasta files can also be used by providing
+#Alternatively, .fasta files can also be used by providing
 ##The path to the file as a character string
 chargeHydropathyPlot(sequence = aaString)
 chargeHydropathyPlot( sequence = aaVector)

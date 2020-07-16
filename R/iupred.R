@@ -54,6 +54,7 @@
 #'   If \code{plotResults = TRUE}, a ggplot of IUPred predictions is returned
 #'   If \code{plotResults = FALSE}, a data frame of predictions is returned.
 #' @return see plotResults argument.
+#'
 #' @section Prediction Type:
 #'   Information from \url{https://iupred2a.elte.hu/help_new} on 5.22.20
 #'   Additionally, see the sources for further details and source information.
@@ -93,6 +94,23 @@
 #'   IUPred2A. Current Protocols in Bioinformatics, 70, e99.
 #'   \url{https://doi.org/10.1002/cpbi.99}
 #' @export
+#' @section Plot Colors:
+#'   For users who wish to keep a common aesthetic, the following colors are
+#'   used when plotResults = TRUE. \cr \itemize{
+#'   \item iupred() iupredType = 'long', 'short', or 'glob'. Additionally,
+#'      the 'long' prediction with iupredAnchor(). \itemize{
+#'   \item Dynamic iupred line colors: \itemize{
+#'   \item Close to 0 = "darkolivegreen3" or "#A2CD5A"
+#'   \item Close to 1 = "darkorchid1" or "#BF3EFF"
+#'   \item Close to 0.5 (midpoint) = "grey65" or "#A6A6A6"}}
+#'   \item iupredAnchor : \itemize{
+#'   \item Solid Line (ANCHOR2 Score) = "#92140C"}
+#'   \item iupredRedox: \itemize{
+#'   \item iupredPlus line = "darkorchid1" or "#BF3EFF"
+#'   \item iupredMin line = "#348AA7"
+#'   \item redox sensitive regions = "#5DD39E"}
+#'   }
+#' @name iupred
 #' @examples
 #' #A UniProt Accession must be specified.
 #' ##this example uses human P53.
@@ -281,4 +299,4 @@ iupredRedox <-
         }
         return(iupredDF)
     }
-}
+    }

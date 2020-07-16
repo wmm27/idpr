@@ -41,6 +41,17 @@ This is used to calculate the scaled hydropathy of an amino acid
   sequence using a sliding window. The output is either a data frame or graph
   showing the calculated scores for each window along the sequence.
 }
+\section{Plot Colors}{
+
+  For users who wish to keep a common aesthetic, the following colors are
+  used when plotResults = TRUE. \cr
+  \itemize{
+  \item Dynamic line colors: \itemize{
+  \item Close to 0 = "skyblue3" or "#6CA6CD"
+  \item Close to 1 = "chocolate1" or "#FF7F24"
+  \item Close to midpoint = "grey65" or "#A6A6A6"}}
+}
+
 \examples{
 #Amino acid sequences can be character strings
 aaString <- "ACDEFGHIKLMNPQRSTVWY"
@@ -49,7 +60,7 @@ aaVector <- c("A", "C", "D", "E", "F",
               "G", "H", "I", "K", "L",
               "M", "N", "P", "Q", "R",
               "S", "T", "V", "W", "Y")
-#Alternativly, .fasta files can also be used by providing
+#Alternatively, .fasta files can also be used by providing
   ##The path to the file as a character string.
 
 exampleDF <- scaledHydropathyLocal(aaString,

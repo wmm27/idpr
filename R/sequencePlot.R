@@ -1,4 +1,5 @@
 #' Sequence Plot
+#'
 #' This is a graphical function used to visualize numeric
 #'   data along an amino acid sequence.
 #' @importFrom ggplot2 aes theme

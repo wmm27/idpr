@@ -70,7 +70,11 @@ A ggplot.
 }
 \description{
 This is a graphical function used to visualize data along an
-  amino acid sequence.
+  amino acid sequence. \cr
+  The purpose of this function is to show the entire sequence and color
+  residues based on properties. This may help identify important residues
+  along a protein. This was designed with the goal of visualizing discrete
+  values, but has since been expanded to visualize numeric/continuous values.
 }
 \examples{
 #Get a data frame returned from another function

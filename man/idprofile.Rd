@@ -2,7 +2,7 @@
 % Please edit documentation in R/idprofile.R
 \name{idprofile}
 \alias{idprofile}
-\title{IDPRofile From idpr Package}
+\title{IDp PRofile From idpr Package}
 \usage{
 idprofile(
   sequence,
@@ -56,7 +56,7 @@ Character string to load specific, preloaded pKa sets.
  c("EMBOSS", "DTASelect", "Solomons", "Sillero", "Rodwell",
   "Lehninger", "Toseland", "Thurlkill", "Nozaki", "Dawson",
   "Bjellqvist", "ProMoST", "Vollhardt", "IPC_protein", "IPC_peptide")
- Alternativly, the user may supply a custom pKa dataset.
+ Alternatively, the user may supply a custom pKa dataset.
  The format must be a data frame where:
  Column 1 must be a character vector of residues named "AA" AND
  Column 2 must be a numeric vector of pKa values.}
@@ -168,19 +168,21 @@ The IDPRofile is a summation of many features of the idpr package,
 \examples{
 #For most functions, a protein sequence is all that is needed.
 
-#The UniProt ID is optional but reccomened for IUPred results.
+#The UniProt ID is optional but recommended for IUPred results.
 proteinID <- "P04637"
+p53Seq <- idpr:::TP53Sequences[2]
 \dontrun{
 idprofile(
-  sequence = iupredSeq,
+  sequence = p53Seq,
   uniprotAccession = proteinID)
 
 
 #changing the iupred to redox
 ## and getting a pie chart for structuralTendency.
 idprofile(
-  sequence = iupredSeq,
+  sequence = p53Seq,
   uniprotAccession = proteinID,
+  pKaSet = EMBOSS,
   iupredType = "redox",
   structuralTendencyType = "pie")
 }

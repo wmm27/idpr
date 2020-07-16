@@ -35,6 +35,7 @@
 #'   \code{\link[ggplot2]{ggplot}}
 #' @importFrom ggplot2 aes aes_
 #' @return Graphical values of Charge-Hydropathy Plot
+#' @name chargeHydropathyPlot
 #' @seealso \code{\link{netCharge}} and
 #'   \code{\link{meanScaledHydropathy}}
 #'   for functions used to calculate values.
@@ -56,6 +57,12 @@
 #'   415-427.
 #'   \url{https://doi.org/10.1002/1097-0134(20001115)41:3<415::AID-PROT130>3.0.CO;2-7}
 #' @export
+#' @section Plot Colors:
+#'   For users who wish to keep a common aesthetic, the following colors are
+#'   used when plotResults = TRUE. \cr
+#'   \itemize{
+#'   \item Point(s) = "chocolate1" or "#ff7f24"
+#'   \item Lines = "black"}
 #' @examples
 #' #Amino acid sequences can be character strings
 #' aaString <- "ACDEFGHIKLMNPQRSTVWY"
@@ -64,7 +71,7 @@
 #'               "G", "H", "I", "K", "L",
 #'               "M", "N", "P", "Q", "R",
 #'               "S", "T", "V", "W", "Y")
-#' #Alternativly, .fasta files can also be used by providing
+#' #Alternatively, .fasta files can also be used by providing
 #' ##The path to the file as a character string
 #' chargeHydropathyPlot(sequence = aaString)
 #' chargeHydropathyPlot( sequence = aaVector)
@@ -208,7 +215,7 @@ chargeHydropathyPlot <- function(
     } else {
         ggTitle <- customPlotTitle
     }
-    gg <- gg + ggplot2::geom_point(color = "#92140C") +
+    gg <- gg + ggplot2::geom_point(color = "chocolate1") +
         ggplot2::theme_minimal() + ggplot2::xlim(0, 1) +
         ggplot2::ylim(-1.125, 1) + ggplot2::labs(y = yLabel, x = xLabel,
                                                     title = ggTitle)

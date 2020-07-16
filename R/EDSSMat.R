@@ -1,6 +1,6 @@
 #' EDSSMat Disorder-based Substitution Matrices.
 #'
-#' The EDSSMat series of matrices were deveveloped and described in
+#' The EDSSMat series of matrices were developed and described in
 #'   \href{https://doi.org/10.1038/s41598-019-52532-8}{Trivedi and
 #'    Nagarajaram (2019)}. \cr
 #'    In short: These are substitution scoring matrices
@@ -36,7 +36,7 @@
 #'   \strong{See Usage Section for available matrices}
 #'
 #' @section Optimal Gap Parameters:
-#'   These values were described in the source article, and reported in
+#'   These values were described in the source article and reported in
 #'   Supplemental Table S5. Therefore, it is recommended to use these parameters
 #'   for any alignment utilizing the respective EDSS matrix. These were
 #'   determined for 3 categories: Proteins containing Less Disorder (LD),
@@ -58,6 +58,7 @@
 #'   Rep 9, 16380 (2019).
 #'   \url{https://doi.org/10.1038/s41598-019-52532-8}
 #' @family IDP-based Substitution Matrices
+#' @seealso Disordered Matrices Vignette within the idpr package
 #' @name EDSSMat
 
 NULL

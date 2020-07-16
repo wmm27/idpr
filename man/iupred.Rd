@@ -26,6 +26,8 @@ iupred(
 iupredAnchor(uniprotAccession, plotResults = TRUE, proteinName = NA)
 
 iupredRedox(uniprotAccession, plotResults = TRUE, proteinName = NA)
+
+iupredRedox(uniprotAccession, plotResults = TRUE, proteinName = NA)
 }
 \arguments{
 \item{uniprotAccession}{character string specifying the UniProt Accession
@@ -120,6 +122,25 @@ This function makes a connection to the IUPred2A REST API based on the type
            for further information on interpreting these results.
        }
    }
+}
+
+\section{Plot Colors}{
+
+  For users who wish to keep a common aesthetic, the following colors are
+  used when plotResults = TRUE. \cr \itemize{
+  \item iupred() iupredType = 'long', 'short', or 'glob'. Additionally,
+     the 'long' prediction with iupredAnchor(). \itemize{
+  \item Dynamic iupred line colors: \itemize{
+  \item Close to 0 = "darkolivegreen3" or "#A2CD5A"
+  \item Close to 1 = "darkorchid1" or "#BF3EFF"
+  \item Close to 0.5 (midpoint) = "grey65" or "#A6A6A6"}}
+  \item iupredAnchor : \itemize{
+  \item Solid Line (ANCHOR2 Score) = "#92140C"}
+  \item iupredRedox: \itemize{
+  \item iupredPlus line = "darkorchid1" or "#BF3EFF"
+  \item iupredMin line = "#348AA7"
+  \item redox sensitive regions = "#5DD39E"}
+  }
 }
 
 \examples{

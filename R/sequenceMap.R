@@ -25,7 +25,7 @@
 #'            "G", "H", "I", "K", "L",
 #'            "M", "N", "P", "Q", "R",
 #'            "S", "T", "V", "W", "Y")
-#' #Alternativly, .fasta files can also be used by providing
+#' #Alternatively, .fasta files can also be used by providing
 #' ##The path to the file as a character string
 #'
 #' exampleDF <- sequenceMapCoordinates(aaString,
@@ -97,7 +97,11 @@ sequenceMapCoordinates <- function(sequence, nbResidues = 30) {
 #' Sequence Map Function
 #'
 #' This is a graphical function used to visualize data along an
-#'   amino acid sequence.
+#'   amino acid sequence. \cr
+#'   The purpose of this function is to show the entire sequence and color
+#'   residues based on properties. This may help identify important residues
+#'   along a protein. This was designed with the goal of visualizing discrete
+#'   values, but has since been expanded to visualize numeric/continuous values.
 #' @importFrom ggplot2 ggplot aes geom_bin2d theme geom_text aes_
 #'
 #' @inheritParams sequenceCheck

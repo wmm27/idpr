@@ -21,8 +21,8 @@ knitr::opts_chunk$set(
 
 One way to visualize results both within **idpr** and with data from other 
 sources is the sequenceMap() function. The purpose of this function is to show 
-the entire sequence and color it based on properties. This may help identify 
-important residues within a protein.
+the entire sequence and color residues based on properties. This may help 
+identify important residues within a protein.
 
 It has been identified that as few as a single amino acid is sufficient for an 
 IDP to dock to its binding partner (Warren & Shechter, 2017). Therefore, it is
@@ -312,6 +312,9 @@ Horizontal lines are provided by hline (the dashed line in the middle) and
 propertyLimits (the solid lines at the top and bottom).
 
 Colors can be dynamic by setting dynamicColor equal to the value of the color.
+
+Since the result is ggplot element, a user can add custom annotations, 
+change the axes, or modify the theme with any acceptable ggplot functions.
 
 ```{r}
 exampleDF <- chargeCalculationGlobal(P53_HUMAN,

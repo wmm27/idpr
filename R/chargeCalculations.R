@@ -13,7 +13,7 @@
 #'    c("EMBOSS", "DTASelect", "Solomons", "Sillero", "Rodwell",
 #'     "Lehninger", "Toseland", "Thurlkill", "Nozaki", "Dawson",
 #'     "Bjellqvist", "ProMoST", "Vollhardt", "IPC_protein", "IPC_peptide")
-#'    Alternativly, the user may supply a custom pKa dataset.
+#'    Alternatively, the user may supply a custom pKa dataset.
 #'    The format must be a data frame where:
 #'    Column 1 must be a character vector of residues named "AA" AND
 #'    Column 2 must be a numeric vector of pKa values.
@@ -47,6 +47,15 @@
 #'   is returned with the position, residue, and charge (-1 to +1). If
 #'   \code{plotResults = TRUE}, a graphical output is returned (ggplot) showing
 #'   the charge distribution.
+#' @section Plot Colors:
+#'   For users who wish to keep a common aesthetic, the following colors are
+#'   used when plotResults = TRUE. \cr
+#'   \itemize{
+#'   \item Dynamic line colors: \itemize{
+#'   \item Close to -1 = "#92140C"
+#'   \item Close to +1 = "#348AA7"
+#'   \item Close to 0 (midpoint) = "grey65" or "#A6A6A6"}}
+#'
 #' @family charge functions
 #' @seealso \code{\link{pKaData}} for residue pKa values and
 #'   \code{\link{hendersonHasselbalch}} for charge calculations.
@@ -59,7 +68,7 @@
 #'               "G", "H", "I", "K", "L",
 #'               "M", "N", "P", "Q", "R",
 #'               "S", "T", "V", "W", "Y")
-#' #Alternativly, .fasta files can also be used by providing
+#' #Alternatively, .fasta files can also be used by providing
 #' #a character string of the path to the file.
 #' exampleDF <- chargeCalculationGlobal(aaString)
 #' head(exampleDF)
@@ -196,7 +205,7 @@ chargeCalculationGlobal <- function(
         gg <-  sequencePlot(
             position = chargeDF$Position, property = chargeDF$Charge,
             hline = 0, dynamicColor = chargeDF$Charge,
-            customColors = c("blue", "red", "grey65"),
+            customColors = c("#348AA7", "#92140C", "grey65"),
             customTitle = NA, propertyLimits = c(-1, 1))
         gg <- gg + ggplot2::labs(title = plotTitle, subtitle = plotSubtitle)
         return(gg)
@@ -230,6 +239,14 @@ chargeCalculationGlobal <- function(
 #' @seealso \code{\link{pKaData}} for residue pKa values and citations. See
 #'   \code{\link{hendersonHasselbalch}} for charge calculations.
 #' @export
+#' @section Plot Colors:
+#'   For users who wish to keep a common aesthetic, the following colors are
+#'   used when plotResults = TRUE. \cr
+#'   \itemize{
+#'   \item Dynamic line colors: \itemize{
+#'   \item Close to -1 = "#92140C"
+#'   \item Close to +1 = "#348AA7"
+#'   \item Close to 0 (midpoint) = "grey65" or "#A6A6A6"}}
 #' @examples
 #'  #Amino acid sequences can be character strings
 #' aaString <- "ACDEFGHIKLMNPQRSTVWY"
@@ -238,7 +255,7 @@ chargeCalculationGlobal <- function(
 #'               "G", "H", "I", "K", "L",
 #'               "M", "N", "P", "Q", "R",
 #'               "S", "T", "V", "W", "Y")
-#' #Alternativly, .fasta files can also be used by providing
+#' #Alternatively, .fasta files can also be used by providing
 #' # a character string of the path to the file.
 #' exampleDF <- chargeCalculationLocal(aaString)
 #' exampleDF <- chargeCalculationLocal(aaVector)
@@ -344,7 +361,7 @@ chargeCalculationLocal <- function(sequence, window = 7,  proteinName = NA,
         gg <-  sequencePlot(position = chargeDF$Position,
                             property = chargeDF$windowCharge,
                             hline = 0, dynamicColor = chargeDF$windowCharge,
-                            customColors = c("blue", "red", "grey65"),
+                            customColors = c("#348AA7", "#92140C", "grey65"),
                             customTitle = NA, propertyLimits = c(-1, 1))
         gg <- gg + ggplot2::labs(title = plotTitle, subtitle = plotSubtitle)
         return(gg)
@@ -384,7 +401,7 @@ chargeCalculationLocal <- function(sequence, window = 7,  proteinName = NA,
 #'               "G", "H", "I", "K", "L",
 #'               "M", "N", "P", "Q", "R",
 #'               "S", "T", "V", "W", "Y")
-#' #Alternativly, .fasta files can also be used by providing a character string
+#' #Alternatively, .fasta files can also be used by providing a character string
 #'  # of the path to the file.
 #'
 #' #Calculate the Net Charge
