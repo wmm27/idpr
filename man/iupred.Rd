@@ -26,8 +26,6 @@ iupred(
 iupredAnchor(uniprotAccession, plotResults = TRUE, proteinName = NA)
 
 iupredRedox(uniprotAccession, plotResults = TRUE, proteinName = NA)
-
-iupredRedox(uniprotAccession, plotResults = TRUE, proteinName = NA)
 }
 \arguments{
 \item{uniprotAccession}{character string specifying the UniProt Accession

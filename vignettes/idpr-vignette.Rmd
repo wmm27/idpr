@@ -108,7 +108,7 @@ customizations on returned graphics.
 Overall, ‘idpr’ aims to integrate tools for the computational analysis of 
 intrinsically disordered proteins within R. This package is used to identify
 known characteristics of IDPs within a sequence of interest with easily reported
-and dynamic results. Additionally, this package also includes tools for 
+and dynamic results. Additionally, this package includes tools for 
 IDP-based sequence analysis to be used in conjunction with other R packages. 
 ‘idpr’ represents one of the first, if not the first, attempt at bringing IDP 
 sequence-based analysis into R.  

@@ -133,7 +133,7 @@ sequenceCheck <- function(
         invalidResidues <- unique(invalidResidues)
         warningMessage <- paste(
                             "Protein contains the following invalid residues: ",
-                            invalidResidues, ". ", sep = "")
+                            invalidResidues, ". ", sep = "", collapse = "")
         #--- below reports the error
         if (method == "stop") {
             stop(warningMessage)
