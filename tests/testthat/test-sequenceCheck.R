@@ -23,12 +23,12 @@ test_that("sequenceCheck checks for accepted amino acids", {
     #--- Test changing AA
     expect_message(sequenceCheck(sequence = aaStandard,
                                nonstandardResidues = c("B"),
-                               supressAAWarning = TRUE),
+                               suppressAAWarning = TRUE),
                    "The sequence contains no invalid residues.")
 
     expect_message(sequenceCheck(sequence = aaNonstandard,
                                  nonstandardResidues = c("B"),
-                                 supressAAWarning = TRUE),
+                                 suppressAAWarning = TRUE),
                    "The sequence contains no invalid residues.")
 
 })
@@ -39,19 +39,19 @@ test_that("sequenceCheck accepts and returns various formats", {
     #--- Create Output
     vect_2_vect <- sequenceCheck(sequence = idpr:::HIM5Vector,
                                  outputType = "vector",
-                                 supressOutputMessage = TRUE)
+                                 suppressOutputMessage = TRUE)
 
     str_2_str <- sequenceCheck(sequence = idpr:::HIM5String,
                                  outputType = "string",
-                                 supressOutputMessage = TRUE)
+                                 suppressOutputMessage = TRUE)
 
     vect_2_str <- sequenceCheck(sequence = idpr:::HIM5Vector,
                                outputType = "string",
-                               supressOutputMessage = TRUE)
+                               suppressOutputMessage = TRUE)
 
     str_2_vect <- sequenceCheck(sequence = idpr:::HIM5String,
                                  outputType = "vector",
-                                 supressOutputMessage = TRUE)
+                                 suppressOutputMessage = TRUE)
     #---
 
     #--- sequenceCheck removes vector name

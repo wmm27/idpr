@@ -78,7 +78,7 @@
 scaledHydropathyLocal <- function(sequence, window = 9,
     plotResults = TRUE, proteinName = NA, ...) {
     seqVector <- sequenceCheck(sequence = sequence, method = "stop",
-        outputType = "vector", supressOutputMessage = TRUE)
+        outputType = "vector", suppressOutputMessage = TRUE)
     if ((window %% 2) == 0) {
         stop("Window must be an odd number")
     }
@@ -198,7 +198,7 @@ scaledHydropathyGlobal <- function(
     ...) {
     seqCharacterVector <- sequenceCheck(sequence = sequence, method = "stop",
                                         outputType = "vector",
-                                        supressOutputMessage = TRUE)
+                                        suppressOutputMessage = TRUE)
     if (!is.logical(plotResults)) {
         stop("plotResults must be a logical value")
     }

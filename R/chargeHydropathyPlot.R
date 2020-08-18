@@ -28,7 +28,7 @@
 #' @param pKaSet pKa set used for charge calculations. See
 #'   \code{\link{netCharge}} for additional details
 #' @param pH numeric value, 7.0 by default.
-#'   The environmental pH used to calculate residue charge.
+#'   The environmental pH is used to calculate residue charge.
 #' @param ... additional arguments to be passed to
 #'   \link[idpr:netCharge]{idpr::netCharge()},
 #'   \link[idpr:meanScaledHydropathy]{idpr::meanScaledHydropathy()} or

@@ -35,7 +35,7 @@ Used to either add the name of the protein to the plot title when there
 is only one protein, or to create a custom plot title for the output.}
 
 \item{pH}{numeric value, 7.0 by default.
-The environmental pH used to calculate residue charge.}
+The environmental pH is used to calculate residue charge.}
 
 \item{pKaSet}{pKa set used for charge calculations. See
 \code{\link{netCharge}} for additional details}

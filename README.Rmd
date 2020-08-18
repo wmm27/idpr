@@ -23,12 +23,15 @@ reported and dynamic results. Additionally, this package also includes tools
 for IDP-based sequence analysis to be used in conjunction with other R 
 packages.
 
+**Please Refer to idpr-vignette.Rmd file for a detailed introduction to the**
+**idpr package.**
+
 ## Installation
 
 You can install the development version from [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
+# install.packages("devtools") #if not already installed
 devtools::install_github("wmm27/idpr")
 ```
 

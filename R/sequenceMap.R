@@ -70,7 +70,7 @@ sequenceMapCoordinates <- function(sequence, nbResidues = 30) {
         sequence = sequence,
         method = "stop",
         outputType = "vector",
-        supressOutputMessage = TRUE)
+        suppressOutputMessage = TRUE)
 
     seqLength <- length(seqCharacterVector)
     seqDF <- data.frame(Position = seq_len(seqLength),

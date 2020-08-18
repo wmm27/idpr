@@ -130,7 +130,7 @@ chargeCalculationGlobal <- function(
     ...) {
 
     seqCharacterVector <- sequenceCheck(sequence = sequence, method = "stop",
-                            outputType = "vector", supressOutputMessage = TRUE)
+                            outputType = "vector", suppressOutputMessage = TRUE)
     seqLength <- length(seqCharacterVector)
     positionVector <- seq_len(seqLength)
     if (!all(c(is.logical(plotResults), is.logical(includeTermini),
@@ -300,7 +300,7 @@ chargeCalculationLocal <- function(sequence, window = 7,  proteinName = NA,
                         pH = 7.0, pKaSet = "IPC_protein",
                         printCitation = FALSE, plotResults = FALSE, ...) {
     seqVector <- sequenceCheck(sequence = sequence, method = "stop",
-        outputType = "vector", supressOutputMessage = TRUE)
+        outputType = "vector", suppressOutputMessage = TRUE)
     seqLength <- length(seqVector)
     if ((window %% 2) == 0) {
         stop("Window must be an odd number")

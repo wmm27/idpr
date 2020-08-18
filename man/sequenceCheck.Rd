@@ -9,8 +9,8 @@ sequenceCheck(
   method = "stop",
   outputType = "string",
   nonstandardResidues = NA,
-  supressAAWarning = FALSE,
-  supressOutputMessage = FALSE
+  suppressAAWarning = FALSE,
+  suppressOutputMessage = FALSE
 )
 }
 \arguments{
@@ -39,17 +39,17 @@ Default values are "ACDEFGHIKLMNPQRSTVWY". Additional letters added here.
 \code{nonstandardResidues = c("O,U")}
 to allow Pyrrolysine (O) and Selenocysteine (U).}
 
-\item{supressAAWarning}{If using nonstandardResidues,
+\item{suppressAAWarning}{If using nonstandardResidues,
  a warning will be issued.
 set \code{nonstandardResidues = T}
 to confirm addition of non-standard residues.}
 
-\item{supressOutputMessage}{Set \code{supressOutputMessage = T}
+\item{suppressOutputMessage}{Set \code{suppressOutputMessage = T}
 to prevent sequence validity message}
 }
 \value{
 A message and sequence are returned.
-  If \code{supressOutputMessage = T}, the message is not returned.
+  If \code{suppressOutputMessage = T}, the message is not returned.
   If \code{outputType = "None")}, the sequence is not returned.
   Otherwise, outputType will determine the format of the returned sequence.
   If the sequence contains an error, it will be reported
@@ -64,7 +64,7 @@ This is used validate a sequence of amino acids.
   It can also be used to coerce a sequence into a specific format.
 }
 \examples{
- #Amino acid sequences can be character strings
+#Amino acid sequences can be character strings
 aaString <- "ACDEFGHIKLMNPQRSTVWY"
 #Amino acid sequences can also be character vectors
 aaVector <- c("A", "C", "D", "E", "F",
@@ -81,11 +81,11 @@ sequenceCheck(aaVector)
 #To allow O and U
 sequenceCheck(aaString,
            nonstandardResidues = c("O", "U"),
-           supressAAWarning = TRUE)
+           suppressAAWarning = TRUE)
 
 #To turn off output message
 sequenceCheck(aaString,
-           supressOutputMessage = TRUE)
+           suppressOutputMessage = TRUE)
 
 #To change string to be a vector
 sequenceCheck(aaString,

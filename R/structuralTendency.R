@@ -22,7 +22,7 @@
 #'    It is not recommended to change these. These definitions are from
 #'    Uversky (2013).
 #' @return a data frame containing each residue from the sequence
-#'   matched with its structural tendancy, defined by disorderPromoting,
+#'   matched with its structural tendency, defined by disorderPromoting,
 #'   disorderNeutral, and orderPromoting.
 #'   For convenient plotting see \code{\link{structuralTendencyPlot}}.
 #' @family structural tendency
@@ -51,7 +51,7 @@
 #' exampleDF <- structuralTendency(aaVector)
 #' head(exampleDF)
 #'
-#' #If using a different definition of disordered residues
+#' #This example shows if a user changes the default definition of residues.
 #' ##These residues are labeled as such from Dunker et al (2001),
 #' ##"Intrinsically disordered protein."
 #' exampleDF <- structuralTendency(aaString,
@@ -71,7 +71,7 @@ structuralTendency <- function(
         sequence = sequence,
         method = "stop",
         outputType = "vector",
-        supressOutputMessage = TRUE)
+        suppressOutputMessage = TRUE)
     sequenceLength <- length(seqCharacterVector)
 
     #----- Matches residue with tendency

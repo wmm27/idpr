@@ -24,15 +24,15 @@
 #'   Default values are "ACDEFGHIKLMNPQRSTVWY". Additional letters added here.
 #'   \code{nonstandardResidues = c("O,U")}
 #'   to allow Pyrrolysine (O) and Selenocysteine (U).
-#' @param supressAAWarning If using nonstandardResidues,
+#' @param suppressAAWarning If using nonstandardResidues,
 #'    a warning will be issued.
 #'   set \code{nonstandardResidues = T}
 #'   to confirm addition of non-standard residues.
-#' @param supressOutputMessage Set \code{supressOutputMessage = T}
+#' @param suppressOutputMessage Set \code{suppressOutputMessage = T}
 #'   to prevent sequence validity message
 #'
 #' @return A message and sequence are returned.
-#'   If \code{supressOutputMessage = T}, the message is not returned.
+#'   If \code{suppressOutputMessage = T}, the message is not returned.
 #'   If \code{outputType = "None")}, the sequence is not returned.
 #'   Otherwise, outputType will determine the format of the returned sequence.
 #'   If the sequence contains an error, it will be reported
@@ -42,7 +42,7 @@
 #'   sequenceName. This allows the sequences to be called by the user.
 #' @export
 #' @examples
-#'  #Amino acid sequences can be character strings
+#' #Amino acid sequences can be character strings
 #' aaString <- "ACDEFGHIKLMNPQRSTVWY"
 #' #Amino acid sequences can also be character vectors
 #' aaVector <- c("A", "C", "D", "E", "F",
@@ -59,11 +59,11 @@
 #' #To allow O and U
 #' sequenceCheck(aaString,
 #'            nonstandardResidues = c("O", "U"),
-#'            supressAAWarning = TRUE)
+#'            suppressAAWarning = TRUE)
 #'
 #' #To turn off output message
 #' sequenceCheck(aaString,
-#'            supressOutputMessage = TRUE)
+#'            suppressOutputMessage = TRUE)
 #'
 #' #To change string to be a vector
 #' sequenceCheck(aaString,
@@ -82,8 +82,8 @@ sequenceCheck <- function(
     method = "stop",
     outputType = "string",
     nonstandardResidues = NA,
-    supressAAWarning = FALSE,
-    supressOutputMessage = FALSE) {
+    suppressAAWarning = FALSE,
+    suppressOutputMessage = FALSE) {
     if (!all(is.character(sequence), is.character(method),
         is.character(outputType))) {
         stop("Error: sequence, method, and outputType must be character vectors.
@@ -113,12 +113,12 @@ sequenceCheck <- function(
     aa <- unlist(aa)
     if (!is.na(nonstandardResidues)) {
         aa <- c(aa, nonstandardResidues)
-        if (!supressAAWarning) {
+        if (!suppressAAWarning) {
             warningMessage <- paste(
             "This validation allows the following non-standard amino acids: ",
                 nonstandardResidues,
                 ". If this is an error, please set nonstandardResidues = NA . ",
-                "If this is not an error, please set supressAAWarning = T. ",
+                "If this is not an error, please set suppressAAWarning = T. ",
                 sep = "")
             warning(warningMessage)
         }
@@ -150,7 +150,7 @@ sequenceCheck <- function(
     if (outputType == "vector") {
         outputSequence <- separatedSequence
     }
-    if (supressOutputMessage == FALSE) {
+    if (suppressOutputMessage == FALSE) {
         if (aaError == FALSE) {
             validMessage <- paste("The sequence contains no invalid residues.")
         }

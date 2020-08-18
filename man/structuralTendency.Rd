@@ -36,7 +36,7 @@ residue that is used as the default settings.}
 }
 \value{
 a data frame containing each residue from the sequence
-  matched with its structural tendancy, defined by disorderPromoting,
+  matched with its structural tendency, defined by disorderPromoting,
   disorderNeutral, and orderPromoting.
   For convenient plotting see \code{\link{structuralTendencyPlot}}.
 }
@@ -64,7 +64,7 @@ head(exampleDF)
 exampleDF <- structuralTendency(aaVector)
 head(exampleDF)
 
-#If using a different definition of disordered residues
+#This example shows if a user changes the default definition of residues.
 ##These residues are labeled as such from Dunker et al (2001),
 ##"Intrinsically disordered protein."
 exampleDF <- structuralTendency(aaString,
