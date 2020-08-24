@@ -121,18 +121,16 @@ chargeHydropathyPlot <- function(
                             "avg_scaled_hydropathy",
                             "avg_net_charge")
 
-    for (i in seq_len(nSequences)) {
-        sequence.i <- sequence[i]
-        dataCollected$sequence[i] <- sequence.i
-        dataCollected$avg_scaled_hydropathy[i] <-
-            meanScaledHydropathy(sequence = sequence.i)
-        dataCollected$avg_net_charge[i] <-
-            netCharge(sequence = sequence.i,
-                        pKaSet = pKaSet,
-                        pH = pH,
-                        includeTermini = TRUE,
-                        averaged = TRUE)
-    }
+    sequenceList <- as.list(sequence)
+    hydropathyList <- lapply(sequenceList, meanScaledHydropathy)
+    chargeList <- lapply(sequenceList, netCharge,
+        pKaSet = pKaSet,
+        pH = pH,
+        includeTermini = TRUE,
+        averaged = TRUE)
+    dataCollected$sequence <- do.call(rbind, sequenceList)
+    dataCollected$avg_scaled_hydropathy <- do.call(rbind, hydropathyList)
+    dataCollected$avg_net_charge <- do.call(rbind, chargeList)
 
     # ---- Math for plotting lines
     #The equations for the lines are:
@@ -186,10 +184,9 @@ chargeHydropathyPlot <- function(
                                             label = "Collapsed Proteins"))
     }
 
-    gg <- gg +
-        ggplot2::geom_label(ggplot2::aes(x = 0.4,
-                                        y = 0.8,
-                                        label = "Extended IDPs"))
+    gg <- gg + ggplot2::geom_label(
+        ggplot2::aes(x = 0.4, y = 0.8,
+            label = "Extended IDPs"))
 
     #Values cannot exceede the logical space within the C-H plot
     gg <- gg +
