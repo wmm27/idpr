@@ -37,6 +37,20 @@ disorder‐neutral residues are D, T, and R (Uversky, 2013).
 
 
 
+## Installation  
+
+The package can be installed from Bioconductor with the following line of code.
+It requires the BiocManager package to be installed
+```{r}
+#BiocManager::install("idpr") 
+```
+
+The most recent version of the package can be installed with the following line 
+of code. This requires the devtools package to be installed.
+
+```{r}
+#devtools::install_github("wmm27/idpr")
+```
 
 ## Quick-use guide
 
