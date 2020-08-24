@@ -35,7 +35,7 @@
 #'   \tabular{ccc}{
 #'   DUNMat \tab Gap Open \tab Gap Extension \cr
 #'   Original Optimization \tab -3 \tab -0.5 \cr
-#'   Further Refinement \tab -3.2 \tab -0.1} \cr
+#'   Further Refinement \tab -3.2 \tab -0.1}
 #'   It should also be noted that a more recent work,
 #'   \href{https://doi.org/10.1038/s41598-019-52532-8}{Trivedi and
 #'    Nagarajaram (2019)}, determined optimal parameters based on the disordered
