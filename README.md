@@ -30,7 +30,7 @@ This is a basic example to quickly profile your protein of interest:
 ``` r
 library(idpr)
 
-P53_HUMAN <- idpr:::TP53Sequences[2] #Getting a preloaded sequence from idpr
+P53_HUMAN <- TP53Sequences[2] #Getting a preloaded sequence from idpr
 print(P53_HUMAN)
 #>                                                                                                                                                                                                                                                                                                                                                                                            P04637|P53_HUMAN 
 #> "MEEPQSDPSVEPPLSQETFSDLWKLLPENNVLSPLPSQAMDDLMLSPDDIEQWFTEDPGPDEAPRMPEAAPPVAPAPAAPTPAAPAPAPSWPLSSSVPSQKTYQGSYGFRLGFLHSGTAKSVTCTYSPALNKMFCQLAKTCPVQLWVDSTPPPGTRVRAMAIYKQSQHMTEVVRRCPHHERCSDSDGLAPPQHLIRVEGNLRVEYLDDRNTFRHSVVVPYEPPEVGSDCTTIHYNYMCNSSCMGGMNRRPILTIITLEDSSGNLLGRNSFEVRVCACPGRDRRTEEENLRKKGEPHHELPPGSTKRALPNNTSSSPQPKKKPLDGEYFTLQIRGRERFEMFRELNEALELKDAQAGKEPGGSRAHSSHLKSKKGQSTSRHKKLMFKTEGPDSD"

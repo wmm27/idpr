@@ -108,7 +108,7 @@ acquired from UniProt (UniProt Consortium 2019)
 and stored within the **idpr** package for examples.
 
 ```{r}
-HUMAN_P53 <- idpr:::TP53Sequences[2]
+HUMAN_P53 <- TP53Sequences[2]
 print(HUMAN_P53)
 ```
 
@@ -169,7 +169,7 @@ acquired from UniProt (UniProt Consortium 2019) that were
  stored within the **idpr** package for examples.
 
 ```{r}
-TP53_Sequences <- idpr:::TP53Sequences
+TP53_Sequences <- TP53Sequences
 print(TP53_Sequences)
 ```
 

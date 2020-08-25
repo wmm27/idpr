@@ -37,5 +37,3 @@ NULL
 
 #' @rdname TP53Sequences
 "GorillaTP53"
-
-

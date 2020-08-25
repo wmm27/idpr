@@ -41,7 +41,7 @@ This is a basic example to quickly profile your protein of interest:
 ```{r example}
 library(idpr)
 
-P53_HUMAN <- idpr:::TP53Sequences[2] #Getting a preloaded sequence from idpr
+P53_HUMAN <- TP53Sequences[2] #Getting a preloaded sequence from idpr
 print(P53_HUMAN)
 
 P53_ID <- "P04637" #Human TP53 UniProt ID

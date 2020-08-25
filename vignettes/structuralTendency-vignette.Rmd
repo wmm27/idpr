@@ -68,7 +68,7 @@ This example will use the *H. sapiens* TP53 sequence, acquired from UniProt
 and stored within the **idpr** package for examples.
 
 ```{r}
-P53_HUMAN <- idpr:::TP53Sequences[2]
+P53_HUMAN <- TP53Sequences[2]
 print(P53_HUMAN)
 ```
 
@@ -109,7 +109,7 @@ The following examples will use the *M. musculus* Tp53 sequence,
 acquired from UniProt (UniProt Consortium 2019)
 and stored within the **idpr** package for examples.
 ```{r}
-P53_MOUSE <- idpr:::TP53Sequences[1]
+P53_MOUSE <- TP53Sequences[1]
 print(P53_MOUSE)
 ```
 

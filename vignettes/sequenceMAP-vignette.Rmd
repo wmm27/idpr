@@ -62,7 +62,7 @@ library(idpr) #load the idpr package
 ```
 
 ```{r}
-P53_HUMAN <- idpr:::TP53Sequences[2]
+P53_HUMAN <- TP53Sequences[2]
 print(P53_HUMAN)
 ```
 

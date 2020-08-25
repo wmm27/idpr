@@ -259,11 +259,11 @@ The amino acid sequences were acquired from UniProt (UniProt Consortium, 2019)
 and stored within the **idpr** package for examples.
 
 ```{r}
-P53_MOUSE <- idpr:::TP53Sequences[1]
+P53_MOUSE <- TP53Sequences[1]
 print(P53_MOUSE)
-P53_HUMAN <- idpr:::TP53Sequences[2]
+P53_HUMAN <- TP53Sequences[2]
 print(P53_HUMAN)
-P53_GORILLA <- idpr:::GorillaTP53
+P53_GORILLA <- GorillaTP53
 print(P53_GORILLA)
 ```
 
@@ -333,7 +333,7 @@ First I will load several P53 sequences stored within **idpr**.
 These sequences were selected due to their highly similar identity on UniProt(
 [The UniProt Consortium, 2019](https://doi.org/10.1093/nar/gky1049)).
 ```{r}
-TP53_Sequences <- idpr:::TP53Sequences
+TP53_Sequences <- TP53Sequences
 print(TP53_Sequences)
 ```
 
