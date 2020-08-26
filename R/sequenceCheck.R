@@ -3,8 +3,8 @@
 #' This is used validate a sequence of amino acids.
 #'   It can additionally be used to load an amino acid sequence.
 #'   It can also be used to coerce a sequence into a specific format.
-#' @param sequence amino acid sequence as a single character string
-#'   or vector of single characters.
+#' @param sequence amino acid sequence as a single character string,
+#'   a vector of single characters, or an AAString object.
 #'   It also supports a single character string that specifies
 #'   the path to a .fasta or .fa file.
 #' @param method Required Setting.
@@ -41,6 +41,7 @@
 #'   is not specified. Otherwise the sequence is assigned to the value of
 #'   sequenceName. This allows the sequences to be called by the user.
 #' @export
+#' @importFrom methods is
 #' @examples
 #' #Amino acid sequences can be character strings
 #' aaString <- "ACDEFGHIKLMNPQRSTVWY"
@@ -75,8 +76,6 @@
 #' }
 #'
 
-
-
 sequenceCheck <- function(
     sequence,
     method = "stop",
@@ -84,22 +83,26 @@ sequenceCheck <- function(
     nonstandardResidues = NA,
     suppressAAWarning = FALSE,
     suppressOutputMessage = FALSE) {
-    if (!all(is.character(sequence), is.character(method),
-        is.character(outputType))) {
-        stop("Error: sequence, method, and outputType must be character vectors.
-            Please check variable type.")
+    if (!all(is.character(outputType), is.character(method))) {
+        stop("Error: method and outputType must be character vectors,")
+    }
+    if (!any(is.character(sequence), (is(sequence)[1] == "AAString"))){
+        stop("Error: sequence must be a character vector or an AAString Object")
     }
     if (!(method %in% c("stop", "warn"))) {
         stop('Error: method is not equal to a valid term.
-            Set method equal to "Stop" or "Warn"')
+            Set method equal to "stop" or "warn"')
     }
     #-----
     #This section will confirm what to do with the amino acid sequence
+    if(is(sequence)[1] == "AAString"){
+        sequence <- as.character(sequence)
+    }
     if (length(sequence) == 1) {
         #this is to see if the string is a .fasta / .fa file
         if (grepl("\\.fa", sequence, ignore.case = TRUE)) {
-        sequence <- unlist(seqinr::read.fasta(file = sequence, seqtype = "AA",
-                                        as.string = TRUE))
+        sequence <- Biostrings::readAAStringSet(sequence, format="fasta")
+        sequence <- as.character(sequence)
         }
         separatedSequence <- strsplit(sequence, "")
         names(separatedSequence) <- NULL

@@ -1,7 +1,7 @@
 Package: idpr
 Type: Package
 Title: Profiling and Analyzing Intrinsically Disordered Proteins in R
-Version: 0.99.21
+Version: 0.99.22
 Authors@R: c(person("William", "McFadden", 
                 email = "wmm27@pitt.edu", 
                 role = c("cre", "aut")),
@@ -27,17 +27,18 @@ Depends:
     R (>= 4.0.0)
 Imports: 
     ggplot2 (>= 3.3.0),
-    seqinr (>= 3.6.1),
     magrittr (>= 1.5),
     dplyr (>= 0.8.5),
     plyr (>= 1.8.6),
     jsonlite (>= 1.6.1),
-    rlang (>= 0.4.6)
+    rlang (>= 0.4.6),
+    Biostrings (>= 2.56.0),
+    methods (>= 4.0.0)
 Suggests: 
     knitr,
     rmarkdown,
-    Biostrings,
     msa,
     ape,
-    testthat
+    testthat,
+    seqinr
 VignetteBuilder: knitr

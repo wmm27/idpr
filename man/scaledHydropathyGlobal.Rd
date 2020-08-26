@@ -7,8 +7,8 @@
 scaledHydropathyGlobal(sequence, plotResults = FALSE, proteinName = NA, ...)
 }
 \arguments{
-\item{sequence}{amino acid sequence as a single character string
-or vector of single characters.
+\item{sequence}{amino acid sequence as a single character string,
+a vector of single characters, or an AAString object.
 It also supports a single character string that specifies
 the path to a .fasta or .fa file.}
 
