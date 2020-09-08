@@ -110,7 +110,7 @@ to their residue and position conservation.
 IDPs do not experience the same level of residue-identity conservation that has 
 been observed in proteins with a specific, well-folded structure. 
 IDPs often conserve the overall chemistry and the disordered state of the 
-protein, but are less conserved at the residue and position position level. 
+protein, but are less conserved at the residue and position level. 
 Therefore using BLOSUM or PAM for studies comparing IDP evolution is 
 not the most appropriate method,
 since these matrices account for the evolutionary observations of ordered

@@ -1,5 +1,5 @@
 ---
-title: "idpr-vignette"
+title: "idpr Vignette (Summary of Package)"
 author: "William McFadden"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -282,7 +282,8 @@ p53_tendency_DF <- structuralTendency(P53_HUMAN)
 head(p53_tendency_DF) #see the first few rows of the generated data frame
 
 sequenceMap(sequence = P53_HUMAN,
-            property = p53_tendency_DF$Tendency)  #generate the map
+            property = p53_tendency_DF$Tendency,
+            customColors = c("#F0B5B3", "#A2CD5A", "#BF3EFF"))  #generate the map
 ```
 
 sequenceMap() does accept continuous values as well. Additionally, custom plots
