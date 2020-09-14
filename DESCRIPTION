@@ -11,6 +11,7 @@ Authors@R: c(person("William", "McFadden",
              person("Michael", "Buszczak", 
                 email = "michael.buszczak@utsouthwestern.edu",
                 role = c("ctb", "fnd")))
+Date: 2020-09-14
 Description: ‘idpr’ aims to integrate tools for the computational analysis of 
     intrinsically disordered proteins (IDPs) within R. This package is used to 
     identify known characteristics of IDPs for a sequence of interest with 
