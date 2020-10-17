@@ -25,15 +25,32 @@ packages.
 
 **Please Refer to idpr-vignette.Rmd file for a detailed introduction to the**
 **idpr package.**
+Links to the vignettes found at the 
+[Bioconductor landing page](https://doi.org/doi:10.18129/B9.bioc.idpr) 
+
 
 ## Installation
 
-You can install the development version from [GitHub](https://github.com/) with:
+You can install the development version from 
+[Bioconductor](https://doi.org/doi:10.18129/B9.bioc.idpr) with:
+``` r
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+# The following initializes usage of Bioc devel
+BiocManager::install(version='devel')
+
+BiocManager::install("idpr")
+```
+
+Or you can install the development version from 
+[GitHub](https://github.com/wmm27/idpr) with:
 
 ``` r
 # install.packages("devtools") #if not already installed
 devtools::install_github("wmm27/idpr")
 ```
+
 
 ## Example
 This is a basic example to quickly profile your protein of interest:
@@ -51,3 +68,20 @@ idprofile(sequence = P53_HUMAN, #Generates the Profi
 ```
 
 
+
+**Please Refer to idpr-vignette.Rmd file for a detailed introduction to the**
+**idpr package.**
+
+## Appendix
+
+### Package citation
+```{r}
+citation("idpr")
+```
+
+### Additional Information
+```{r}
+Sys.time()
+Sys.Date()
+R.version
+```

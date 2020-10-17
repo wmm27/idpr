@@ -78,7 +78,7 @@ head(tendencyDF)
 ```
 
 
-For convient plotting, use structuralTendencyPlot().
+For convenient plotting, use structuralTendencyPlot().
 Results can be as a pie chart or bar plot. 
 
 ```{r}
@@ -188,7 +188,7 @@ structuralTendencyPlot(P53_MOUSE,
 In addition to the compositional profile of each residue, a summary of the 
 profile focused only on the structural tendency can be given by setting
 summarize = TRUE. This shifts the focus from amino acid identity to the general 
-composition. The graphType is preseved.
+composition. The graphType is preserved.
 
 ```{r}
 structuralTendencyPlot(P53_MOUSE,
@@ -246,7 +246,7 @@ R Version
 R.version.string
 ```
 
-System Infomation
+System Information
 ```{r}
 as.data.frame(Sys.info())
 ```

@@ -328,7 +328,7 @@ netCharge(HUMAN_P53,
 There are also many pKa sets that are preloaded in **idpr**. 
 pKa datasets used within this vignette are cited. See the documentation for
 netCharge or pKaData within **idpr** for additional information and citations 
-for avaliable pKa sets. 
+for available pKa sets.
 Additionally, see Kozlowski (2016) for further details on pKa data sets. 
 
 * "EMBOSS" -  (Rice, Longden, & Bleasby, 2000)
@@ -359,7 +359,7 @@ netCharge(HUMAN_P53,
 ```
 
 
-Alternativly, the user may supply a custom pKa dataset.
+Alternatively, the user may supply a custom pKa dataset.
 The format must be a data frame where: Column 1 must be a 
 character vector of residues AND Column 2 must be a numeric vector of pKa 
 values. This can be helpful if there is a data set the user prefers or if
@@ -389,7 +389,7 @@ netCharge(HUMAN_P53,
 ### Global Charge Distibution
 
 chargeCalculationGlobal is a function used to calculate the charge of
-each residue, indepenent of other amino acids, within a sequence. 
+each residue, independent of other amino acids, within a sequence. 
 The results are returned as a data frame (default) or a plot.
 
 chargeCalculationGlobal accepts the same pKa and pH arguments as netCharge. 
@@ -406,14 +406,14 @@ P53_ccg <- chargeCalculationGlobal(HUMAN_P53)
 head(P53_ccg)
 ```
 
-The results can return a ggplot visalizing the charge distribution.
+The results can return a ggplot visualizing the charge distribution.
 ```{r}
 chargeCalculationGlobal(HUMAN_P53,
                         plotResults = TRUE)
 ```
 
 (This is not the most aesthetically pleasing plot, so a sequenceMap from 
-**idpr** is reccomended in this case for visualizations.)
+**idpr** is recommended in this case for visualizations.)
 
 ```{r}
 P53_ccg <- chargeCalculationGlobal(HUMAN_P53) #repeating from above
@@ -425,7 +425,7 @@ sequenceMap(sequence = P53_ccg$AA,
 
 The C-terminus here has a charge of ~ -2 since the function aggregates the
 termini values with residue charges by default. If you wish to calculate
-the termini as seperate values, use sumTermini = FALSE. This will add 2 residues
+the termini as separate values, use sumTermini = FALSE. This will add 2 residues
 to the data frame as "NH3" and "COO"
 
 ```{r}
@@ -435,7 +435,7 @@ head(P53_ccg)
 ```
 
 
-If you wish to completly ignore the termini for calculation, set includeTermini
+If you wish to completely ignore the termini for calculation, set includeTermini
 = FALSE. 
 
 ```{r}
@@ -472,7 +472,7 @@ P53_cgl <- chargeCalculationLocal(HUMAN_P53)
 head(P53_cgl)
 ```
 
-Alternativly, results can be returned as a plot of each window's charge.
+Alternatively, results can be returned as a plot of each window's charge.
 ```{r}
 chargeCalculationLocal(HUMAN_P53,
                        plotResults = TRUE)
@@ -554,7 +554,7 @@ R Version
 R.version.string
 ```
 
-System Infomation
+System Information
 ```{r}
 as.data.frame(Sys.info())
 ```

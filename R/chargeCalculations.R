@@ -114,7 +114,7 @@
 #'                                 ggplot2::aes(label = AA,
 #'                                              y = Charge + 0.1))
 #'   plot(gg)
-#' #alternativly, you can pass the data frame to sequenceMap()
+#' #alternatively, you can pass the data frame to sequenceMap()
 #' sequenceMap(sequence = exampleDF$AA,
 #'             property = exampleDF$Charge)
 

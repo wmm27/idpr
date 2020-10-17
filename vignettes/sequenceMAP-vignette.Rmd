@@ -105,7 +105,7 @@ sequenceMap(
 There are multiple customization options to allow for improved graphing. 
 One is the organization of the labels. 
 You are able to represent the sequence with both amino acid residues and their 
-location in the sequence, but you can choose one or the other (or nethier).
+location in the sequence, but you can choose one or the other (or neither).
 This is specified by the 'labelType' argument
 
 ```{r}
@@ -138,7 +138,7 @@ sequenceMap(
 ```
 
 The text can also be rotated, via the 'rotationAngle' argument, for ease of 
-reading. This is espeically helpful for larger sequences with dense graphics.
+reading. This is especially helpful for larger sequences with dense graphics.
 ```{r}
 sequenceMap(
   sequence = tendencyDF$AA,
@@ -217,7 +217,7 @@ sequenceMap(
 
 Since the output is a ggplot, the visualization is able to be assigned to an
 object and additional features can be added and annotated. The example below 
-will annotate a metal binding residue and the region that the P53 protien binds 
+will annotate a metal binding residue and the region that the P53 protein binds 
 DNA. These annotations and locations were retrieved from UniProt 
 (UniProt Consortium 2019).
 ```{r}
@@ -299,10 +299,10 @@ of the residues on the map.
 
 To solve this, sequenceMapCoordinates() will return the row (y value) and the 
 column (x value) as a data frame for each residue visualized with sequenceMap(). 
-The puporse of this is to make adding annotations easier and customizable.
+The purpose of this is to make adding annotations easier and customizable.
 
 
-As shown before, nbResidues deterines how many residues will be on each
+As shown before, nbResidues determines how many residues will be on each
 row. Make sure nbResidues is equal to the value used in sequenceMap(). 
 
 To get the coordinates, the amino acid sequence must be supplied. The output
@@ -319,7 +319,7 @@ head(coord_DF)
 
 ## Sequence Plot
 
-The funtions for calculating charge and scaled hydropathy and the iupred
+The functions for calculating charge and scaled hydropathy and the iupred
 functions all have plotting options. The plotting for these are done with the
 sequencePlot() function to have a uniform aesthetic. If you wish to make a plot
 with custom values, sequencePlot() can still be used.
@@ -399,7 +399,7 @@ R Version
 R.version.string
 ```
 
-System Infomation
+System Information
 ```{r}
 as.data.frame(Sys.info())
 ```
