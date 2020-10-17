@@ -1,11 +1,11 @@
 Package: idpr
 Type: Package
 Title: Profiling and Analyzing Intrinsically Disordered Proteins in R
-Version: 0.99.27
-Authors@R: c(person("William", "McFadden", 
+Version: 0.99.29
+Authors@R: c(person(c("William", "M."), "McFadden", 
                 email = "wmm27@pitt.edu", 
                 role = c("cre", "aut")),
-             person("Judith", "Yanowitz", 
+             person(c("Judith", "L."), "Yanowitz", 
                 email = "yanowitzjl@mwri.magee.edu",
                 role = c("aut", "fnd")),
              person("Michael", "Buszczak", 
