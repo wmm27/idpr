@@ -95,8 +95,7 @@ sequenceCheck <- function(
     }
     #-----
     #This section will confirm what to do with the amino acid sequence
-    if(is(sequence)[1] %in% c("AAString", "BString", 
-                              "AAStringSet", "BStringSet")){
+    if(is(sequence)[1] == "AAString"){
         sequence <- as.character(sequence)
     }
     if (length(sequence) == 1) {

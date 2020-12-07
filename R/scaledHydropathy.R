@@ -118,8 +118,7 @@ scaledHydropathyLocal <- function(sequence, window = 9,
                         dynamicColor = windowDF$WindowHydropathy,
                         customColors = c("chocolate1", "skyblue3", "grey65"),
                         customTitle = NA, propertyLimits = c(0, 1))
-        gg <- gg + ggplot2::labs(title = plotTitle, subtitle = plotSubtitle,
-                                 y = "Hydropathy")
+        gg <- gg + ggplot2::labs(title = plotTitle, subtitle = plotSubtitle)
         return(gg)
     } else { #returns the DF
         return(windowDF)
@@ -225,8 +224,7 @@ scaledHydropathyGlobal <- function(
                         customColors = c("chocolate1", "skyblue3", "grey65"),
                         customTitle = NA,
                         propertyLimits = c(0, 1))
-        gg <- gg + ggplot2::labs(title = plotTitle, subtitle = plotSubtitle,
-                                 y = "Hydropathy")
+        gg <- gg + ggplot2::labs(title = plotTitle, subtitle = plotSubtitle)
         return(gg)
     } else {
         return(hydropathyDF)
