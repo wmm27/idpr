@@ -342,9 +342,13 @@ sequenceMap <- function(
         if (plyr::is.discrete(seqDF$Property)) {
             gg <- gg + ggplot2::scale_fill_manual(values = customColors)
         } else {
-            gg <- gg + ggplot2::scale_fill_gradient2(high = customColors[1],
-                                                        low = customColors[2],
-                                                        mid = customColors[3])
+            gg <- gg + 
+                ggplot2::scale_fill_gradient2(
+                    high = customColors[1],
+                    low = customColors[2],
+                    mid = customColors[3],
+                    midpoint = ((min(seqDF$Property) + max(seqDF$Property)) / 2)
+                )
         }
     }
     return(gg)

@@ -1,7 +1,7 @@
 #' Protein Charge Calculation, Globally
 #'
 #' This function will determine the charge of a peptide using the
-#'   Henderson-Hasselbalch Equation. The output is a data frame (default) or q
+#'   Henderson-Hasselbalch Equation. The output is a data frame (default) or a
 #'   plot of charge calculations along the peptide sequence. Charges are
 #'   determined globally, or along the entire chain.
 #'
@@ -207,7 +207,8 @@ chargeCalculationGlobal <- function(
             hline = 0, dynamicColor = chargeDF$Charge,
             customColors = c("#348AA7", "#92140C", "grey65"),
             customTitle = NA, propertyLimits = c(-1, 1))
-        gg <- gg + ggplot2::labs(title = plotTitle, subtitle = plotSubtitle)
+        gg <- gg + ggplot2::labs(title = plotTitle, subtitle = plotSubtitle,
+                                 y = "Charge")
         return(gg)
     } else {
         return(chargeDF)
@@ -363,7 +364,8 @@ chargeCalculationLocal <- function(sequence, window = 7,  proteinName = NA,
                             hline = 0, dynamicColor = chargeDF$windowCharge,
                             customColors = c("#348AA7", "#92140C", "grey65"),
                             customTitle = NA, propertyLimits = c(-1, 1))
-        gg <- gg + ggplot2::labs(title = plotTitle, subtitle = plotSubtitle)
+        gg <- gg + ggplot2::labs(title = plotTitle, subtitle = plotSubtitle,
+                                 y = "Average Charge")
         return(gg)
     } else {
         return(chargeDF)
