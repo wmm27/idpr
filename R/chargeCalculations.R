@@ -1,7 +1,7 @@
 #' Protein Charge Calculation, Globally
 #'
 #' This function will determine the charge of a peptide using the
-#'   Henderson-Hasselbalch Equation. The output is a data frame (default) or q
+#'   Henderson-Hasselbalch Equation. The output is a data frame (default) or a
 #'   plot of charge calculations along the peptide sequence. Charges are
 #'   determined globally, or along the entire chain.
 #'
