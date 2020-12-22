@@ -11,8 +11,10 @@ also includes tools for IDP-based sequence analysis to be used in
 conjunction with other R packages.
 
 **Please Refer to idpr-vignette.Rmd file for a detailed introduction to
-the** **idpr package.** Links to the vignettes found at the
-[Bioconductor landing page](https://doi.org/doi:10.18129/B9.bioc.idpr)
+the** **idpr package.**
+
+Links to the vignettes found at the [Bioconductor landing page
+(here)](https://doi.org/doi:10.18129/B9.bioc.idpr)
 
 ## Installation
 
@@ -44,14 +46,14 @@ This is a basic example to quickly profile your protein of interest:
 ``` r
 library(idpr)
 
-P53_HUMAN <- TP53Sequences[2] #Getting a preloaded sequence from idpr
+P53_HUMAN <- TP53Sequences[2] #Getting a pre-loaded sequence from idpr
 print(P53_HUMAN)
 #>                                                                                                                                                                                                                                                                                                                                                                                            P04637|P53_HUMAN 
 #> "MEEPQSDPSVEPPLSQETFSDLWKLLPENNVLSPLPSQAMDDLMLSPDDIEQWFTEDPGPDEAPRMPEAAPPVAPAPAAPTPAAPAPAPSWPLSSSVPSQKTYQGSYGFRLGFLHSGTAKSVTCTYSPALNKMFCQLAKTCPVQLWVDSTPPPGTRVRAMAIYKQSQHMTEVVRRCPHHERCSDSDGLAPPQHLIRVEGNLRVEYLDDRNTFRHSVVVPYEPPEVGSDCTTIHYNYMCNSSCMGGMNRRPILTIITLEDSSGNLLGRNSFEVRVCACPGRDRRTEEENLRKKGEPHHELPPGSTKRALPNNTSSSPQPKKKPLDGEYFTLQIRGRERFEMFRELNEALELKDAQAGKEPGGSRAHSSHLKSKKGQSTSRHKKLMFKTEGPDSD"
 
 P53_ID <- "P04637" #Human TP53 UniProt ID
 
-idprofile(sequence = P53_HUMAN, #Generates the Profi
+idprofile(sequence = P53_HUMAN, #Generates the Profile
           uniprotAccession = P53_ID)
 #> [[1]]
 ```
@@ -79,7 +81,8 @@ idprofile(sequence = P53_HUMAN, #Generates the Profi
 <img src="man/figures/README-example-5.png" width="75%" />
 
 **Please Refer to idpr-vignette.Rmd file for a detailed introduction to
-the** **idpr package.**
+the** **idpr package.** [Link to the Vignette
+(here)](https://bioconductor.org/packages/release/bioc/vignettes/idpr/inst/doc/idpr-vignette.html)
 
 ## Appendix
 
@@ -90,17 +93,17 @@ citation("idpr")
 #> 
 #> To cite package 'idpr' in publications use:
 #> 
-#>   William McFadden and Judith Yanowitz (2020). idpr: Profiling and
-#>   Analyzing Intrinsically Disordered Proteins in R. R package version
-#>   0.99.25.
+#>   William M. McFadden and Judith L. Yanowitz (2020). idpr: Profiling
+#>   and Analyzing Intrinsically Disordered Proteins in R. R package
+#>   version 1.0.003.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
 #>   @Manual{,
 #>     title = {idpr: Profiling and Analyzing Intrinsically Disordered Proteins in R},
-#>     author = {William McFadden and Judith Yanowitz},
+#>     author = {William M. McFadden and Judith L. Yanowitz},
 #>     year = {2020},
-#>     note = {R package version 0.99.25},
+#>     note = {R package version 1.0.003},
 #>   }
 ```
 
@@ -108,9 +111,9 @@ citation("idpr")
 
 ``` r
 Sys.time()
-#> [1] "2020-10-17 14:40:21 EDT"
+#> [1] "2020-12-22 14:25:03 EST"
 Sys.Date()
-#> [1] "2020-10-17"
+#> [1] "2020-12-22"
 R.version
 #>                _                           
 #> platform       x86_64-apple-darwin17.0     
@@ -119,12 +122,12 @@ R.version
 #> system         x86_64, darwin17.0          
 #> status                                     
 #> major          4                           
-#> minor          0.2                         
+#> minor          0.3                         
 #> year           2020                        
-#> month          06                          
-#> day            22                          
-#> svn rev        78730                       
+#> month          10                          
+#> day            10                          
+#> svn rev        79318                       
 #> language       R                           
-#> version.string R version 4.0.2 (2020-06-22)
-#> nickname       Taking Off Again
+#> version.string R version 4.0.3 (2020-10-10)
+#> nickname       Bunny-Wunnies Freak Out
 ```

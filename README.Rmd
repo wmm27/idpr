@@ -25,8 +25,10 @@ packages.
 
 **Please Refer to idpr-vignette.Rmd file for a detailed introduction to the**
 **idpr package.**
+
+
 Links to the vignettes found at the 
-[Bioconductor landing page](https://doi.org/doi:10.18129/B9.bioc.idpr) 
+[Bioconductor landing page (here)](https://doi.org/doi:10.18129/B9.bioc.idpr) 
 
 
 ## Installation
@@ -58,12 +60,12 @@ This is a basic example to quickly profile your protein of interest:
 ```{r example}
 library(idpr)
 
-P53_HUMAN <- TP53Sequences[2] #Getting a preloaded sequence from idpr
+P53_HUMAN <- TP53Sequences[2] #Getting a pre-loaded sequence from idpr
 print(P53_HUMAN)
 
 P53_ID <- "P04637" #Human TP53 UniProt ID
 
-idprofile(sequence = P53_HUMAN, #Generates the Profi
+idprofile(sequence = P53_HUMAN, #Generates the Profile
           uniprotAccession = P53_ID)
 ```
 
@@ -71,6 +73,8 @@ idprofile(sequence = P53_HUMAN, #Generates the Profi
 
 **Please Refer to idpr-vignette.Rmd file for a detailed introduction to the**
 **idpr package.**
+[Link to the Vignette (here)](https://bioconductor.org/packages/release/bioc/vignettes/idpr/inst/doc/idpr-vignette.html)
+
 
 ## Appendix
 
