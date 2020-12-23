@@ -38,7 +38,7 @@
 #'    \code{\link{structuralTendencyPlot}} should be summarized into broad
 #'    categories. Equivalent argument to summarize= in the linked function.
 #'    FALSE by default
-##' @param disorderPromoting,disorderNeutral,orderPromoting character vectors
+#' @param disorderPromoting,disorderNeutral,orderPromoting character vectors
 #'    of individual residues to be matched with the input sequence. Defaults:
 #'    \itemize{
 #'      \item disorderPromoting = c("P", "E", "S", "Q", "K", "A", "G")
@@ -61,13 +61,14 @@
 #'   for more details. This is skipped if uniprotAccession = NA.
 #' @return 4 or 5 plots, depending if a UniProt Accession is provided.
 #' @export
-#' @seealso \code{\link{chargeHydropathyPlot}}\cr
+#' @seealso 
+#'   \code{\link{chargeHydropathyPlot}}\cr
 #'   \code{\link{chargeCalculationLocal}}\cr
 #'   \code{\link{scaledHydropathyLocal}}\cr
 #'   \code{\link{structuralTendencyPlot}}\cr
 #'   \code{\link{iupred}}\cr
 #'   \code{\link{iupredAnchor}}\cr
-#'   \code{\link{iupredRedox}}\cr
+#'   \code{\link{iupredRedox}}
 #'
 #' @section Citations for each Plot:
 #'   \itemize{
@@ -125,7 +126,6 @@
 #'         https://doi.org/10.1002/cpbi.99}
 #'     }
 #'  }
-
 #' @examples
 #' #For most functions, a protein sequence is all that is needed.
 #'
@@ -147,6 +147,8 @@
 #'   iupredType = "redox",
 #'   structuralTendencyType = "pie")
 #' }
+#' 
+#' 
 
 idprofile <- function(
     sequence,
