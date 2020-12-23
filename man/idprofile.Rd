@@ -186,6 +186,8 @@ idprofile(
   iupredType = "redox",
   structuralTendencyType = "pie")
 }
+
+
 }
 \seealso{
 \code{\link{chargeHydropathyPlot}}\cr
@@ -194,5 +196,5 @@ idprofile(
   \code{\link{structuralTendencyPlot}}\cr
   \code{\link{iupred}}\cr
   \code{\link{iupredAnchor}}\cr
-  \code{\link{iupredRedox}}\cr
+  \code{\link{iupredRedox}}
 }
