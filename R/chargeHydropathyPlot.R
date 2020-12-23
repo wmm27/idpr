@@ -29,6 +29,12 @@
 #'   \code{\link{netCharge}} for additional details
 #' @param pH numeric value, 7.0 by default.
 #'   The environmental pH is used to calculate residue charge.
+#' @param plotResults logical value, TRUE by default.
+#'   This determines what is returned. If \code{plotResults = FALSE}, a
+#'   data frame is returned with the Sequence(s), Average Scaled Hydropathy,
+#'   and Average Net Charge. 
+#'   If  \code{plotResults = TRUE}, a graphical output is returned (ggplot)
+#'   showing the Charge Hydropathy Plot (recommended).
 #' @param ... additional arguments to be passed to
 #'   \link[idpr:netCharge]{idpr::netCharge()},
 #'   \link[idpr:meanScaledHydropathy]{idpr::meanScaledHydropathy()} or
@@ -108,6 +114,7 @@ chargeHydropathyPlot <- function(
     customPlotTitle = NA,
     pH = 7.0,
     pKaSet = "IPC_protein",
+    plotResults = TRUE,
     ...) {
 
     if (nchar(sequence[1]) == 1) {
@@ -131,6 +138,10 @@ chargeHydropathyPlot <- function(
     dataCollected$sequence <- do.call(rbind, sequenceList)
     dataCollected$avg_scaled_hydropathy <- do.call(rbind, hydropathyList)
     dataCollected$avg_net_charge <- do.call(rbind, chargeList)
+    
+    if (!plotResults) {
+        return(dataCollected)
+    }
 
     # ---- Math for plotting lines
     #The equations for the lines are:
