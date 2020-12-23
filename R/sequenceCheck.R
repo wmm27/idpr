@@ -86,7 +86,10 @@ sequenceCheck <- function(
     if (!all(is.character(outputType), is.character(method))) {
         stop("Error: method and outputType must be character vectors,")
     }
-    if (!any(is.character(sequence), (is(sequence)[1] == "AAString"))){
+    if (!any(is.character(sequence), 
+             (is(sequence)[1]  %in% c("AAString", "BString", 
+                                      "AAStringSet", "BStringSet"))
+             )){
         stop("Error: sequence must be a character vector or an AAString Object")
     }
     if (!(method %in% c("stop", "warn"))) {
