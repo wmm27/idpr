@@ -4,7 +4,7 @@ author: "William McFadden"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{idpr-vignette}
+  %\VignetteIndexEntry{idpr Package Overview Vignette}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

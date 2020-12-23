@@ -71,7 +71,7 @@ If \code{plotResults = FALSE}, a data frame
 }
 \description{
 This function will determine the charge of a peptide using the
-  Henderson-Hasselbalch Equation. The output is a data frame (default) or q
+  Henderson-Hasselbalch Equation. The output is a data frame (default) or a
   plot of charge calculations along the peptide sequence. Charges are
   determined globally, or along the entire chain.
 }
@@ -140,7 +140,7 @@ head(exampleDF_SepTermini)
                                 ggplot2::aes(label = AA,
                                              y = Charge + 0.1))
   plot(gg)
-#alternativly, you can pass the data frame to sequenceMap()
+#alternatively, you can pass the data frame to sequenceMap()
 sequenceMap(sequence = exampleDF$AA,
             property = exampleDF$Charge)
 }

@@ -12,6 +12,7 @@ chargeHydropathyPlot(
   customPlotTitle = NA,
   pH = 7,
   pKaSet = "IPC_protein",
+  plotResults = TRUE,
   ...
 )
 }
@@ -39,6 +40,13 @@ The environmental pH is used to calculate residue charge.}
 
 \item{pKaSet}{pKa set used for charge calculations. See
 \code{\link{netCharge}} for additional details}
+
+\item{plotResults}{logical value, TRUE by default.
+This determines what is returned. If \code{plotResults = FALSE}, a
+data frame is returned with the Sequence(s), Average Scaled Hydropathy,
+and Average Net Charge. 
+If  \code{plotResults = TRUE}, a graphical output is returned (ggplot)
+showing the Charge Hydropathy Plot (recommended).}
 
 \item{...}{additional arguments to be passed to
 \link[idpr:netCharge]{idpr::netCharge()},
