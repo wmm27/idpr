@@ -85,7 +85,7 @@ idprofile(sequence = P53_HUMAN, #Generates the Profile
 **idpr package.**
 [Link to the Vignette (here)](https://bioconductor.org/packages/release/bioc/vignettes/idpr/inst/doc/idpr-vignette.html)
 
-
+ 
 ## Appendix
 
 ### Package citation

@@ -63,7 +63,15 @@ $$<R> = - 2.785 <H> + 1.151 $$
 
 This plot allows a distinction between
 negative and positive proteins while preserving the information of the 
-charge-hydropathy plot. 
+charge-hydropathy plot.
+
+Further, a this can be used to identify folded regions on a protein. 
+FoldIndex used this equation and set variables to 0 and using a sliding window, 
+the resulting values would identify regions predicted as folded or unfolded. 
+$$ Score = 2.785 <H> - \lvert<R>\rvert -1.151 $$
+When windows have a negative score (<0) sequences are predicted as disordered. 
+When windows have a positive score (>0) sequences are predicted as ordered. 
+This was described in Prilusky, J., Felder, C. E., et al. (2005). 
 
 ## Installation  
 
@@ -195,6 +203,15 @@ chargeHydropathyPlot(
   pKaSet = "EMBOSS")  #Using EMBOSS pKa set
 ```
 
+
+## Using FoldIndexR to predict folded and unfolded windows. 
+
+```{r}
+foldIndexR(sequence = HUMAN_P53,
+           plotResults = TRUE)
+```
+
+Prilusky, J., Felder, C. E., et al. (2005). 
 
 ## Calculating Scaled Hydropathy
 
@@ -520,6 +537,11 @@ biology, 157(1), 105-132.
 
 Po, H. N., & Senozan, N. (2001). The Henderson-Hasselbalch equation:
 its history and limitations. Journal of Chemical Education, 78(11), 1499. 
+
+Prilusky, J., Felder, C. E., et al. (2005). 
+FoldIndex: a simple tool to predict whether a given protein sequence 
+is intrinsically unfolded. Bioinformatics, 21(16), 3435-3438. 
+
 
 Proteinogenic amino acid. (n.d.). In Wikipedia. Retrieved July 12th, 2020. 
 https://en.wikipedia.org/wiki/Proteinogenic_amino_acid#Chemical_properties

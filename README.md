@@ -89,6 +89,11 @@ idprofile(sequence = P53_HUMAN, #Generates the Profile
 
 <img src="man/figures/README-example-5.png" width="75%" />
 
+    #> 
+    #> [[6]]
+
+<img src="man/figures/README-example-6.png" width="75%" />
+
 **Please Refer to idpr-vignette.Rmd file for a detailed introduction to
 the** **idpr package.** [Link to the Vignette
 (here)](https://bioconductor.org/packages/release/bioc/vignettes/idpr/inst/doc/idpr-vignette.html)
@@ -104,7 +109,7 @@ citation("idpr")
 #> 
 #>   William M. McFadden and Judith L. Yanowitz (2020). idpr: Profiling
 #>   and Analyzing Intrinsically Disordered Proteins in R. R package
-#>   version 1.0.005.
+#>   version 1.6.1.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
@@ -112,7 +117,7 @@ citation("idpr")
 #>     title = {idpr: Profiling and Analyzing Intrinsically Disordered Proteins in R},
 #>     author = {William M. McFadden and Judith L. Yanowitz},
 #>     year = {2020},
-#>     note = {R package version 1.0.005},
+#>     note = {R package version 1.6.1},
 #>   }
 ```
 
@@ -120,9 +125,9 @@ citation("idpr")
 
 ``` r
 Sys.time()
-#> [1] "2020-12-23 14:07:28 EST"
+#> [1] "2022-03-11 02:31:26 EST"
 Sys.Date()
-#> [1] "2020-12-23"
+#> [1] "2022-03-11"
 R.version
 #>                _                           
 #> platform       x86_64-apple-darwin17.0     
@@ -131,12 +136,12 @@ R.version
 #> system         x86_64, darwin17.0          
 #> status                                     
 #> major          4                           
-#> minor          0.3                         
-#> year           2020                        
-#> month          10                          
+#> minor          1.3                         
+#> year           2022                        
+#> month          03                          
 #> day            10                          
-#> svn rev        79318                       
+#> svn rev        81868                       
 #> language       R                           
-#> version.string R version 4.0.3 (2020-10-10)
-#> nickname       Bunny-Wunnies Freak Out
+#> version.string R version 4.1.3 (2022-03-10)
+#> nickname       One Push-Up
 ```
