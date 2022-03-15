@@ -87,6 +87,7 @@ Kyte, J., & Doolittle, R. F. (1982). A simple method for
 
 Other scaled hydropathy functions: 
 \code{\link{KDNorm}},
+\code{\link{foldIndexR}()},
 \code{\link{meanScaledHydropathy}()},
 \code{\link{scaledHydropathyLocal}()}
 }

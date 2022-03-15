@@ -3,6 +3,7 @@
 export(chargeCalculationGlobal)
 export(chargeCalculationLocal)
 export(chargeHydropathyPlot)
+export(foldIndexR)
 export(hendersonHasselbalch)
 export(idprofile)
 export(iupred)

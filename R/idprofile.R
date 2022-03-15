@@ -7,6 +7,7 @@
 #'   \code{\link{chargeCalculationLocal}}\cr
 #'   \code{\link{scaledHydropathyLocal}}\cr
 #'   \code{\link{structuralTendencyPlot}}\cr
+#'   \code{\link{foldIndexR}}\cr
 #'   All of the above linked functions only require the sequence argument
 #'   to output plots of characteristics associated with IDPs. The function also
 #'   includes options for IUPred functions. The function does one of the
@@ -24,7 +25,11 @@
 #' @param uniprotAccession character string specifying the UniProt Accession of
 #'   the protein of interest. Used to fetch predictions from IUPreds REST API.
 #'   Default is NA. Keep as NA if you do not have a UniProt Accession.
-#'
+#' @param window a positive, odd integer. 51 by default.
+#'   Sets the size of sliding window, must be an odd number.
+#'   The window determines the number of residues to be analyzed and averaged
+#'   for each position along the sequence. 51 is default for 
+#'   \code{\link{foldIndexR}}\cr.
 #' @param proteinName character string, optional.
 #'   Used to add protein name to the title in ggplot.
 #' @inheritParams chargeCalculationLocal
@@ -66,6 +71,7 @@
 #'   \code{\link{chargeCalculationLocal}}\cr
 #'   \code{\link{scaledHydropathyLocal}}\cr
 #'   \code{\link{structuralTendencyPlot}}\cr
+#'   \code{\link{foldIndexR}}\cr
 #'   \code{\link{iupred}}\cr
 #'   \code{\link{iupredAnchor}}\cr
 #'   \code{\link{iupredRedox}}
@@ -112,6 +118,19 @@
 #'               Protein Science, 22(6), 693-724.
 #'               doi:10.1002/pro.2261 }
 #'     }
+#'     \item \code{\link{foldIndexR}}
+#'       \itemize{
+#'         \item{Prilusky, J., Felder, C. E., et al. (2005). 
+#'               FoldIndex: a simple tool to predict whether 
+#'               a given protein sequence is intrinsically unfolded. 
+#'               Bioinformatics, 21(16), 3435-3438.}
+#'          \item{Uversky, V. N., Gillespie, J. R., & Fink, A. L. (2000).
+#'               Why are “natively unfolded” proteins unstructured under
+#'               physiologic conditions?. Proteins: structure, function,
+#'               and bioinformatics, 41(3), 415-427.
+#'               https://doi.org/10.1002/1097-0134(20001115)41:3<415::AID-PROT130>3.0.CO;2-7}
+#'         \item{Also see citations for hydrapthy and charge plots above}
+#'     }
 #'     \item \code{\link{iupred}},
 #'           \code{\link{iupredAnchor}},
 #'           \code{\link{iupredRedox}}
@@ -155,7 +174,7 @@ idprofile <- function(
     uniprotAccession = NA,
     proteinName = NA,
     iupredType = "long",
-    window = 9,
+    window = 51,
     pH = 7.2,
     pKaSet = "IPC_protein",
     structuralTendencyType = "bar",
@@ -180,6 +199,12 @@ idprofile <- function(
         plotResults = TRUE,
         pKaSet = pKaSet,
         proteinName = proteinName)
+    hydropPlot <- scaledHydropathyLocal(
+        sequence = sequence,
+        window = window,
+        plotResults = TRUE,
+        pKaSet = pKaSet,
+        proteinName = proteinName)
     tendencyPlot <- structuralTendencyPlot(
         sequence = sequence,
         graphType = structuralTendencyType,
@@ -188,6 +213,10 @@ idprofile <- function(
         disorderNeutral = disorderNeutral,
         orderPromoting = orderPromoting,
         proteinName = proteinName)
+    foldIndexPlot <- foldIndexR(sequence = sequence,
+        window = window, 
+        proteinName = proteinName,
+        pKaSet = pKaSet) 
 
     #-------- Adding IUPred Plot based on which type
     if (!is.na(uniprotAccession)) {
@@ -216,6 +245,7 @@ idprofile <- function(
                 label = "No Uniprot Accession provided...IUPred plot skipped") +
             ggplot2::theme_void()
     }
-    plotList <- list(rhPlot, tendencyPlot, chargePlot, hydropPlot, iupredPlot)
+    plotList <- list(rhPlot, tendencyPlot, chargePlot, hydropPlot, 
+                     foldIndexPlot, iupredPlot)
     return(plotList)
 }

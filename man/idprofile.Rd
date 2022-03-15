@@ -43,10 +43,11 @@ disorder based on environmental conditions. Regions of predicted
 environmental sensitivity are highlighted. See the respective functions
 for more details. This is skipped if uniprotAccession = NA.}
 
-\item{window}{a positive, odd integer. 7 by default.
+\item{window}{a positive, odd integer. 51 by default.
 Sets the size of sliding window, must be an odd number.
 The window determines the number of residues to be analyzed and averaged
-for each position along the sequence.}
+for each position along the sequence. 51 is default for 
+\code{\link{foldIndexR}}\cr.}
 
 \item{pH}{numeric value, 7.0 by default.
 The environmental pH used to calculate residue charge.}
@@ -94,6 +95,7 @@ The IDPRofile is a summation of many features of the idpr package,
   \code{\link{chargeCalculationLocal}}\cr
   \code{\link{scaledHydropathyLocal}}\cr
   \code{\link{structuralTendencyPlot}}\cr
+  \code{\link{foldIndexR}}\cr
   All of the above linked functions only require the sequence argument
   to output plots of characteristics associated with IDPs. The function also
   includes options for IUPred functions. The function does one of the
@@ -149,6 +151,19 @@ The IDPRofile is a summation of many features of the idpr package,
               Protein Science, 22(6), 693-724.
               doi:10.1002/pro.2261 }
     }
+    \item \code{\link{foldIndexR}}
+      \itemize{
+        \item{Prilusky, J., Felder, C. E., et al. (2005). 
+              FoldIndex: a simple tool to predict whether 
+              a given protein sequence is intrinsically unfolded. 
+              Bioinformatics, 21(16), 3435-3438.}
+         \item{Uversky, V. N., Gillespie, J. R., & Fink, A. L. (2000).
+              Why are “natively unfolded” proteins unstructured under
+              physiologic conditions?. Proteins: structure, function,
+              and bioinformatics, 41(3), 415-427.
+              https://doi.org/10.1002/1097-0134(20001115)41:3<415::AID-PROT130>3.0.CO;2-7}
+        \item{Also see citations for hydrapthy and charge plots above}
+    }
     \item \code{\link{iupred}},
           \code{\link{iupredAnchor}},
           \code{\link{iupredRedox}}
@@ -194,6 +209,7 @@ idprofile(
   \code{\link{chargeCalculationLocal}}\cr
   \code{\link{scaledHydropathyLocal}}\cr
   \code{\link{structuralTendencyPlot}}\cr
+  \code{\link{foldIndexR}}\cr
   \code{\link{iupred}}\cr
   \code{\link{iupredAnchor}}\cr
   \code{\link{iupredRedox}}

@@ -28,6 +28,7 @@ A dataset containing a measure of hydropathy for each amino acid residue
 }
 \seealso{
 Other scaled hydropathy functions: 
+\code{\link{foldIndexR}()},
 \code{\link{meanScaledHydropathy}()},
 \code{\link{scaledHydropathyGlobal}()},
 \code{\link{scaledHydropathyLocal}()}

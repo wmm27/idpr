@@ -153,12 +153,13 @@ idprofile(sequence = P53_HUMAN,
 ```
 
 
-idprofile returns 4-5 plots:
+idprofile returns 5-6 plots:
 
  * Charge-Hydropathy Plot^\*^
  * Plot of Amino Acid Composition and Structural Tendency^†^
  * Calculations of Local Charge Along a Protein Sequence^\*^
  * Local, Scaled Hydropathy Along a Protein Sequence^\*^
+ * A prediction of intrinsic disorder by FoldIndex^\*^
  * A prediction of intrinsic disorder by IUPred2 (only with a uniprotAccession)^‡^
  
 *Detailed descriptions of each plot can be found in specific vignettes.*
@@ -173,7 +174,7 @@ idprofile returns 4-5 plots:
 A brief explanation of each plot is given below:
 
 
-### Charge-Hydropathy Plot
+### Charge-Hydropathy Plot and FoldIndex
 
 Uversky, Gillespie, & Fink (2000) showed that both high net charge and 
 low mean hydropathy are properties of IDPs (15). One explanation is that a high 
@@ -185,7 +186,11 @@ graphic can be used to distinguish proteins that are extended or compact under
 native conditions. However, it is important to note that IDPs can have the 
 characteristics of a collapsed protein or an extended protein. Therefore a 
 protein within the “collapsed protein” field does not necessary mean that it 
-lacks intrinsic disorder under native conditions (15, 31). 
+lacks intrinsic disorder under native conditions (15, 31). This equation was
+later applied to a method of predicting unfolded peptides using a sliding window 
+of charge and hydropathy in FoldIndex (44). When scores are negative, a region 
+is predicted as unfolded; when scores are positive, a region is predicted as 
+folded.
 
 
 **For further theory and details, please refer to idpr's **
@@ -387,6 +392,7 @@ et al. (2001) (25).
 41. Johnson M, Zaretskaya I, Raytselis Y, Merezhuk Y, McGinnis S, Madden TL. NCBI BLAST: a better web interface. Nucleic Acids Research. 2008;36(suppl_2):W5-W9.
 42. Madeira F, Park YM, Lee J, Buso N, Gur T, Madhusoodanan N, et al. The EMBL-EBI search and sequence analysis tools APIs in 2019. Nucleic acids research. 2019;47(W1):W636-W41.
 43. Pagès H, Aboyoun P, Gentleman R, DebRoy S. Biostrings: Efficient manipulation of biological strings. R package version. 2020;2(0).
+44. Prilusky J, Felder C, Zeev-Ben-Mordehai T, Rydberg E, Man O, Beckmann J, Silman I, & Sussman J. FoldIndex©: a simple tool to predict whether a given protein sequence is intrinsically unfolded. Bioinformatics 21, no. 16 (2005): 3435-3438.
 
 
 
