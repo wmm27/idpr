@@ -25,7 +25,7 @@
 #' @param uniprotAccession character string specifying the UniProt Accession of
 #'   the protein of interest. Used to fetch predictions from IUPreds REST API.
 #'   Default is NA. Keep as NA if you do not have a UniProt Accession.
-#' @param window a positive, odd integer. 51 by default.
+#' @param window a positive, odd integer. 9 by default.
 #'   Sets the size of sliding window, must be an odd number.
 #'   The window determines the number of residues to be analyzed and averaged
 #'   for each position along the sequence. 51 is default for 
@@ -174,7 +174,7 @@ idprofile <- function(
     uniprotAccession = NA,
     proteinName = NA,
     iupredType = "long",
-    window = 51,
+    window = 9,
     pH = 7.2,
     pKaSet = "IPC_protein",
     structuralTendencyType = "bar",
@@ -192,12 +192,6 @@ idprofile <- function(
         sequence = sequence,
         window = window,
         plotResults = TRUE, pH = pH,
-        proteinName = proteinName)
-    hydropPlot <- scaledHydropathyLocal(
-        sequence = sequence,
-        window = window,
-        plotResults = TRUE,
-        pKaSet = pKaSet,
         proteinName = proteinName)
     hydropPlot <- scaledHydropathyLocal(
         sequence = sequence,

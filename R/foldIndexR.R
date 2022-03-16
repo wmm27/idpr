@@ -45,7 +45,6 @@
 #' @references Kyte, J., & Doolittle, R. F. (1982). A simple method for
 #'   displaying the hydropathic character of a protein.
 #'   Journal of molecular biology, 157(1), 105-132.
-#' @export
 #' @section Plot Colors:
 #'   For users who wish to keep a common aesthetic, the following colors are
 #'   used when plotResults = TRUE. \cr
@@ -69,31 +68,14 @@
 #'   conditions?. Proteins: structure, function, and bioinformatics, 41(3),
 #'   415-427.
 #'   \url{https://doi.org/10.1002/1097-0134(20001115)41:3<415::AID-PROT130>3.0.CO;2-7}
-#' @examples
-#' #Amino acid sequences can be character strings
-#' aaString <- "ACDEFGHIKLMNPQRSTVWY"
-#' #Amino acid sequences can also be character vectors
-#' aaVector <- c("A", "C", "D", "E", "F",
-#'               "G", "H", "I", "K", "L",
-#'               "M", "N", "P", "Q", "R",
-#'               "S", "T", "V", "W", "Y")
-#' #Alternatively, .fasta files can also be used by providing
-#'   ##The path to the file as a character string.
-#'
-#'
-#' foldIndexR(aaVector)
-#'
-#' exampleDF <- 
-#'   foldIndexR(aaString,
-#'       plotResults = FALSE)
-#' head(exampleDF)
-#' 
+#' @export
 
 foldIndexR <- function(sequence,
                        window = 51, 
                        proteinName = NA,
                        pKaSet = "IPC_protein",
-                       plotResults = TRUE) {
+                       plotResults = TRUE,
+                       ...) {
     
     chargeDF <-
         chargeCalculationLocal(sequence = sequence, window = window,

@@ -44,7 +44,7 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
 BiocManager::install("idpr")
 ```
 
-You can install the development version from 
+Additionally, you can install the development version from 
 [Bioconductor](https://bioconductor.org/packages/devel/bioc/html/idpr.html) 
 with:
 ``` r
