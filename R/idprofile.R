@@ -182,6 +182,7 @@ idprofile <- function(
     proteinName = NA,
     iupredType = "long",
     window = 9,
+    foldIndexWindow = 51,
     pH = 7.2,
     pKaSet = "IPC_protein",
     structuralTendencyType = "bar",
