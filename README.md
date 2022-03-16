@@ -109,7 +109,7 @@ citation("idpr")
 #> 
 #>   William M. McFadden and Judith L. Yanowitz (2020). idpr: Profiling
 #>   and Analyzing Intrinsically Disordered Proteins in R. R package
-#>   version 1.6.11.
+#>   version 1.5.11.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
@@ -117,7 +117,7 @@ citation("idpr")
 #>     title = {idpr: Profiling and Analyzing Intrinsically Disordered Proteins in R},
 #>     author = {William M. McFadden and Judith L. Yanowitz},
 #>     year = {2020},
-#>     note = {R package version 1.6.11},
+#>     note = {R package version 1.5.11},
 #>   }
 ```
 
@@ -125,7 +125,7 @@ citation("idpr")
 
 ``` r
 Sys.time()
-#> [1] "2022-03-15 20:07:30 EDT"
+#> [1] "2022-03-15 21:11:51 EDT"
 Sys.Date()
 #> [1] "2022-03-15"
 R.version
