@@ -46,8 +46,8 @@ for more details. This is skipped if uniprotAccession = NA.}
 \item{window}{a positive, odd integer. 9 by default.
 Sets the size of sliding window, must be an odd number.
 The window determines the number of residues to be analyzed and averaged
-for each position along the sequence. 51 is default for 
-\code{\link{foldIndexR}}\cr.}
+for each position along the sequence. For chargeCalculationLocal and 
+scaledHydropathyLocal.}
 
 \item{pH}{numeric value, 7.0 by default.
 The environmental pH used to calculate residue charge.}
@@ -83,6 +83,11 @@ of individual residues to be matched with the input sequence. Defaults:
 }
 It is not recommended to change these. Arguments passed to
 \code{\link{structuralTendencyPlot}}}
+
+\item{foldIndexWindow}{a positive, odd integer. 51 by default.
+Sets the size of sliding window, must be an odd number.
+The window determines the number of residues to be scored and averaged
+for each position along the sequence.}
 }
 \value{
 4 or 5 plots, depending if a UniProt Accession is provided.

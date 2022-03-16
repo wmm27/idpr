@@ -28,8 +28,8 @@
 #' @param window a positive, odd integer. 9 by default.
 #'   Sets the size of sliding window, must be an odd number.
 #'   The window determines the number of residues to be analyzed and averaged
-#'   for each position along the sequence. 51 is default for 
-#'   \code{\link{foldIndexR}}\cr.
+#'   for each position along the sequence. For chargeCalculationLocal and 
+#'   scaledHydropathyLocal. 
 #' @param proteinName character string, optional.
 #'   Used to add protein name to the title in ggplot.
 #' @inheritParams chargeCalculationLocal
@@ -64,6 +64,13 @@
 #'   disorder based on environmental conditions. Regions of predicted
 #'   environmental sensitivity are highlighted. See the respective functions
 #'   for more details. This is skipped if uniprotAccession = NA.
+#'   
+#' @param foldIndexWindow a positive, odd integer. 51 by default.
+#'   Sets the size of sliding window, must be an odd number.
+#'   The window determines the number of residues to be scored and averaged
+#'   for each position along the sequence. 
+#'   
+#'   
 #' @return 4 or 5 plots, depending if a UniProt Accession is provided.
 #' @export
 #' @seealso 
@@ -208,7 +215,7 @@ idprofile <- function(
         orderPromoting = orderPromoting,
         proteinName = proteinName)
     foldIndexPlot <- foldIndexR(sequence = sequence,
-        window = window, 
+        foldIndexWindow = 51, 
         proteinName = proteinName,
         pKaSet = pKaSet) 
 
