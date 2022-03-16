@@ -28,7 +28,7 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
 BiocManager::install("idpr")
 ```
 
-You can install the development version from
+Additionally, you can install the development version from
 [Bioconductor](https://bioconductor.org/packages/devel/bioc/html/idpr.html)
 with:
 
@@ -109,7 +109,7 @@ citation("idpr")
 #> 
 #>   William M. McFadden and Judith L. Yanowitz (2020). idpr: Profiling
 #>   and Analyzing Intrinsically Disordered Proteins in R. R package
-#>   version 1.6.1.
+#>   version 1.6.11.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
@@ -117,7 +117,7 @@ citation("idpr")
 #>     title = {idpr: Profiling and Analyzing Intrinsically Disordered Proteins in R},
 #>     author = {William M. McFadden and Judith L. Yanowitz},
 #>     year = {2020},
-#>     note = {R package version 1.6.1},
+#>     note = {R package version 1.6.11},
 #>   }
 ```
 
@@ -125,9 +125,9 @@ citation("idpr")
 
 ``` r
 Sys.time()
-#> [1] "2022-03-11 02:31:26 EST"
+#> [1] "2022-03-15 20:07:30 EDT"
 Sys.Date()
-#> [1] "2022-03-11"
+#> [1] "2022-03-15"
 R.version
 #>                _                           
 #> platform       x86_64-apple-darwin17.0     
