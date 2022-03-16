@@ -43,7 +43,7 @@ disorder based on environmental conditions. Regions of predicted
 environmental sensitivity are highlighted. See the respective functions
 for more details. This is skipped if uniprotAccession = NA.}
 
-\item{window}{a positive, odd integer. 51 by default.
+\item{window}{a positive, odd integer. 9 by default.
 Sets the size of sliding window, must be an odd number.
 The window determines the number of residues to be analyzed and averaged
 for each position along the sequence. 51 is default for 

@@ -5,7 +5,7 @@
 #'   showing the calculated scores for each window along the sequence.
 #' @inheritParams sequenceCheck
 #'
-#' @param window a positive, odd integer. 7 by default.
+#' @param window a positive, odd integer. 9 by default.
 #'   Sets the size of sliding window, must be an odd number.
 #'   The window determines the number of residues to be analyzed and averaged
 #'   for each position along the sequence.

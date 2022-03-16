@@ -6,7 +6,7 @@
 \usage{
 chargeCalculationLocal(
   sequence,
-  window = 7,
+  window = 9,
   proteinName = NA,
   pH = 7,
   pKaSet = "IPC_protein",
@@ -21,7 +21,7 @@ or vector of single characters.
 It also supports a single character string that specifies
 the location of a .fasta or .fa file.}
 
-\item{window}{a positive, odd integer. 7 by default.
+\item{window}{a positive, odd integer. 9 by default.
 Sets the size of sliding window, must be an odd number.
 The window determines the number of residues to be analyzed and averaged
 for each position along the sequence.}

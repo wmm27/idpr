@@ -226,7 +226,7 @@ chargeCalculationGlobal <- function(
 #'   or vector of single characters.
 #'   It also supports a single character string that specifies
 #'   the location of a .fasta or .fa file.
-#' @param window a positive, odd integer. 7 by default.
+#' @param window a positive, odd integer. 9 by default.
 #'   Sets the size of sliding window, must be an odd number.
 #'   The window determines the number of residues to be analyzed and averaged
 #'   for each position along the sequence.
@@ -297,7 +297,7 @@ chargeCalculationGlobal <- function(
 #'  plot(gg)
 
 
-chargeCalculationLocal <- function(sequence, window = 7,  proteinName = NA,
+chargeCalculationLocal <- function(sequence, window = 9,  proteinName = NA,
                         pH = 7.0, pKaSet = "IPC_protein",
                         printCitation = FALSE, plotResults = FALSE, ...) {
     seqVector <- sequenceCheck(sequence = sequence, method = "stop",
