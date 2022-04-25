@@ -38,7 +38,9 @@ in several human diseases such as Parkinson’s Disease, Alzheimer’s Disease,
 and various cancers (8-10). Due to their abundance and relevance, interest in 
 IDPs has been increasing over the last few decades (11). In this regard, there 
 have been dozens of computational tools developed to help predict intrinsic 
-disorder of a protein sequence (12-14).
+disorder of a protein sequence (12-14). See our peer-reviewed article published 
+in [PLOS ONE (https://doi.org/10.1371/journal.pone.0266929)](https://doi.org/10.1371/journal.pone.0266929) 
+to learn more on this topic! 
 
 
 These tools utilize known differences between disordered and ordered proteins.

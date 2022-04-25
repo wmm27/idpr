@@ -1,0 +1,17 @@
+citHeader("To cite idpr in publications, use the citation below and other function-specific sources found in the idpr package documentation:")
+
+citEntry(
+  entry    = "Article",
+  title    = "idpr: A package for profiling and analyzing Intrinsically Disordered Proteins in R",
+  author   = personList(as.person("William M McFadden"),
+                        as.person("Judith L Yanowitz")),
+  journal  = "PLOS ONE",
+  publisher = "Public Library of Science",
+  year     = 2022,
+  volume   = 17,
+  number   = 4,
+  pages    = "e0266929",
+  doi      = "10.1371/journal.pone.0266929",
+  url      = "https://bioconductor.org/packages/idpr/",
+  textVersion = paste("McFadden, W. M., and Yanowitz, J. L. (2022). idpr: A package for profiling and analyzing Intrinsically Disordered Proteins in R. PLOS ONE, 17(4), e0266929. doi:10.1371/journal.pone.0266929")
+)
