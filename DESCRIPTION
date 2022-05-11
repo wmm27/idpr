@@ -19,7 +19,7 @@ Description: ‘idpr’ aims to integrate tools for the computational analysis o
     tools for IDP-based sequence analysis to be used in conjunction with other R 
     packages. 
 BugReports: https://github.com/wmm27/idpr/issues
-License: LGPL-3
+License: LGPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 biocViews: StructuralPrediction, Proteomics, CellBiology
