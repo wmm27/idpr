@@ -32,7 +32,7 @@
 #' @param plotResults logical value, TRUE by default.
 #'   This determines what is returned. If \code{plotResults = FALSE}, a
 #'   data frame is returned with the Sequence(s), Average Scaled Hydropathy,
-#'   and Average Net Charge. 
+#'   and Average Net Charge.
 #'   If  \code{plotResults = TRUE}, a graphical output is returned (ggplot)
 #'   showing the Charge Hydropathy Plot (recommended).
 #' @param ... additional arguments to be passed to
@@ -138,7 +138,7 @@ chargeHydropathyPlot <- function(
     dataCollected$sequence <- do.call(rbind, sequenceList)
     dataCollected$avg_scaled_hydropathy <- do.call(rbind, hydropathyList)
     dataCollected$avg_net_charge <- do.call(rbind, chargeList)
-    
+
     if (!plotResults) {
         return(dataCollected)
     }

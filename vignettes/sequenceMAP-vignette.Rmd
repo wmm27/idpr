@@ -11,11 +11,10 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.width = 6, 
+  fig.width = 6,
   fig.height = 4
 )
 ```
-
 
 ## Introduction
 
@@ -44,7 +43,7 @@ and stored within the **idpr** package for examples.
 The package can be installed from Bioconductor with the following line of code.
 It requires the BiocManager package to be installed.
 ```{r}
-#BiocManager::install("idpr") 
+#BiocManager::install("idpr")
 ```
 
 The most recent version of the package can be installed with the following line 
@@ -70,9 +69,8 @@ The values can be discrete, like the output of structuralTendency(), or
 continuous, like the output of chargeCalculationGlobal()
 
 ```{r}
-tendencyDF <- structuralTendency(sequence = P53_HUMAN) 
+tendencyDF <- structuralTendency(sequence = P53_HUMAN)
 head(tendencyDF)
-
 
 chargeDF <- chargeCalculationGlobal(sequence = P53_HUMAN,
                                     includeTermini = FALSE)
@@ -89,13 +87,12 @@ values in 'Charge'.
 ```{r}
 sequenceMap(
   sequence = tendencyDF$AA,
-  property = tendencyDF$Tendency) 
-
+  property = tendencyDF$Tendency)
 
 sequenceMap(
   sequence = as.character(chargeDF$AA),
   property = chargeDF$Charge, #character vector
-  customColors = c("blue", "red", "grey30")) 
+  customColors = c("blue", "red", "grey30"))
 
 ```
 
@@ -194,25 +191,24 @@ sequenceMap(
   rotationAngle = 90) #45 residues each row
 ```
 
-
 You can also specify colors for discrete values using a vector of colors. This
 is done with the "customColors" argument.
 ```{r}
 sequenceMap(
   sequence = tendencyDF$AA,
   property = tendencyDF$Tendency,
-  customColors = c("#999999", "#E69F00", "#56B4E9")) 
+  customColors = c("#999999", "#E69F00", "#56B4E9"))
 ```
 
 Continuous variables custom colors are specified with a vector in the order of 
 "High value", "Low  Value", "Middle Value". Here the order is high = purple, 
-low = pink, and middle = light grey
+low = pink, and middle = light grey.
 ```{r}
 sequenceMap(
   sequence = as.character(chargeDF$AA),
-  property = chargeDF$Charge, 
+  property = chargeDF$Charge,
   customColors = c("purple", "pink", "grey90")
-  ) 
+  )
 ```
 
 Since the output is a ggplot, the visualization is able to be assigned to an
@@ -237,14 +233,14 @@ ggSequence <- ggSequence +
                         y = 8.05,
                         yend = 8.05,
                        color = "#FF3562",
-                       size = 1.5) + 
+                       size = 1.5) +
               annotate("segment",
                        x = 1,
                        xend  = 12.5,
                         y = 3.05,
                         yend = 3.05,
                        color = "#FF3562",
-                       size = 1.5) + 
+                       size = 1.5) +
               annotate("segment",
                        x = 1,
                        xend  = 40.5,
@@ -260,13 +256,11 @@ ggSequence <- ggSequence +
                         color = "#FF3562",
                        size = 1.5) +
               annotate("text",
-                       x = 36.35, 
+                       x = 36.35,
                        y = 0.65,
                        label = "= DNA Binding",
                        size = 3.5,
                        hjust = 0)
-  
-  
 # Adding a plot title
 ggSequence <- ggSequence +
               labs(title = "P53 Structural Tendency") +
@@ -280,7 +274,7 @@ ggSequence <- ggSequence +
                          show.legend = FALSE,
                          inherit.aes = FALSE) +
               annotate("text",
-                       x = 4.5, 
+                       x = 4.5,
                        y = 4.3,
                        label = "Metal Binding",
                         size = 3)

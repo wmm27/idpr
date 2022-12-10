@@ -44,7 +44,7 @@ The environmental pH is used to calculate residue charge.}
 \item{plotResults}{logical value, TRUE by default.
 This determines what is returned. If \code{plotResults = FALSE}, a
 data frame is returned with the Sequence(s), Average Scaled Hydropathy,
-and Average Net Charge. 
+and Average Net Charge.
 If  \code{plotResults = TRUE}, a graphical output is returned (ggplot)
 showing the Charge Hydropathy Plot (recommended).}
 

@@ -86,10 +86,10 @@ sequenceCheck <- function(
     if (!all(is.character(outputType), is.character(method))) {
         stop("Error: method and outputType must be character vectors,")
     }
-    if (!any(is.character(sequence), 
-             (is(sequence)[1]  %in% c("AAString", "BString", 
+    if (!any(is.character(sequence),
+             (is(sequence)[1] %in% c("AAString", "BString",
                                       "AAStringSet", "BStringSet"))
-             )){
+             )) {
         stop("Error: sequence must be a character vector or an AAString Object")
     }
     if (!(method %in% c("stop", "warn"))) {
@@ -98,14 +98,14 @@ sequenceCheck <- function(
     }
     #-----
     #This section will confirm what to do with the amino acid sequence
-    if(is(sequence)[1] %in% c("AAString", "BString", 
-                              "AAStringSet", "BStringSet")){
+    if (is(sequence)[1] %in% c("AAString", "BString",
+                              "AAStringSet", "BStringSet")) {
         sequence <- as.character(sequence)
     }
     if (length(sequence) == 1) {
         #this is to see if the string is a .fasta / .fa file
         if (grepl("\\.fa", sequence, ignore.case = TRUE)) {
-        sequence <- Biostrings::readAAStringSet(sequence, format="fasta")
+        sequence <- Biostrings::readAAStringSet(sequence, format = "fasta")
         sequence <- as.character(sequence)
         }
         separatedSequence <- strsplit(sequence, "")

@@ -13,14 +13,13 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.width = 6, 
+  fig.width = 6,
   fig.height = 4
 )
 ```
 
 
 # Fetching IUPred Predictions of Intrinsic Disorder
-
 
 ## Quick Start
 
@@ -91,7 +90,7 @@ Both type of results will be shown for examples.
 The idpr package can be installed from Bioconductor with the following line of 
 code. It requires the BiocManager package to be installed.
 ```{r}
-#BiocManager::install("idpr") 
+#BiocManager::install("idpr")
 ```
 
 The most recent version of the package can be installed with the following line 
@@ -214,7 +213,7 @@ iupredAnchor(p53_ID,
 The data frame for iupredAnchor has a similar layout to iupred(),
 with an additional column for ANCHOR2 scores.
 ```{r}
-iupredAnchorDF <- iupredAnchor(p53_ID, 
+iupredAnchorDF <- iupredAnchor(p53_ID,
                                plotResults = FALSE)
 head(iupredAnchorDF)
 ```
@@ -250,7 +249,7 @@ sensitive region was predicted. When redoxSensitive == TRUE, the residue is
 predicted to be in a redox sensitive region, when FALSE the residue is not 
 predicted to be in a redox sensitive region. 
 ```{r}
-iupredRedoxDF <- iupredRedox(p53_ID, 
+iupredRedoxDF <- iupredRedox(p53_ID,
                              plotResults = FALSE)
 head(iupredRedoxDF)
 ```
@@ -272,18 +271,13 @@ iupredLongDF <- iupred(p53_ID,
 
 sequenceMap(sequence = iupredLongDF$AA,
             property = iupredLongDF$IUPred2,
-            customColors = c("darkolivegreen3", "grey65", "darkorchid1")) + 
+            customColors = c("darkolivegreen3", "grey65", "darkorchid1")) +
   ggplot2::labs(title = "Prediction of Intrinsic Disorder in HUMAN P53",
                 subtitle = "By IUPred2A long")
-
-
-                         
 ```
 
-
-**For further details, please refer to idpr's **
+**For further details, please refer to idpr's**
 **"Sequence Map Vignette" file.**
-
 
 ## Getting the UniProt Accession
 

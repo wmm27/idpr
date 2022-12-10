@@ -13,7 +13,7 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.width = 6, 
+  fig.width = 6,
   fig.height = 4
 )
 ```
@@ -42,7 +42,7 @@ disorder‐neutral residues are D, T, and R (Uversky, 2013).
 The package can be installed from Bioconductor with the following line of code.
 It requires the BiocManager package to be installed
 ```{r}
-#BiocManager::install("idpr") 
+#BiocManager::install("idpr")
 ```
 
 The most recent version of the package can be installed with the following line 
@@ -127,7 +127,7 @@ Another possibility is the use of the sequenceMap() function within **idpr**.
 sequenceMap(
   sequence = tendencyDF$AA,
   property = tendencyDF$Tendency,
-  customColors = c("#999999", "#E69F00", "#56B4E9"))  
+  customColors = c("#999999", "#E69F00", "#56B4E9"))
 ```
 
 structuralTendency defines order- and disorder-promoting residues based on 
@@ -154,12 +154,11 @@ tendencyDF <- structuralTendency(P53_MOUSE,
                  disorderNeutral = c("H", "M", "T", "D"),
                  orderPromoting = c("W", "C", "F", "I", "Y", "V", "L", "N"))
 head(tendencyDF)
-  
-  
+
 sequenceMap(
   sequence = P53_MOUSE,
   property = tendencyDF$Tendency,
-  customColors = c("#999999", "#E69F00", "#56B4E9"))    
+  customColors = c("#999999", "#E69F00", "#56B4E9"))
 ```
 
 

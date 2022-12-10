@@ -13,7 +13,7 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.width = 6, 
+  fig.width = 6,
   fig.height = 4
 )
 ```
@@ -121,7 +121,7 @@ sequence-based analysis into R.
 The package can be installed from Bioconductor with the following line of code.
 This requires the BiocManager package to be installed.
 ```{r}
-#BiocManager::install("idpr") 
+#BiocManager::install("idpr")
 ```
 
 The most recent version of the package can be installed with the following line 
@@ -308,7 +308,7 @@ head(p53_tendency_DF) #see the first few rows of the generated data frame
 
 sequenceMap(sequence = P53_HUMAN,
             property = p53_tendency_DF$Tendency,
-            customColors = c("#F0B5B3", "#A2CD5A", "#BF3EFF"))  #generate the map
+            customColors = c("#F0B5B3", "#A2CD5A", "#BF3EFF")) #generate the map
 ```
 
 sequenceMap() does accept continuous values as well. Additionally, custom plots
