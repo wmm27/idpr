@@ -10,8 +10,9 @@ idprofile(
   proteinName = NA,
   iupredType = "long",
   window = 9,
-  foldIndexWindow = 51,
-  pH = 7.2,
+  foldIndexWindowSize = 51,
+  pH = 7,
+  foldIndex_pH = 7,
   pKaSet = "IPC_protein",
   structuralTendencyType = "bar",
   structuralTendencySummarize = FALSE,
@@ -47,16 +48,21 @@ for more details. This is skipped if uniprotAccession = NA.}
 \item{window}{a positive, odd integer. 9 by default.
 Sets the size of sliding window, must be an odd number.
 The window determines the number of residues to be analyzed and averaged
-for each position along the sequence. For chargeCalculationLocal and 
+for each position along the sequence. For chargeCalculationLocal and
 scaledHydropathyLocal.}
 
-\item{foldIndexWindow}{a positive, odd integer. 51 by default.
+\item{foldIndexWindowSize}{a positive, odd integer. 51 by default.
 Sets the size of sliding window, must be an odd number.
 The window determines the number of residues to be scored and averaged
 for each position along the sequence.}
 
 \item{pH}{numeric value, 7.0 by default.
 The environmental pH used to calculate residue charge.}
+
+\item{foldIndex_pH}{numeric value, 7.0 by default.
+The environmental pH used to calculate residue charge.
+FoldIndex specifically uses pH = 7.0 in settings and thus, is distinct
+from changing pH in the other calculations.}
 
 \item{pKaSet}{A character string or data frame. "IPC_protein" by default.
 Character string to load specific, preloaded pKa sets.
@@ -159,9 +165,9 @@ The IDPRofile is a summation of many features of the idpr package,
     }
     \item \code{\link{foldIndexR}}
       \itemize{
-        \item{Prilusky, J., Felder, C. E., et al. (2005). 
-              FoldIndex: a simple tool to predict whether 
-              a given protein sequence is intrinsically unfolded. 
+        \item{Prilusky, J., Felder, C. E., et al. (2005).
+              FoldIndex: a simple tool to predict whether
+              a given protein sequence is intrinsically unfolded.
               Bioinformatics, 21(16), 3435-3438.}
          \item{Uversky, V. N., Gillespie, J. R., & Fink, A. L. (2000).
               Why are “natively unfolded” proteins unstructured under
@@ -207,7 +213,6 @@ idprofile(
   iupredType = "redox",
   structuralTendencyType = "pie")
 }
-
 
 }
 \seealso{

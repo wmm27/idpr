@@ -28,8 +28,8 @@
 #' @param window a positive, odd integer. 9 by default.
 #'   Sets the size of sliding window, must be an odd number.
 #'   The window determines the number of residues to be analyzed and averaged
-#'   for each position along the sequence. For chargeCalculationLocal and 
-#'   scaledHydropathyLocal. 
+#'   for each position along the sequence. For chargeCalculationLocal and
+#'   scaledHydropathyLocal.
 #' @param proteinName character string, optional.
 #'   Used to add protein name to the title in ggplot.
 #' @inheritParams chargeCalculationLocal
@@ -64,16 +64,18 @@
 #'   disorder based on environmental conditions. Regions of predicted
 #'   environmental sensitivity are highlighted. See the respective functions
 #'   for more details. This is skipped if uniprotAccession = NA.
-#'   
-#' @param foldIndexWindow a positive, odd integer. 51 by default.
+#' @param foldIndexWindowSize a positive, odd integer. 51 by default.
 #'   Sets the size of sliding window, must be an odd number.
 #'   The window determines the number of residues to be scored and averaged
-#'   for each position along the sequence. 
-#'   
-#'   
+#'   for each position along the sequence.
+#' @param foldIndex_pH numeric value, 7.0 by default.
+#'   The environmental pH used to calculate residue charge.
+#'   FoldIndex specifically uses pH = 7.0 in settings and thus, is distinct
+#'   from changing pH in the other calculations.
+#'
 #' @return 4 or 5 plots, depending if a UniProt Accession is provided.
 #' @export
-#' @seealso 
+#' @seealso
 #'   \code{\link{chargeHydropathyPlot}}\cr
 #'   \code{\link{chargeCalculationLocal}}\cr
 #'   \code{\link{scaledHydropathyLocal}}\cr
@@ -127,9 +129,9 @@
 #'     }
 #'     \item \code{\link{foldIndexR}}
 #'       \itemize{
-#'         \item{Prilusky, J., Felder, C. E., et al. (2005). 
-#'               FoldIndex: a simple tool to predict whether 
-#'               a given protein sequence is intrinsically unfolded. 
+#'         \item{Prilusky, J., Felder, C. E., et al. (2005).
+#'               FoldIndex: a simple tool to predict whether
+#'               a given protein sequence is intrinsically unfolded.
 #'               Bioinformatics, 21(16), 3435-3438.}
 #'          \item{Uversky, V. N., Gillespie, J. R., & Fink, A. L. (2000).
 #'               Why are “natively unfolded” proteins unstructured under
@@ -173,8 +175,7 @@
 #'   iupredType = "redox",
 #'   structuralTendencyType = "pie")
 #' }
-#' 
-#' 
+#'
 
 idprofile <- function(
     sequence,
@@ -182,8 +183,9 @@ idprofile <- function(
     proteinName = NA,
     iupredType = "long",
     window = 9,
-    foldIndexWindow = 51,
-    pH = 7.2,
+    foldIndexWindowSize = 51,
+    pH = 7.0,
+    foldIndex_pH = 7.0,
     pKaSet = "IPC_protein",
     structuralTendencyType = "bar",
     structuralTendencySummarize = FALSE,
@@ -216,9 +218,10 @@ idprofile <- function(
         orderPromoting = orderPromoting,
         proteinName = proteinName)
     foldIndexPlot <- foldIndexR(sequence = sequence,
-        foldIndexWindow = 51, 
+        foldIndexWindow = foldIndexWindowSize,
+        pH = foldIndex_pH,
         proteinName = proteinName,
-        pKaSet = pKaSet) 
+        pKaSet = pKaSet)
 
     #-------- Adding IUPred Plot based on which type
     if (!is.na(uniprotAccession)) {
@@ -247,7 +250,7 @@ idprofile <- function(
                 label = "No Uniprot Accession provided...IUPred plot skipped") +
             ggplot2::theme_void()
     }
-    plotList <- list(rhPlot, tendencyPlot, chargePlot, hydropPlot, 
+    plotList <- list(rhPlot, tendencyPlot, chargePlot, hydropPlot,
                      foldIndexPlot, iupredPlot)
     return(plotList)
 }
