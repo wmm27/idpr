@@ -11,5 +11,10 @@
 #' \code{browseVignettes("idpr")}
 #' @docType package
 #' @name idpr
+#' @references
+#' McFadden, W. M., & Yanowitz, J. L. (2022).
+#' idpr: A package for profiling and analyzing Intrinsically Disordered
+#' Proteins in R.
+#' \href{https://doi.org/10.1371/journal.pone.0266929}{PloS one, 17(4), e0266929}
 NULL
 #> NULL

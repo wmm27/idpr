@@ -19,11 +19,11 @@
 #'   require the UniProt Accession to make a proper connection to the IUPred2A
 #'   REST API. If the UniProt Accession is not specified, the IUPred plot is
 #'   skipped.
-#'   
+#'
 #'   Described in McFadden, W. M., & Yanowitz, J. L. (2022).
-#' idpr: A package for profiling and analyzing Intrinsically Disordered
-#' Proteins in R. PloS one,
-#' \href{https://doi.org/10.1371/journal.pone.0266929}{17(4), e0266929}
+#'   idpr: A package for profiling and analyzing Intrinsically Disordered
+#'   Proteins in R. PloS one,
+#'   \href{https://doi.org/10.1371/journal.pone.0266929}{17(4), e0266929}
 #' @param sequence amino acid sequence as a single character string or vector of
 #'    single characters. It also supports a single character string that
 #'    specifies the location of a .fasta or .fa file.

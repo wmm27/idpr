@@ -15,3 +15,9 @@ packages.
 Please see the idpr vignettes for details on idpr functions and theory.
 \code{browseVignettes("idpr")}
 }
+\references{
+McFadden, W. M., & Yanowitz, J. L. (2022).
+idpr: A package for profiling and analyzing Intrinsically Disordered
+Proteins in R.
+\href{https://doi.org/10.1371/journal.pone.0266929}{PloS one, 17(4), e0266929}
+}

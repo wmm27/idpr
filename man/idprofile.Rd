@@ -120,6 +120,12 @@ The IDPRofile is a summation of many features of the idpr package,
   REST API. If the UniProt Accession is not specified, the IUPred plot is
   skipped.
 }
+\details{
+Described in McFadden, W. M., & Yanowitz, J. L. (2022).
+  idpr: A package for profiling and analyzing Intrinsically Disordered
+  Proteins in R. PloS one,
+  \href{https://doi.org/10.1371/journal.pone.0266929}{17(4), e0266929}
+}
 \section{Citations for each Plot}{
 
   \itemize{
